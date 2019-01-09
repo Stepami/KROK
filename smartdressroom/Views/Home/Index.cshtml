@@ -23,11 +23,17 @@
     </a>
 </div>
 
+<form method="post" action="@Url.Action("Scan", "Home")" style="margin: 0 auto">
+    <input type="number" name="code"/>
+    <input type="submit" value="сканировать"/>
+ </form>
+   
 <img src="@Url.Content("~/images/krok.png")" alt="krok logo"
      style="position: absolute; bottom: 0px; right: 0px;">
 
 <script>
-    function consult() {
+    function consult()
+    {
         alert("Консультант вызван!");
     }
 </script>
