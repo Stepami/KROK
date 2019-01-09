@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>
+        Умная примерочная
+    </h1>
+<div>
+    <form action="@Url.Action("Cart", "Home")">
+        <input type="image" src="images/cart.png" alt="cart icon"
+               style="position: absolute; left: 0px">
+    </form>
+    <img src="images/krok.png" alt="krok logo"
+         style="position: absolute; bottom: 0px; right: 0px;">
+</div>
+</body>
+<head>
+    <style>
+        body {
+            background-color: black;
+        }
+
+        h1 {
+            color: white;
+        }
+    </style>
+</head>
+</html>
