@@ -4,31 +4,36 @@
 <!DOCTYPE html>
 <html>
 <body>
+
 <h1>
     Умная примерочная
 </h1>
-<div>
 
+<div>
     <a href="@Url.Action("Cart", "Home")">
         <img src="@Url.Content("~/images/cart.png")" alt="cart icon"
-             style="position: absolute; left: 0px">
+             style="left: 0px">
     </a>
+</div>
 
+<div>
     <a onclick="consult()">
         <img src="@Url.Content("~/images/consult.png")" alt="consult icon"
-             style="position: absolute; left: 0px">
+             style="left: 0px">
     </a>
-
-    <img src="@Url.Content("~/images/krok.png")" alt="krok logo"
-         style="position: absolute; bottom: 0px; right: 0px;">
 </div>
+
+<img src="@Url.Content("~/images/krok.png")" alt="krok logo"
+     style="position: absolute; bottom: 0px; right: 0px;">
+
 <script>
-    function consult()
-    {
+    function consult() {
         alert("Консультант вызван!");
     }
 </script>
+
 </body>
+
 <head>
     <style>
         body 
