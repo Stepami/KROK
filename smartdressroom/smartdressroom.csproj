@@ -13,8 +13,4 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="wwwroot\images\krok.png" />
-  </ItemGroup>
-
 </Project>
