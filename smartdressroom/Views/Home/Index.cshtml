@@ -8,13 +8,26 @@
     Умная примерочная
 </h1>
 <div>
-    <form action="@Url.Action("Cart", "Home")">
-        <input type="image" src="@Url.Content("~/images/cart.png")" alt="cart icon"
-               style="position: absolute; left: 0px">
-    </form>
+
+    <a href="@Url.Action("Cart", "Home")">
+        <img src="@Url.Content("~/images/cart.png")" alt="cart icon"
+             style="position: absolute; left: 0px">
+    </a>
+
+    <a onclick="consult()">
+        <img src="@Url.Content("~/images/consult.png")" alt="consult icon"
+             style="position: absolute; left: 0px">
+    </a>
+
     <img src="@Url.Content("~/images/krok.png")" alt="krok logo"
          style="position: absolute; bottom: 0px; right: 0px;">
 </div>
+<script>
+    function consult()
+    {
+        alert("Консультант вызван!");
+    }
+</script>
 </body>
 <head>
     <style>
