@@ -26,6 +26,14 @@ namespace smartdressroom.Controllers
         }
 
         [HttpPost]
-        public string Scan(int code) => clothes.Exists(item => item.Code == code) ? "yes" : "no";
+        public string Scan(int code)
+        {
+            if (clothes.Exists(item => item.Code == code))
+            {
+                var temp = clothes.Find(item => item.Code == code);
+                return $"Price: {temp.Price} RUR\nSize: {temp.Size}\nBrand: {temp.Brand}";
+            }
+            else return "Scan_Error";
+        }
     }
 }
