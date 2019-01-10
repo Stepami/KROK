@@ -11,25 +11,40 @@
 
 <div>
     <a href="@Url.Action("Cart", "Home")">
-        <img src="@Url.Content("~/images/cart.png")" alt="cart icon"
+        <img src="@Url.Content("~/images/icons/cart.png")" alt="cart icon"
              style="left: 0px">
     </a>
 </div>
 
 <div>
     <a onclick="consult()">
-        <img src="@Url.Content("~/images/consult.png")" alt="consult icon"
+        <img src="@Url.Content("~/images/icons/consult.png")" alt="consult icon"
              style="left: 0px">
     </a>
 </div>
 
-<form method="post" action="@Url.Action("Scan", "Home")" style="margin: 0 auto">
+<div>
+    <img src="@Url.Content("~/images/icons/size.png")" alt="consult icon"
+         style="left: 0px">
+</div>
+
+<div>
+    <img src="@Url.Content("~/images/icons/price.png")" alt="consult icon"
+         style="left: 0px">
+</div>
+
+<div>
+    <img src="@Url.Content("~/images/icons/color.png")" alt="consult icon"
+         style="left: 0px">
+</div>
+
+<form method="post" action="@Url.Action("Scan", "Home")">
     <input type="number" name="code"/>
     <input type="submit" value="сканировать"/>
  </form>
    
-<img src="@Url.Content("~/images/krok.png")" alt="krok logo"
-     style="position: absolute; bottom: 0px; right: 0px;">
+<img src="@Url.Content("~/images/icons/krok.png")" alt="krok logo"
+     style="position: fixed; bottom: 0px; right: 0px;">
 
 <script>
     function consult()
@@ -49,6 +64,7 @@
 
         h1 
         {
+            text-align: center;
             color: white;
         }
     </style>
