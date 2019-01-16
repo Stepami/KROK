@@ -12,13 +12,13 @@ namespace smartdressroom.Controllers
         {
             clothes = new List<ClothesModel>
             {
-                new ClothesModel(1, 132, 1000, "L", "SABBAT CULT"),
-                new ClothesModel(2, 1456, 500, "M", "SELA")
+                new ClothesModel(1, 132, 1000, "L", "SABBAT CULT", Url.Content("~/images/clothes/sabbat_tshirt1.png")),
             };
         }
-        public IActionResult Index()
+        public IActionResult Index(ClothesModel Model)
         {
-            return View();
+            Model = clothes[0];
+            return View(Model);
         }
         public IActionResult Cart()
         {

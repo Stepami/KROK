@@ -1,3 +1,12 @@
-﻿@{
+﻿@model smartdressroom.Models.ClothesModel
+@{
     Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");
 }
+<!DOCTYPE html>
+<html>
+<body>
+<div>
+    <img alt="clothes" src=@Model.ImgPath style="position: center"/>
+</div>
+</body>
+</html>
