@@ -13,7 +13,7 @@ namespace smartdressroom.Controllers
             clothes = new List<ClothesModel>
             {
                 new ClothesModel(1, 132, 1000, "L", "SABBAT CULT", "/images/clothes/sabbat_tshirt1.jpg"),
-                new ClothesModel(2, 12, 1200, "L", "SELA", "")
+                new ClothesModel(2, 12, 1200, "L", "SELA", "/images/clothes/sela_jemper1.jpg")
             };
         }
         public IActionResult Index()
