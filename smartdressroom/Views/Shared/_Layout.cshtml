@@ -6,11 +6,6 @@
         body {
             background-color: black;
         }
-
-        h1 {
-            text-align: center;
-            color: white;
-        }
     </style>
 </head>
 <body>
@@ -32,22 +27,22 @@
         </a>
     </div>
 
-    <div>
-        <img src="@Url.Content("~/images/icons/size.png")" alt="consult icon"
+    <div id="size" style="position: relative; width: 300px">
+        <img src="@Url.Content("~/images/icons/size.png")" alt="size icon"
              style="left: 0px">
     </div>
 
-    <div>
-        <img src="@Url.Content("~/images/icons/price.png")" alt="consult icon"
+    <div id="price" style="position: relative; width: 300px">
+        <img src="@Url.Content("~/images/icons/price.png")" alt="price icon"
              style="left: 0px">
     </div>
 
-    <div>
-        <img src="@Url.Content("~/images/icons/color.png")" alt="consult icon"
+    <div id="color">
+        <img src="@Url.Content("~/images/icons/color.png")" alt="color icon"
              style="left: 0px">
     </div>
 
-    <form method="post" action="@Url.Action("Scan", "Home")">
+    <form method="post" action="@Url.Action("Product", "Home")">
         <input type="number" name="code" />
         <input type="submit" value="сканировать" />
     </form>

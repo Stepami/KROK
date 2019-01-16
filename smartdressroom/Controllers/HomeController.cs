@@ -6,19 +6,19 @@ namespace smartdressroom.Controllers
 {
     public class HomeController : Controller
     {
-        private List<ClothesModel> clothes;
+        public List<ClothesModel> clothes;
 
         public HomeController()
         {
             clothes = new List<ClothesModel>
             {
-                new ClothesModel(1, 132, 1000, "L", "SABBAT CULT", Url.Content("~/images/clothes/sabbat_tshirt1.png")),
+                new ClothesModel(1, 132, 1000, "L", "SABBAT CULT", "/images/clothes/sabbat_tshirt1.jpg"),
+                new ClothesModel(2, 12, 1200, "L", "SELA", "")
             };
         }
-        public IActionResult Index(ClothesModel Model)
+        public IActionResult Index()
         {
-            Model = clothes[0];
-            return View(Model);
+            return View();
         }
         public IActionResult Cart()
         {
@@ -26,14 +26,14 @@ namespace smartdressroom.Controllers
         }
 
         [HttpPost]
-        public string Scan(int code)
+        public IActionResult Product(int code)
         {
             if (clothes.Exists(item => item.Code == code))
             {
                 var temp = clothes.Find(item => item.Code == code);
-                return $"Price: {temp.Price} RUR\nSize: {temp.Size}\nBrand: {temp.Brand}";
+                return View(temp);
             }
-            else return "Scan_Error";
+            else return Content("Scan_Error");
         }
     }
 }
