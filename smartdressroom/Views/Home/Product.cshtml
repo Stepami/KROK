@@ -27,10 +27,19 @@
     </script>
 </head>
 <body onload="fill()">
-    <div>
-        <img src="@Model.ImgPath" alt="cart icon"
-             style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%)">
-        <p style="position: absolute; bottom: 0px; left: 50%; font-family: Tahoma, sans-serif; font-weight: normal; color: white">@Model.Brand</p>
-    </div>
+<div>
+    <img src="@Model.ImgPath" alt="cart icon"
+         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%)">
+    <p style="position: absolute; bottom: 0px; left: 50%; font-family: Tahoma, sans-serif; font-weight: normal; color: white">@Model.Brand</p>
+</div>
+<form method="post" action="@Url.Action("AddToCart", "Cart")">
+    <input type="hidden" name="id" value=@Model.Id />
+    <input type="hidden" name="code" value=@Model.Code />
+    <input type="hidden" name="price" value=@Model.Price />
+    <input type="hidden" name="size" value="@Model.Size" />
+    <input type="hidden" name="brand" value="@Model.Brand" />
+    <input type="hidden" name="path" value="@Model.ImgPath" />
+    <input type="submit" value="добавить в корзину" />
+</form>
 </body>
 </html>

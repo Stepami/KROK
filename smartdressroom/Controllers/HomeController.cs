@@ -8,16 +8,13 @@ namespace smartdressroom.Controllers
     {
         public List<ClothesModel> clothes;
 
-        public HomeController()
-        {
-            clothes = new List<ClothesModel>
+        public HomeController() => clothes = new List<ClothesModel>
             {
                 new ClothesModel(1, 132, 1000, "L", "SABBAT CULT", "/images/clothes/sabbat_tshirt1.jpg"),
                 new ClothesModel(2, 12, 1200, "L", "SELA", "/images/clothes/sela_jemper1.jpg")
             };
-        }
+
         public IActionResult Index() => View();
-        public IActionResult Cart() => View();
 
         [HttpPost]
         public IActionResult Product(int code) => clothes.Exists(item => item.Code == code)
