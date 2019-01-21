@@ -1,9 +1,0 @@
-﻿@model List<smartdressroom.Models.ClothesModel>
-@{
-    Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");
-}
-
-@foreach (var item in Model)
-{
-    <p style="color: white">@item.Price</p>
-}

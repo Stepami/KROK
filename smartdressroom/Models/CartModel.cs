@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace smartdressroom.Models
 {
-    public class CartModel
+    /*public class Cart
     {
-        private List<CartEntity> lineList = new List<CartEntity>();
+        public CartModel() => lineList = new List<CartEntity>();
+        private List<CartEntity> lineList;
 
         public IEnumerable<CartEntity> Lines => lineList;
 
@@ -26,10 +27,10 @@ namespace smartdressroom.Models
 
         public void Clear() => lineList.Clear();
     }
-
-    public class CartEntity
+    */
+    public class CartModel
     {
-        public CartEntity(ClothesModel item, int quantity)
+        public CartModel(ClothesModel item, int quantity)
         {
             Item = item;
             Quantity = quantity;

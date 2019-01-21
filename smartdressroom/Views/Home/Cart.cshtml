@@ -1,0 +1,13 @@
+﻿@using smartdressroom.Models
+@model List<CartModel>
+@{
+    Layout = null;
+    //Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");
+}
+
+<table class="table">
+    @foreach (CartModel cm in Model)
+    {
+        <tr><td>@cm.Item.Brand</td><td>@cm.Item.Size</td><td>@cm.Item.Price</td></tr>
+    }
+</table>
