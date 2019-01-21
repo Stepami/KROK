@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace smartdressroom.Models
 {
-    class CartModel
+    public class CartModel
     {
         private List<CartEntity> lineList = new List<CartEntity>();
 
@@ -27,7 +27,7 @@ namespace smartdressroom.Models
         public void Clear() => lineList.Clear();
     }
 
-    class CartEntity
+    public class CartEntity
     {
         public CartEntity(ClothesModel item, int quantity)
         {

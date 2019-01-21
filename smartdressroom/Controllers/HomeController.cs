@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using smartdressroom.Models;
 
 namespace smartdressroom.Controllers
@@ -21,10 +22,25 @@ namespace smartdressroom.Controllers
             ? View(clothes.Find(item => item.Code == code))
             : View(new ClothesModel(0, 0, 0, "", "", "/images/scan_error.png"));
 
-        [HttpPost]
-        public void AddToCart(int id, int code, int price, string size, string brand, string path)
+        public IActionResult AddToCart(int id, string returnUrl)
         {
-            //cart.Add(new ClothesModel(id, code, price, size, brand, path));
+            ClothesModel item = clothes.Find(x => x.Id == id);
+            if (item != null)
+            {
+                GetCart().AddItem(new CartEntity(item, 1));
+            }
+            return RedirectToAction("Product", new { returnUrl });
+        }
+
+        public CartModel GetCart()
+        {
+            CartModel cart = new CartModel();//(CartModel)Session["Cart"];
+            if (cart == null)
+            {
+                cart = new CartModel();
+                //HttpContext.Session["Cart"] = cart;
+            }
+            return cart;
         }
     }
 }
