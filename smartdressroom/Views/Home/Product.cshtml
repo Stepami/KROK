@@ -32,7 +32,7 @@
          style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%)">
     <p style="position: absolute; bottom: 0px; left: 50%; font-family: Tahoma, sans-serif; font-weight: normal; color: white">@Model.Brand</p>
 </div>
-<form method="post" action="@Url.Action("AddToCart", "Cart")">
+<form method="post" action="@Url.Action("AddToCart", "Home")">
     <input type="hidden" name="id" value=@Model.Id />
     <input type="hidden" name="code" value=@Model.Code />
     <input type="hidden" name="price" value=@Model.Price />

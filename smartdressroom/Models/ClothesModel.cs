@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace smartdressroom.Models
 {
-    public class ClothesModel
+    class ClothesModel
     {
         public ClothesModel(int id, int code, int price, string size, string brand, string path)
         {

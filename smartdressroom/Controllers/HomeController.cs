@@ -6,7 +6,7 @@ namespace smartdressroom.Controllers
 {
     public class HomeController : Controller
     {
-        public List<ClothesModel> clothes;
+        List<ClothesModel> clothes;
 
         public HomeController() => clothes = new List<ClothesModel>
             {
@@ -20,5 +20,11 @@ namespace smartdressroom.Controllers
         public IActionResult Product(int code) => clothes.Exists(item => item.Code == code)
             ? View(clothes.Find(item => item.Code == code))
             : View(new ClothesModel(0, 0, 0, "", "", "/images/scan_error.png"));
+
+        [HttpPost]
+        public void AddToCart(int id, int code, int price, string size, string brand, string path)
+        {
+            //cart.Add(new ClothesModel(id, code, price, size, brand, path));
+        }
     }
 }
