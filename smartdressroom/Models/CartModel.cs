@@ -2,41 +2,49 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace smartdressroom.Models
 {
-    /*public class Cart
-    {
-        public CartModel() => lineList = new List<CartEntity>();
-        private List<CartEntity> lineList;
-
-        public IEnumerable<CartEntity> Lines => lineList;
-
-        public void AddItem(CartEntity ce)
-        {
-            var temp = lineList.Find(x => x.Item.Code == ce.Item.Code);
-            if (temp == null)
-                lineList.Add(ce);
-            else
-                temp.Quantity += ce.Quantity;
-        }
-
-        public void RemoveLine(CartEntity ce) => lineList.RemoveAll(l => l.Item.Id == ce.Item.Id);
-
-        public decimal ComputeTotalValue() => lineList.Sum(e => e.Item.Price * e.Quantity);
-
-        public void Clear() => lineList.Clear();
-    }
-    */
     public class CartModel
     {
-        public CartModel(ClothesModel item, int quantity)
-        {
-            Item = item;
-            Quantity = quantity;
-        }
+        [JsonProperty("list")]
+        public List<CartItemModel> List;
 
-        public ClothesModel Item { get; set; }
-        public int Quantity { get; set; }
+        /// <summary>
+        /// Создание объекта из JSON-представления
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        public static CartModel FromJson(string json) => JsonConvert.DeserializeObject<CartModel>(json, Settings);
+
+        public static CartModel FromArray(byte[] a) => FromJson(Encoding.Default.GetString(a));
+
+        /// <summary>
+        /// JSON-представление объекта
+        /// </summary>
+        /// <returns></returns>
+        public string ToJson() => JsonConvert.SerializeObject(this);
+
+        /// <summary>
+        /// Бинарное представление объекта
+        /// </summary>
+        /// <returns></returns>
+        public byte[] ToArray() => Encoding.Default.GetBytes(ToJson());
+
+        private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+        {
+            MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
+            DateParseHandling = DateParseHandling.None,
+        };
+
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public CartModel()
+        {
+            List = new List<CartItemModel>();
+        }
     }
 }
