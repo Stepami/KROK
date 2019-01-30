@@ -61,24 +61,30 @@ namespace smartdressroom.Models
         /// Штрих-код товара
         /// </summary>
         [JsonProperty("code")]
+        [Display(Name ="Штрих-код товара")]
         public int Code { get; set; }
 
         [JsonProperty("price")]
+        [Display(Name = "Цена")]
         public int Price { get; set; }
 
         [JsonProperty("size")]
+        [Display(Name = "Размер")]
         public string Size { get; set; }
 
         [JsonProperty("brand")]
+        [Display(Name = "Бренд")]
         public string Brand { get; set; }
 
         [JsonProperty("img")]
+        [Display(Name = "Изображение")]
         public string ImgPath { get; set; }
 
         /// <summary>
         /// Коллекция
         /// </summary>      
         [JsonProperty("collection")]
+        [Display(Name = "Коллекция")]
         public virtual CollectionModel Collection { get; set; }
     }
 }
