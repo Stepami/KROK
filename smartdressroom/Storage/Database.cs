@@ -18,6 +18,11 @@ namespace smartdressroom.Storage
         public DbSet<Models.ClothesModel> ClothesModels { get; set; }
 
         /// <summary>
+        /// Коллекции
+        /// </summary>
+        public DbSet<Models.CollectionModel> CollectionModels { get; set; }
+
+        /// <summary>
         /// Настройка подключения к БД
         /// </summary>
         /// <param name="optionsBuilder"></param>

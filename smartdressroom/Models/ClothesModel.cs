@@ -50,6 +50,9 @@ namespace smartdressroom.Models
             ImgPath = path;
         }
 
+        /// <summary>
+        /// Уникальный идентификатор записи
+        /// </summary>
         [Key()]
         [JsonProperty("id")]
         public Guid ID { get; set; }
@@ -71,5 +74,11 @@ namespace smartdressroom.Models
 
         [JsonProperty("img")]
         public string ImgPath { get; set; }
+
+        /// <summary>
+        /// Коллекция
+        /// </summary>      
+        [JsonProperty("collection")]
+        public virtual CollectionModel Collection { get; set; }
     }
 }
