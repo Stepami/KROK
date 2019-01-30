@@ -6,20 +6,30 @@ using Newtonsoft.Json;
 
 namespace smartdressroom.Models
 {
+    /// <summary>
+    /// Одежда
+    /// </summary>
     public class ClothesModel
     {
         /// <summary>
+        /// Конструктор по умолчанию для сериализации
+        /// </summary>
+        public ClothesModel()
+        {
+        }
+
+        /// <summary>
         /// Конструктор по значениям
         /// </summary>
-        /// <param name="id"></param>
         /// <param name="code"></param>
         /// <param name="price"></param>
         /// <param name="size"></param>
         /// <param name="brand"></param>
         /// <param name="path"></param>
-        public ClothesModel(int id, int code, int price, string size, string brand, string path)
+        public ClothesModel(int code, int price, string size, string brand, string path)
         {
-            Id = id;
+            // Формирование нового уникального идентификатора
+            ID = Guid.NewGuid();
             Code = code;
             Price = price;
             Size = size;
@@ -27,9 +37,24 @@ namespace smartdressroom.Models
             ImgPath = path;
         }
 
-        [JsonProperty("id")]
-        public int Id { get; set; }
+        public ClothesModel(string id, int code, int price, string size, string brand, string path)
+        {
+            // Формирование нового уникального идентификатора
+            ID = Guid.Parse(id);
+            Code = code;
+            Price = price;
+            Size = size;
+            Brand = brand;
+            ImgPath = path;
+        }
 
+
+        [JsonProperty("id")]
+        public Guid ID { get; set; }
+
+        /// <summary>
+        /// Штрих-код товара
+        /// </summary>
         [JsonProperty("code")]
         public int Code { get; set; }
 
