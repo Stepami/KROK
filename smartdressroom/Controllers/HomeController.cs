@@ -9,7 +9,10 @@ namespace smartdressroom.Controllers
 {
     public class HomeController : Controller
     {
-        List<ClothesModel> clothes;
+        /// <summary>
+        /// База данных
+        /// </summary>
+        Storage.Database db;
 
         /// <summary>
         /// Корзина, сохраняемая в сессии
@@ -44,13 +47,9 @@ namespace smartdressroom.Controllers
         /// </summary>
         public HomeController()
         {
-            clothes = new List<ClothesModel>
-            {
-                new ClothesModel("32A1AD2E-FDFD-486A-A901-A48D1783A91B", 132, 1000, "L", "SABBAT CULT", "/images/clothes/sabbat_tshirt1.jpg"),
-                new ClothesModel("32A1AD2E-FDFD-486A-A901-A48D1783A91C", 12, 1200, "L", "SELA", "/images/clothes/sela_jemper1.jpg")
-            };
-            
+            db = new Storage.Database();
         }
+
         public IActionResult Index() => View();
 
         /// <summary>
@@ -60,13 +59,19 @@ namespace smartdressroom.Controllers
         public IActionResult Cart() => View(cart.List);
 
         [HttpPost]
-        public IActionResult Product(int code) => clothes.Exists(item => item.Code == code)
-            ? View(clothes.Find(item => item.Code == code))
-            : View(new ClothesModel(0, 0, "", "", "/images/scan_error.png"));
+        public IActionResult Product(int code)
+        {
+            ClothesModel m = db.ClothesModels.Where(item => item.Code == code).FirstOrDefault();
+            if (m == null)
+            {
+                m = new ClothesModel(0, 0, "", "", "/images/scan_error.png");
+            }
+            return View(m);
+        }
 
         public IActionResult AddToCart(Guid id)
         {
-            ClothesModel item = clothes.Find(x => x.ID == id);
+            ClothesModel item = db.ClothesModels.Where(a => a.ID == id).FirstOrDefault();
             if (item != null)
             {
                 var ce = new CartItemModel(item, 1);

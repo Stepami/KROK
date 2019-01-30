@@ -12,6 +12,18 @@ namespace smartdressroom.Storage
     /// </summary>
     public class Database : DbContext
     {
+        /// <summary>
+        /// Каталог одежды
+        /// </summary>
+        public DbSet<Models.ClothesModel> ClothesModels { get; set; }
 
+        /// <summary>
+        /// Настройка подключения к БД
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseMySQL("server=localhost;UserId=stepan;Password=leftkrok;database=db;");
+        }
     }
 }
