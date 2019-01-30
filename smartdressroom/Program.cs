@@ -7,6 +7,9 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
+
 
 namespace smartdressroom
 {
@@ -18,7 +21,10 @@ namespace smartdressroom
             using (Storage.Database db = new Storage.Database())
             {
                 // Проверка на существование БД, автоматическое создание при отсутствии
-                db.Database.EnsureCreated();
+                // db.Database.EnsureCreated();
+
+                // Проверка на существование БД, автоматическое создание при отсутствии, автоматическая миграция
+                db.Database.Migrate();
 
                 if (db.ClothesModels.Where(a => a.Code == 132).FirstOrDefault() == null)
                 {
