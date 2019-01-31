@@ -10,7 +10,7 @@ namespace smartdressroom.Storage
     /// <summary>
     /// База данных
     /// </summary>
-    public class Database : DbContext
+    public class ApplicationContext : DbContext
     {
         /// <summary>
         /// Каталог одежды

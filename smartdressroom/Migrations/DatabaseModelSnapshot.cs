@@ -7,7 +7,7 @@ using smartdressroom.Storage;
 
 namespace smartdressroom.Migrations
 {
-    [DbContext(typeof(Database))]
+    [DbContext(typeof(ApplicationContext))]
     partial class DatabaseModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

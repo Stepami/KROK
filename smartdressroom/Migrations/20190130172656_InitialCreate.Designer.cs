@@ -8,7 +8,7 @@ using smartdressroom.Storage;
 
 namespace smartdressroom.Migrations
 {
-    [DbContext(typeof(Database))]
+    [DbContext(typeof(ApplicationContext))]
     [Migration("20190130172656_InitialCreate")]
     partial class InitialCreate
     {

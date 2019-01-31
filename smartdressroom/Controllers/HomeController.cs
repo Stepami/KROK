@@ -12,7 +12,7 @@ namespace smartdressroom.Controllers
         /// <summary>
         /// База данных
         /// </summary>
-        Storage.Database db;
+        Storage.ApplicationContext db;
 
         /// <summary>
         /// Корзина, сохраняемая в сессии
@@ -45,10 +45,7 @@ namespace smartdressroom.Controllers
         /// <summary>
         /// Конструктор контроллера
         /// </summary>
-        public HomeController()
-        {
-            db = new Storage.Database();
-        }
+        public HomeController() => db = new Storage.ApplicationContext();
 
         public IActionResult Index() => View();
 
@@ -59,15 +56,9 @@ namespace smartdressroom.Controllers
         public IActionResult Cart() => View(cart.List);
 
         [HttpPost]
-        public IActionResult Product(int code)
-        {
-            ClothesModel m = db.ClothesModels.Where(item => item.Code == code).FirstOrDefault();
-            if (m == null)
-            {
-                m = new ClothesModel(0, 0, "", "", "/images/scan_error.png");
-            }
-            return View(m);
-        }
+        public IActionResult Product(int code) => db.ClothesModels.Where(item => item.Code == code).FirstOrDefault() == null
+                ? View(new ClothesModel(0, 0, "", "", "/images/scan_error.png"))
+                : View(db.ClothesModels.Where(item => item.Code == code).FirstOrDefault());
 
         public IActionResult AddToCart(Guid id)
         {
@@ -78,7 +69,9 @@ namespace smartdressroom.Controllers
                 // Здесь была мистика - если напрямую использовать свойство cart, то
                 // объект ce не добавлялся в список
                 var c = cart;
-                c.List.Add(ce);
+                if (c.List.Contains(ce))
+                    c.List.Find(x => x == ce).Quantity += 1;
+                else c.List.Add(ce);
                 // Для сохранения в данных сессии
                 cart = c;
             }
