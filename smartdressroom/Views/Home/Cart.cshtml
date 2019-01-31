@@ -1,11 +1,10 @@
 ﻿@using smartdressroom.Models
 @model List<CartItemModel>
 @{
-    Layout = null;
-    //Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");
+    Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");
 }
 
-<table class="table">
+<table class="table" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%)">
     @foreach (CartItemModel cm in Model)
     {
         <tr><td>@cm.Item.Brand</td><td>@cm.Item.Size</td><td>@cm.Item.Price</td><td>@cm.Quantity</td></tr>
