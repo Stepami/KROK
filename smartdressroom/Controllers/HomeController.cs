@@ -69,8 +69,8 @@ namespace smartdressroom.Controllers
                 // Здесь была мистика - если напрямую использовать свойство cart, то
                 // объект ce не добавлялся в список
                 var c = cart;
-                if (c.List.Contains(ce))
-                    c.List[c.List.FindIndex(x => x == ce)].Quantity += 1;
+                if (c.List.Exists(x => x.Item.ID == ce.Item.ID))
+                    c.List[c.List.FindIndex(x => x.Item.ID == ce.Item.ID)].Quantity += 1;
                 else c.List.Add(ce);
                 // Для сохранения в данных сессии
                 cart = c;
