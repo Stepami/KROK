@@ -70,7 +70,7 @@ namespace smartdressroom.Controllers
                 // объект ce не добавлялся в список
                 var c = cart;
                 if (c.List.Contains(ce))
-                    c.List.Find(x => x == ce).Quantity += 1;
+                    c.List[c.List.FindIndex(x => x == ce)].Quantity += 1;
                 else c.List.Add(ce);
                 // Для сохранения в данных сессии
                 cart = c;
