@@ -49,6 +49,8 @@ namespace smartdressroom.Models
 
         public decimal ComputeTotalValue() => LineList.Sum(e => e.Item.Price * e.Quantity);
 
+        public int TotalItemCount() => LineList.Sum(e => e.Quantity);
+
         public void Clear() => LineList.Clear();
     }
 }
