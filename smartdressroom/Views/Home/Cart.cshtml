@@ -3,16 +3,23 @@
 @{
     Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");
 }
-<style>
-    td {
-        color: white;
-        font-family: Tahoma, sans-serif;
-        font-weight: normal;
-    }
-</style>
-<table class="table" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%)">
-    @foreach (CartItemModel cm in Model)
-    {
-        <tr><td>@cm.Item.Brand</td><td>@cm.Item.Size</td><td>@cm.Item.Price</td><td>@cm.Quantity</td></tr>
-    }
-</table>
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        td {
+            color: white;
+            font-family: Tahoma, sans-serif;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <table class="table" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%)">
+        @foreach (CartItemModel cm in Model)
+        {
+            <tr><td>@cm.Item.Brand</td><td>@cm.Item.Size</td><td>@cm.Item.Price</td><td>@cm.Quantity</td></tr>
+        }
+    </table>
+</body>
+</html>
