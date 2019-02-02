@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using smartdressroom.Models;
+using smartdressroom.Storage;
 
 namespace smartdressroom.Controllers
 {
@@ -12,7 +12,7 @@ namespace smartdressroom.Controllers
         /// <summary>
         /// База данных
         /// </summary>
-        Storage.ApplicationContext db;
+        ApplicationContext db;
 
         /// <summary>
         /// Корзина, сохраняемая в сессии
@@ -21,7 +21,7 @@ namespace smartdressroom.Controllers
         {
             get
             {
-                CartModel c;              
+                CartModel c;
                 if (HttpContext.Session.Keys.Contains("cart"))
                 {
                     string json = HttpContext.Session.GetString("cart");
@@ -53,12 +53,14 @@ namespace smartdressroom.Controllers
         /// Просмотр корзины
         /// </summary>
         /// <returns></returns>
-        public IActionResult Cart() => View(cart.List);
+        public IActionResult Cart() => View(cart.LineList);
 
         [HttpPost]
-        public IActionResult Product(int code) => db.ClothesModels.Where(item => item.Code == code).FirstOrDefault() == null
-                ? View(new ClothesModel(0, 0, "", "", "/images/scan_error.png"))
-                : View(db.ClothesModels.Where(item => item.Code == code).FirstOrDefault());
+        public IActionResult Product(int code)
+        {
+            var m = db.ClothesModels.Where(item => item.Code == code).FirstOrDefault();
+            return m == null ? View(new ClothesModel(0, 0, "", "", "/images/scan_error.png")) : View(m);
+        }
 
         public IActionResult AddToCart(Guid id)
         {
@@ -69,9 +71,9 @@ namespace smartdressroom.Controllers
                 // Здесь была мистика - если напрямую использовать свойство cart, то
                 // объект ce не добавлялся в список
                 var c = cart;
-                if (c.List.Exists(x => x.Item.ID == ce.Item.ID))
-                    c.List[c.List.FindIndex(x => x.Item.ID == ce.Item.ID)].Quantity += 1;
-                else c.List.Add(ce);
+                if (c.LineList.Exists(x => x.Item.ID == ce.Item.ID))
+                    c.LineList[c.LineList.FindIndex(x => x.Item.ID == ce.Item.ID)].Quantity += 1;
+                else c.LineList.Add(ce);
                 // Для сохранения в данных сессии
                 cart = c;
             }

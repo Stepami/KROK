@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -10,7 +8,7 @@ namespace smartdressroom.Models
     public class CartModel
     {
         [JsonProperty("list")]
-        public List<CartItemModel> List;
+        public List<CartItemModel> LineList;
 
         /// <summary>
         /// Создание объекта из JSON-представления
@@ -44,7 +42,13 @@ namespace smartdressroom.Models
         /// </summary>
         public CartModel()
         {
-            List = new List<CartItemModel>();
+            LineList = new List<CartItemModel>();
         }
+
+        public void RemoveLine(CartItemModel ce) => LineList.RemoveAll(l => l.Item.ID == ce.Item.ID);
+
+        public decimal ComputeTotalValue() => LineList.Sum(e => e.Item.Price * e.Quantity);
+
+        public void Clear() => LineList.Clear();
     }
 }
