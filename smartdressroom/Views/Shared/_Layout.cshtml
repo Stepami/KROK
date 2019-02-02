@@ -14,7 +14,11 @@
     </div>
 
     <div>
-        <a href="@Url.Action("Cart", "Home")">
+        @await Component.InvokeAsync("Summary")
+    </div>
+
+    <div>
+        <a href="@Url.Action("Display", "Cart")">
             <img src="@Url.Content("~/images/icons/cart.png")" alt="cart icon"
                  style="left: 0px">
         </a>

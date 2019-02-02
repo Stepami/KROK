@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using smartdressroom.Binders;
 using smartdressroom.Services;
 
 namespace smartdressroom
@@ -44,7 +45,10 @@ namespace smartdressroom
 
             services.AddTransient<IStorageService, StorageService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options =>
+            {
+                options.ModelBinderProviders.Insert(0, new CartModelBinderProvider());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
         }
 

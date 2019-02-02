@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using smartdressroom.Models;
 using smartdressroom.Services;
-using smartdressroom.Storage;
 
 namespace smartdressroom.Controllers
 {
@@ -12,7 +11,7 @@ namespace smartdressroom.Controllers
         /// База данных
         /// </summary>
         private readonly IStorageService db;
-
+  
         /// <summary>
         /// Конструктор контроллера
         /// </summary>

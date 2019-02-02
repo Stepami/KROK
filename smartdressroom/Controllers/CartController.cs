@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using smartdressroom.Models;
@@ -14,42 +12,15 @@ namespace smartdressroom.Controllers
         private readonly IStorageService db;
 
         public CartController(IStorageService ss) => db = ss;
-
-        /// <summary>
-        /// Корзина, сохраняемая в сессии
-        /// </summary>
-        CartModel cart
-        {
-            get
-            {
-                CartModel c;
-                if (HttpContext.Session.Keys.Contains("cart"))
-                {
-                    string json = HttpContext.Session.GetString("cart");
-                    c = CartModel.FromJson(json);
-                }
-                else
-                {
-                    c = new CartModel();
-                    string json = c.ToJson();
-                    HttpContext.Session.SetString("cart", json);
-                }
-                return c;
-            }
-            set
-            {
-                string json = value.ToJson();
-                HttpContext.Session.SetString("cart", json);
-            }
-        }
-
+        
         /// <summary>
         /// Просмотр корзины
         /// </summary>
         /// <returns></returns>
-        public IActionResult Display() => View(cart);
+        public IActionResult Display(CartModel cart) => View(cart);
 
-        public IActionResult AddToCart(Guid id)
+        [HttpPost]
+        public IActionResult AddToCart(Guid id, CartModel cart)
         {
             ClothesModel item = db.AppContext.ClothesModels.Where(a => a.ID == id).FirstOrDefault();
             if (item != null)
@@ -62,7 +33,8 @@ namespace smartdressroom.Controllers
                     c.LineList[c.LineList.FindIndex(x => x.Item.ID == ce.Item.ID)].Quantity += 1;
                 else c.LineList.Add(ce);
                 // Для сохранения в данных сессии
-                cart = c;
+                string json = c.ToJson();
+                HttpContext.Session.SetString("cart", json);
             }
 
             return RedirectToAction("Display", "Cart");
