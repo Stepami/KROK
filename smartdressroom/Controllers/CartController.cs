@@ -16,21 +16,20 @@ namespace smartdressroom.Controllers
         /// <summary>
         /// Просмотр корзины
         /// </summary>
-        /// <returns></returns>
         public IActionResult Display(CartModel cart) => View(cart);
 
         [HttpPost]
-        public IActionResult AddToCart(Guid id, CartModel cart)
+        public IActionResult AddToCart(Guid id, int quantity, CartModel cart)
         {
             ClothesModel item = db.AppContext.ClothesModels.Where(a => a.ID == id).FirstOrDefault();
             if (item != null)
             {
-                var ce = new CartItemModel(item, 1);
+                var ce = new CartItemModel(item, quantity);
                 // Здесь была мистика - если напрямую использовать свойство cart, то
                 // объект ce не добавлялся в список
                 var c = cart;
                 if (c.LineList.Exists(x => x.Item.ID == ce.Item.ID))
-                    c.LineList[c.LineList.FindIndex(x => x.Item.ID == ce.Item.ID)].Quantity += 1;
+                    c.LineList[c.LineList.FindIndex(x => x.Item.ID == ce.Item.ID)].Quantity += quantity;
                 else c.LineList.Add(ce);
                 // Для сохранения в данных сессии
                 string json = c.ToJson();
