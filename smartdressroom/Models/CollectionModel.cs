@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace smartdressroom.Models
 {
     /// <summary>
-    /// Коллекция модный вещей
+    /// Коллекция модных вещей
     /// </summary>
     public class CollectionModel
     {

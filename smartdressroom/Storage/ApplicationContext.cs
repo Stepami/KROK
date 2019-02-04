@@ -18,12 +18,14 @@ namespace smartdressroom.Storage
         public DbSet<Models.CollectionModel> CollectionModels { get; set; }
 
         /// <summary>
+        /// Админы
+        /// </summary>
+        public DbSet<Models.AdminModel> Admins { get; set; }
+
+        /// <summary>
         /// Настройка подключения к БД
         /// </summary>
         /// <param name="optionsBuilder"></param>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySQL("server=localhost;UserId=stepan;Password=leftkrok;database=db;");
-        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseMySQL("server=localhost;UserId=stepan;Password=leftkrok;database=db;");
     }
 }

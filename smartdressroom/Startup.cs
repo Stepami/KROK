@@ -73,6 +73,14 @@ namespace smartdressroom
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    "login",
+                    "ClothesModels",
+                    new { controller = "ClothesModels", action = "Login" });
+                routes.MapRoute(
+                    "afterlogin",
+                    "ClothesModels/Index",
+                    new { controller = "ClothesModels", action = "Index" });
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

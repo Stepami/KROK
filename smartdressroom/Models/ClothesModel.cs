@@ -35,17 +35,6 @@ namespace smartdressroom.Models
             ImgPath = path;
         }
 
-        public ClothesModel(string id, int code, int price, string size, string brand, string path)
-        {
-            // Формирование нового уникального идентификатора
-            ID = Guid.Parse(id);
-            Code = code;
-            Price = price;
-            Size = size;
-            Brand = brand;
-            ImgPath = path;
-        }
-
         /// <summary>
         /// Уникальный идентификатор записи
         /// </summary>

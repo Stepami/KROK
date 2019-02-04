@@ -26,17 +26,12 @@ namespace smartdressroom
                 // Проверка на существование БД, автоматическое создание при отсутствии, автоматическая миграция
                 db.Database.Migrate();
 
-                if (db.ClothesModels.Where(a => a.Code == 132).FirstOrDefault() == null)
+                if (db.Admins.Where(a => a.Login == "krok").FirstOrDefault() == null)
                 {
-                    var m = new Models.ClothesModel(132, 1000, "L", "SABBAT CULT", "/images/clothes/sabbat_tshirt1.jpg");
-                    db.ClothesModels.Add(m);
+                    var a = new Models.AdminModel("krok", "Smart4Look");
+                    db.Admins.Add(a);
                 }
 
-                if (db.ClothesModels.Where(a => a.Code == 12).FirstOrDefault() == null)
-                {
-                    var m = new Models.ClothesModel(12, 1200, "L", "SELA", "/images/clothes/sela_jemper1.jpg");
-                    db.ClothesModels.Add(m);
-                }
                 // Запись изменений в БД
                 db.SaveChanges();
             }
