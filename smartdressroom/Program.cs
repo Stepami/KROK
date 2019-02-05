@@ -26,12 +26,6 @@ namespace smartdressroom
                 // Проверка на существование БД, автоматическое создание при отсутствии, автоматическая миграция
                 db.Database.Migrate();
 
-                if (db.Admins.Where(a => a.Login == "krok").FirstOrDefault() == null)
-                {
-                    var a = new Models.AdminModel("krok", "Smart4Look");
-                    db.Admins.Add(a);
-                }
-
                 // Запись изменений в БД
                 db.SaveChanges();
             }
