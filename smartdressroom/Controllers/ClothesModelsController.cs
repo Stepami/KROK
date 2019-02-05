@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using smartdressroom.Models;
 using smartdressroom.Services;
 
@@ -19,12 +22,19 @@ namespace smartdressroom.Controllers
         [HttpPost]
         public IActionResult Login(string login, string password)
         {
-            if (dbStorageService.AppContext.Admins.Where(a => a.Login == login && a.Password == password)
-                    .FirstOrDefault() != null)
+            var user = dbStorageService.AppContext.Admins.Where(a => a.Login == login && a.Password == password).FirstOrDefault();
+            if (user != null)
             {
+                HttpContext.Session.SetString(nameof(user), JsonConvert.SerializeObject(user));
                 return RedirectToAction("Index");
             }
             else return View();
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("user");
+            return RedirectToAction("Login");
         }
 
         // GET: ClothesModels
