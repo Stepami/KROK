@@ -6,50 +6,96 @@
         body {
             background-color: black;
         }
+
+        aside, main {
+            float: left;
+        }
+
+        #leftbar div {
+            display: block;
+        }
+
+        #leftbar img {
+            width: 50%;
+            height: 50%;
+        }
+
+        .productview {
+            text-align: center;
+        }
+
+        .productview img{
+            max-width: 100%;
+        }
+
+        #cart {
+            display: inline-block;
+            position: relative;
+        }
+
+        span {
+            color: white;
+            font-family: Tahoma, sans-serif;
+            font-weight: normal;
+        }
+        #cart span {
+            display: inline-block;
+            position: absolute;   
+        }
+
+        #span1 {
+            top: 75px;
+            left: 75px;
+            transform: translate(-25%, -50%);
+        }
+
+        #span2 {
+            bottom: 0px;
+            left: 30px;
+            transform: translate(0%, -90%);
+        }
     </style>
 </head>
 <body>
-    <div>
-        @RenderBody()
-    </div>
+    <aside id="leftbar">
+        <div>
+            @await Component.InvokeAsync("Summary")
+        </div>
 
-    <div>
-        @await Component.InvokeAsync("Summary")
-    </div>
+        <div id="cart">
+            <a href="@Url.Action("Display", "Cart")">
+                <img src="@Url.Content("~/images/icons/cart.png")" alt="cart icon">
+            </a>
+            <span id="span1"></span>
+            <span id="span2"></span>
+        </div>
 
-    <div>
-        <a href="@Url.Action("Display", "Cart")">
-            <img src="@Url.Content("~/images/icons/cart.png")" alt="cart icon"
-                 style="left: 0px">
-        </a>
-    </div>
+        <div>
+            <a onclick="consult()">
+                <img src="@Url.Content("~/images/icons/consult.png")" alt="consult icon">
+            </a>
+        </div>
 
-    <div>
-        <a onclick="consult()">
-            <img src="@Url.Content("~/images/icons/consult.png")" alt="consult icon"
-                 style="left: 0px">
-        </a>
-    </div>
+        <div id="size">
+            <img src="@Url.Content("~/images/icons/size.png")" alt="size icon">
+            <span></span>
+        </div>
 
-    <div id="size" style="position: relative; width: 300px">
-        <img src="@Url.Content("~/images/icons/size.png")" alt="size icon"
-             style="left: 0px">
-    </div>
+        <div id="price">
+            <img src="@Url.Content("~/images/icons/price.png")" alt="price icon">
+            <span></span>
+        </div>
 
-    <div id="price" style="position: relative; width: 300px">
-        <img src="@Url.Content("~/images/icons/price.png")" alt="price icon"
-             style="left: 0px">
-    </div>
-
-    <div id="color">
-        <img src="@Url.Content("~/images/icons/color.png")" alt="color icon"
-             style="left: 0px">
-    </div>
-
-    <form method="post" action="@Url.Action("Product", "Home")">
-        <input type="number" name="code" />
-        <input type="submit" value="сканировать" />
-    </form>
+        <form method="post" action="@Url.Action("Product", "Home")">
+            <input type="number" name="code" />
+            <input type="submit" value="сканировать" />
+        </form>
+    </aside>
+    <main>
+        <div class="productview">
+            @RenderBody()
+        </div>
+    </main>
 
     <img src="@Url.Content("~/images/icons/krok.png")" alt="krok logo"
          style="position: fixed; bottom: 0px; right: 0px;">

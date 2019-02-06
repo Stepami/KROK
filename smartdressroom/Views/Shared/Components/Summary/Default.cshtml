@@ -2,19 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        #total {
-            color: white;
-            position: absolute;
-            font-family: Tahoma, sans-serif;
-            font-weight: normal;
+    <script>
+        function summary() {
+            document.getElementById("span1").innerHTML = "@Model.TotalItemCount()";
+            document.getElementById("span2").innerHTML = "@Model.ComputeTotalValue()";
         }
-    </style>
+    </script>
 </head>
-<body>
-    <div>
-        <h1 id="total" style="top: 300px; left: 0px;">@Model.ComputeTotalValue()</h1>
-        <h1 id="total" style="top: 150px; left: 150px;">@Model.TotalItemCount()</h1>
-    </div>
+<body onload="summary()">
 </body>
 </html>
