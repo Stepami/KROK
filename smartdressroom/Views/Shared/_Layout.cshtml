@@ -38,7 +38,7 @@
             font-family: Tahoma, sans-serif;
             font-weight: normal;
         }
-        #cart span {
+        #cart span, #size span, #price span {
             display: inline-block;
             position: absolute;   
         }
@@ -54,20 +54,25 @@
             left: 30px;
             transform: translate(0%, -90%);
         }
+
+        #span3 {
+            font-size: 64px;
+            top: 375px;
+            left: 75px;
+            transform: translate(-25%, -50%);
+        }
+        #span4 {
+            font-size: 20px;
+            top: 585px;
+            left: 75px;
+            transform: translate(-25%, -50%);
+        }
     </style>
 </head>
 <body>
     <aside id="leftbar">
-        <div>
-            @await Component.InvokeAsync("Summary")
-        </div>
-
         <div id="cart">
-            <a href="@Url.Action("Display", "Cart")">
-                <img src="@Url.Content("~/images/icons/cart.png")" alt="cart icon">
-            </a>
-            <span id="span1"></span>
-            <span id="span2"></span>
+            @await Component.InvokeAsync("Summary")
         </div>
 
         <div>
@@ -78,16 +83,16 @@
 
         <div id="size">
             <img src="@Url.Content("~/images/icons/size.png")" alt="size icon">
-            <span></span>
+            <span id="span3"></span>
         </div>
 
         <div id="price">
             <img src="@Url.Content("~/images/icons/price.png")" alt="price icon">
-            <span></span>
+            <span id="span4"></span>
         </div>
 
         <form method="post" action="@Url.Action("Product", "Home")">
-            <input type="number" name="code" />
+            <input type="number" name="code" autofocus />
             <input type="submit" value="сканировать" />
         </form>
     </aside>

@@ -5,31 +5,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        h1 {
-            color: white;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            font-family: Tahoma, sans-serif;
-            font-weight: normal;
-        }
-    </style>
     <script>
         function fill() {
-            var size_new = document.createElement("h1");
-            size_new.innerHTML = "@Model.Size";
-            document.getElementById("size").appendChild(size_new);
-            var price_new = document.createElement("h1");
-            price_new.innerHTML = @Model.Price;
-            document.getElementById("price").appendChild(price_new);
+            document.getElementById("span3").innerHTML = "@Model.Size";
+            document.getElementById("span4").innerHTML = "@Model.Price";
         }
     </script>
 </head>
 <body onload="fill()">
 <div>
-    <img src="@Model.ImgPath" alt="cart icon"
-         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%)">
+    <img src="@Model.ImgPath" alt="product img"
+         style="position: absolute; top: 50%; left: 50%; transform: translate(-20%,-50%)">
     <p style="position: absolute; bottom: 0px; left: 50%; font-family: Tahoma, sans-serif; font-weight: normal; color: white">@Model.Brand</p>
 </div>
 @using (Html.BeginForm("AddToCart", "Cart"))

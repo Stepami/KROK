@@ -1,14 +1,11 @@
 ﻿@model smartdressroom.Models.CartModel
 <!DOCTYPE html>
 <html>
-<head>
-    <script>
-        function summary() {
-            document.getElementById("span1").innerHTML = "@Model.TotalItemCount()";
-            document.getElementById("span2").innerHTML = "@Model.ComputeTotalValue()";
-        }
-    </script>
-</head>
-<body onload="summary()">
+<body>
+    <a href="@Url.Action("Display", "Cart")">
+        <img src="@Url.Content("~/images/icons/cart.png")" alt="cart icon">
+    </a>
+    <span id="span1">@Model.TotalItemCount()</span>
+    <span id="span2">@Model.ComputeTotalValue()</span>
 </body>
 </html>
