@@ -19,7 +19,7 @@ namespace smartdressroom.Controllers
 
         public IActionResult Index() => View();
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Product(int code)
         {
             var m = db.AppContext.ClothesModels.Where(item => item.Code == code).FirstOrDefault();
