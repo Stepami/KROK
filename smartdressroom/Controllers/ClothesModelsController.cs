@@ -59,7 +59,7 @@ namespace smartdressroom.Controllers
             {
                 clothesModel.ID = Guid.NewGuid();
                 clothesModel.ImgPath =
-                    $"images/clothes/{clothesModel.Brand}/{clothesModel.Code}.{clothesModel.ImgFormat}";
+                    $"~/images/clothes/{clothesModel.Brand}/{clothesModel.Code}.{clothesModel.ImgFormat}";
                 _context.Add(clothesModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -27,7 +27,7 @@ namespace smartdressroom.Models
             Price = price;
             Size = size;
             Brand = brand;
-            ImgPath = $"images/clothes/{brand}/{code}.{imgformat}";
+            ImgPath = $"~/images/clothes/{brand}/{code}.{imgformat}";
         }
 
         /// <summary>
