@@ -22,9 +22,8 @@
     </div>
 }
     <div>
-        <p style="position: absolute; left:50%; font-family: Tahoma, sans-serif; font-weight: normal; color: white">@Model.Brand</p>
-        <img src="@Url.Content(Model.ImgPath)" alt="product img"
-             style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-75%)"><br />
+        <p style="font-family: Tahoma, sans-serif; font-weight: normal; color: white">@Model.Brand</p>
+        <img src="@Url.Content(Model.ImgPath)" alt="product img"><br />
         @await Component.InvokeAsync("Carousel");
     </div>
 
