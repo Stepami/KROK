@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace smartdressroom.Models
 {
@@ -19,20 +20,14 @@ namespace smartdressroom.Models
         /// <summary>
         /// Конструктор по значениям
         /// </summary>
-        /// <param name="code"></param>
-        /// <param name="price"></param>
-        /// <param name="size"></param>
-        /// <param name="brand"></param>
-        /// <param name="path"></param>
-        public ClothesModel(int code, int price, string size, string brand, string path)
+        public ClothesModel(int code, int price, string size, string brand, string imgformat)
         {
-            // Формирование нового уникального идентификатора
-            ID = Guid.NewGuid();
+            ID = Guid.NewGuid();// Формирование нового уникального идентификатора
             Code = code;
             Price = price;
             Size = size;
             Brand = brand;
-            ImgPath = path;
+            ImgPath = $"images/clothes/{brand}/{code}.{imgformat}";
         }
 
         /// <summary>
@@ -61,15 +56,19 @@ namespace smartdressroom.Models
         [Display(Name = "Бренд")]
         public string Brand { get; set; }
 
+        [JsonProperty("imgformat")]
+        [Display(Name = "Расширение картинки")]
+        public string ImgFormat { get; set; }
+
         [JsonProperty("img")]
-        [Display(Name = "Изображение")]
         public string ImgPath { get; set; }
 
-        /// <summary>
-        /// Коллекция
-        /// </summary>      
+        [JsonProperty("collectionid")]
+        [Display(Name = "ID коллекции")]
+        public Guid? CollectionID { get; set; }
+
         [JsonProperty("collection")]
         [Display(Name = "Коллекция")]
-        public virtual CollectionModel Collection { get; set; }
+        public CollectionModel Collection { get; set; }
     }
 }

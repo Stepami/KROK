@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
-    Layout = "Master";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
 <h2>Delete</h2>
@@ -37,10 +37,22 @@
             @Html.DisplayFor(model => model.Brand)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.ImgFormat)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ImgFormat)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.ImgPath)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ImgPath)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Collection)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Collection.ID)
         </dd>
     </dl>
     

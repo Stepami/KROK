@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "Master";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
 <h2>Edit</h2>
@@ -35,9 +35,19 @@
                 <span asp-validation-for="Brand" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ImgFormat" class="control-label"></label>
+                <input asp-for="ImgFormat" class="form-control" />
+                <span asp-validation-for="ImgFormat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ImgPath" class="control-label"></label>
                 <input asp-for="ImgPath" class="form-control" />
                 <span asp-validation-for="ImgPath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CollectionID" class="control-label"></label>
+                <select asp-for="CollectionID" class="form-control" asp-items="ViewBag.CollectionID"></select>
+                <span asp-validation-for="CollectionID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

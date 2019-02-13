@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function check() {
+            if (!Boolean(@Convert.ToInt32(Context.Session.Keys.Contains("admin")))) {
+                window.location.replace("@Url.Action("AdminLogin", "Login")");
+            }
+        }
+    </script>
+</head>
+<body onload="check()">
+    <div>
+        <form action="@Url.Action("AdminLogout", "Login")">
+            <input type="submit" value="Выйти" />
+        </form>
+    </div>
+    @RenderBody()
+</body>
+</html>

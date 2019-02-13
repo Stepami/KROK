@@ -3,15 +3,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using smartdressroom.Models;
-using smartdressroom.Services;
+using smartdressroom.Storage;
 
 namespace smartdressroom.Controllers
 {
     public class CartController : Controller
     {
-        private readonly IStorageService db;
+        private readonly ApplicationContext _context;
 
-        public CartController(IStorageService ss) => db = ss;
+        public CartController(ApplicationContext context) => _context = context;
         
         /// <summary>
         /// Просмотр корзины
@@ -21,7 +21,7 @@ namespace smartdressroom.Controllers
         [HttpPost]
         public IActionResult AddToCart(Guid id, int quantity, CartModel cart)
         {
-            ClothesModel item = db.AppContext.ClothesModels.Where(a => a.ID == id).FirstOrDefault();
+            ClothesModel item = _context.ClothesModels.Where(a => a.ID == id).FirstOrDefault();
             if (item != null)
             {
                 var ce = new CartItemModel(item, quantity);

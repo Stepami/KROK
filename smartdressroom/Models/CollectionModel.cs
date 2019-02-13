@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace smartdressroom.Models
 {
@@ -9,6 +10,20 @@ namespace smartdressroom.Models
     /// </summary>
     public class CollectionModel
     {
+        /// <summary>
+        /// Конструктор по умолчанию для сериализации
+        /// </summary>
+        public CollectionModel()
+        {
+        }
+
+        public CollectionModel(string name)
+        {
+            ID = Guid.NewGuid();
+            Name = name;
+            ClothesModels = new List<ClothesModel>();
+        }
+
         /// <summary>
         /// Уникальный идентификатор записи
         /// </summary>
@@ -20,6 +35,11 @@ namespace smartdressroom.Models
         /// Название коллекции
         /// </summary>
         [JsonProperty("name")]
+        [Display(Name = "Название коллекции")]
         public string Name { get; set; }
+
+        [JsonProperty("clothesmodels")]
+        [Display(Name = "Вещи в коллекции")]
+        public ICollection<ClothesModel> ClothesModels { get; set; }
     }
 }

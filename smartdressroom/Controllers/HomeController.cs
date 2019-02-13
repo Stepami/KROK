@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using smartdressroom.Models;
-using smartdressroom.Services;
+using smartdressroom.Storage;
 
 namespace smartdressroom.Controllers
 {
@@ -10,20 +10,20 @@ namespace smartdressroom.Controllers
         /// <summary>
         /// База данных
         /// </summary>
-        private readonly IStorageService db;
+        private readonly ApplicationContext _context;
   
         /// <summary>
         /// Конструктор контроллера
         /// </summary>
-        public HomeController(IStorageService ss) => db = ss;
+        public HomeController(ApplicationContext context) => _context = context;
 
         public IActionResult Index() => View();
 
         [HttpGet]
         public IActionResult Product(int code)
         {
-            var m = db.AppContext.ClothesModels.Where(item => item.Code == code).FirstOrDefault();
-            return m == null ? View(new ClothesModel(0, 0, "", "", "/images/scan_error.png")) : View(m);
+            var m = _context.ClothesModels.Where(item => item.Code == code).FirstOrDefault();
+            return m == null ? View(new ClothesModel(0, 0, "", "", ".png")) : View(m);
         }
     }
 }

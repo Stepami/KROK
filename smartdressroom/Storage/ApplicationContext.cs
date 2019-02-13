@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using smartdressroom.Models;
 
 namespace smartdressroom.Storage
 {
@@ -27,5 +28,9 @@ namespace smartdressroom.Storage
         /// </summary>
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseMySQL("server=localhost;UserId=stepan;Password=leftkrok;database=db;");
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.Entity<CollectionModel>()
+                .HasMany(c => c.ClothesModels)
+                .WithOne(cm => cm.Collection);
     }
 }

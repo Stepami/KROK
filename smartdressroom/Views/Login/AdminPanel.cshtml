@@ -1,0 +1,19 @@
+﻿@{
+    Layout = @Url.Content("~/Views/Shared/_LoginLayout.cshtml");
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AdminPanel</title>
+</head>
+<body>
+    <div>
+        <a href="@Url.Action("Index", "ClothesModels")">Вещи</a>
+        <br />
+        <a href="@Url.Action("Index", "CollectionModels")">Коллекции</a>
+    </div>
+</body>
+</html>

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using smartdressroom.Binders;
-using smartdressroom.Services;
+using smartdressroom.Storage;
 
 namespace smartdressroom
 {
@@ -43,7 +43,7 @@ namespace smartdressroom
                 options.Cookie.Name = ".smartdressroom";
             });
 
-            services.AddTransient<IStorageService, StorageService>();
+            services.AddDbContext<ApplicationContext>();
 
             services.AddMvc(options =>
             {
@@ -72,14 +72,6 @@ namespace smartdressroom
             app.UseSession();
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                    "login",
-                    "ClothesModels",
-                    new { controller = "ClothesModels", action = "Login" });
-                routes.MapRoute(
-                    "afterlogin",
-                    "ClothesModels/Index",
-                    new { controller = "ClothesModels", action = "Index" });
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
