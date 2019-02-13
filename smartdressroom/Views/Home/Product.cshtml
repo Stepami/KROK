@@ -13,18 +13,20 @@
     </script>
 </head>
 <body onload="fill()">
-<div>
-    <img src="@Url.Content(Model.ImgPath)" alt="product img"
-         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-75%)">
-    <p style="position: absolute; bottom: 0px; left: 50%; font-family: Tahoma, sans-serif; font-weight: normal; color: white">@Model.Brand</p>
-</div>
 @using (Html.BeginForm("AddToCart", "Cart"))
 {
-<div>
-    @Html.Hidden("id", @Model.ID)
-    <input type="number" id="quantity" name="quantity" value="1"/><label style="color: white" for="quantity">кол-во</label>
-    <input type="submit" value="добавить в корзину"/>
-</div>
+    <div>
+        @Html.Hidden("id", @Model.ID)
+        <input type="number" id="quantity" name="quantity" value="1"/><label style="color: white" for="quantity">кол-во</label>
+        <input type="submit" value="добавить в корзину"/>
+    </div>
 }
+    <div>
+        <p style="position: absolute; left:50%; font-family: Tahoma, sans-serif; font-weight: normal; color: white">@Model.Brand</p>
+        <img src="@Url.Content(Model.ImgPath)" alt="product img"
+             style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-75%)"><br />
+        @await Component.InvokeAsync("Carousel");
+    </div>
+
 </body>
 </html>

@@ -7,15 +7,20 @@
             background-color: black;
         }
 
-        aside, main {
+        #leftbar, main {
             float: left;
+        }
+
+        #rightbar{
+            float: right;
+            transform: translate(50%);
         }
 
         #leftbar div {
             display: block;
         }
 
-        #leftbar img {
+        #leftbar img, #rightbar img {
             width: 50%;
             height: 50%;
         }
@@ -24,9 +29,9 @@
             text-align: center;
         }
 
-        .productview img{
-            max-width: 100%;
-        }
+            .productview img {
+                max-width: 100%;
+            }
 
         #cart {
             display: inline-block;
@@ -38,21 +43,22 @@
             font-family: Tahoma, sans-serif;
             font-weight: normal;
         }
+
         #cart span, #size span, #price span {
             display: inline-block;
-            position: absolute;   
+            position: absolute;
         }
 
         #span1 {
             top: 75px;
             left: 75px;
-            transform: translate(-25%, -50%);
+            transform: translate(-50%, -50%);
         }
 
         #span2 {
             bottom: 0px;
             left: 30px;
-            transform: translate(0%, -90%);
+            transform: translate(-15%, -90%);
         }
 
         #span3 {
@@ -61,6 +67,7 @@
             left: 75px;
             transform: translate(-25%, -50%);
         }
+
         #span4 {
             font-size: 20px;
             top: 585px;
@@ -70,28 +77,36 @@
     </style>
 </head>
 <body>
-    <aside id="leftbar">
-        <div id="cart">
-            @await Component.InvokeAsync("Summary")
-        </div>
+<aside id="leftbar">
+    <div id="cart">
+        @await Component.InvokeAsync("Summary")
+    </div>
 
-        @await Component.InvokeAsync("PopUp")
+    @await Component.InvokeAsync("PopUp")
 
-        <div id="size">
-            <img src="@Url.Content("~/images/icons/size.png")" alt="size icon">
-            <span id="span3"></span>
-        </div>
+    <div id="size">
+        <img src="@Url.Content("~/images/icons/size.png")" alt="size icon">
+        <span id="span3"></span>
+    </div>
 
-        <div id="price">
-            <img src="@Url.Content("~/images/icons/price.png")" alt="price icon">
-            <span id="span4"></span>
-        </div>
+    <div id="price">
+        <img src="@Url.Content("~/images/icons/price.png")" alt="price icon">
+        <span id="span4"></span>
+    </div>
 
-        <form method="get" action="@Url.Action("Product", "Home")">
-            <input type="number" name="code" autofocus />
-            <input type="submit" value="сканировать" />
-        </form>
-    </aside>
+    <form method="get" action="@Url.Action("Product", "Home")">
+        <input type="number" name="code" autofocus />
+        <input type="submit" value="сканировать" />
+    </form>
+</aside>
+<aside id="rightbar">
+    <div id="reboot">
+        <img src="@Url.Content("~/images/icons/reboot.png")" alt="size icon">
+    </div>
+    <div id="reboot">
+        <img src="@Url.Content("~/images/icons/user.png")" alt="size icon">
+    </div>
+</aside>
     <main>
         <div class="productview">
             @RenderBody()
