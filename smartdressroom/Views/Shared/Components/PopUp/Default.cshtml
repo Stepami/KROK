@@ -1,0 +1,63 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        .b-popup {
+            width: 100%;
+            min-height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow: hidden;
+            position: fixed;
+            top: 0px;
+            text-align: center;
+            font-family: Tahoma, sans-serif;
+            font-weight: normal;
+            font-size: 32px;
+        }
+
+        .b-popup .b-popup-content {
+            margin: 40px auto 0px auto;
+            width: 662px;
+            padding: 100px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px #000;
+        }
+    
+    </style>
+    <script src="https://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            //Скрыть PopUp при загрузке страницы    
+            PopUpHide();
+        });
+        //Функция отображения PopUp
+        function PopUpShow(){
+            $("#popup1").show();
+        }
+        //Функция скрытия PopUp
+        function PopUpHide(){
+            $("#popup1").hide();
+        }
+    </script>
+</head>
+<body>
+<div class="b-container">
+    <a href="javascript:PopUpShow()">
+        <img src="@Url.Content("~/images/icons/consult.png")" alt="consult icon">
+    </a>
+</div>
+<div class="b-popup" id="popup1">
+    <div class="b-popup-content">
+        <img src="@Url.Content("~/images/icons/consultdone.png")" alt="consult icon"><br/>
+        <a href="javascript:PopUpHide()">
+            <img src="@Url.Content("~/images/icons/ok.png")" alt="consult icon" style="width: 10%; height: 10%"><br/>
+        </a>
+    </div>
+</div>
+</body>
+</html>

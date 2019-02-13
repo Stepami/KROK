@@ -75,11 +75,7 @@
             @await Component.InvokeAsync("Summary")
         </div>
 
-        <div>
-            <a onclick="consult()">
-                <img src="@Url.Content("~/images/icons/consult.png")" alt="consult icon">
-            </a>
-        </div>
+        @await Component.InvokeAsync("PopUp")
 
         <div id="size">
             <img src="@Url.Content("~/images/icons/size.png")" alt="size icon">
@@ -104,11 +100,5 @@
 
     <img src="@Url.Content("~/images/icons/krok.png")" alt="krok logo"
          style="position: fixed; bottom: 0px; right: 0px;">
-
-    <script>
-        function consult() {
-            alert("Консультант вызван!");
-        }
-    </script>
 </body>
 </html>
