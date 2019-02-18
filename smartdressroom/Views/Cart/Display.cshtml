@@ -19,7 +19,19 @@
         <tr><td>Бренд</td><td>Размер</td><td>Цена</td><td>Количество</td></tr>
         @foreach (CartItemModel cm in Model.LineList)
         {
-            <tr><td>@cm.Item.Brand</td><td>@cm.Item.Size</td><td>@cm.Item.Price</td><td>@cm.Quantity</td></tr>
+            <tr>
+                <td>@cm.Item.Brand</td>
+                <td>@cm.Item.Size</td>
+                <td>@cm.Item.Price</td>
+                <td>@cm.Quantity</td>
+                <td>
+                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                    {
+                        @Html.Hidden("id", cm.Item.ID)
+                        <input class="btn btn-sm btn-warning" type="submit" value="Удалить" />
+                    }
+                </td>
+            </tr>
         }
         <tr><td>Итого</td><td></td><td>@Model.ComputeTotalValue()</td><td>@Model.TotalItemCount()</td></tr>
     </table>

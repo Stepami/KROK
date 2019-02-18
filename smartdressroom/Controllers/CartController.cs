@@ -39,6 +39,20 @@ namespace smartdressroom.Controllers
             return RedirectToAction("Display", "Cart");
         }
 
+        public IActionResult RemoveFromCart(CartModel cart, Guid id)
+        {
+            var c = cart;
+            CartItemModel item = c.LineList.FirstOrDefault(x => x.Item.ID == id);
+
+            if (item != null)
+                c.RemoveLine(item);
+
+            string json = c.ToJson();
+            HttpContext.Session.SetString("cart", json);
+
+            return RedirectToAction("Display");
+        }
+
         public IActionResult ClearCart(CartModel cart)
         {
             var c = cart;
