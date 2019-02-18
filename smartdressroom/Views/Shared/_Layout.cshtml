@@ -13,25 +13,24 @@
 
         #rightbar{
             float: right;
-            transform: translate(50%);
         }
 
         #leftbar div {
             display: block;
         }
 
-        #leftbar img, #rightbar img {
-            width: 50%;
-            height: 50%;
+        .menu {
+            width: 150px;
+            height: 150px;
         }
 
         .productview {
             text-align: center;
         }
-
-            .productview img {
-                max-width: 100%;
-            }
+        
+        .productview img{
+            max-width: 100%;
+        }
 
         #cart {
             display: inline-block;
@@ -78,33 +77,30 @@
 </head>
 <body>
 <aside id="leftbar">
-    <div id="cart">
-        @await Component.InvokeAsync("Summary")
-    </div>
+    @await Component.InvokeAsync("Summary")
 
     @await Component.InvokeAsync("PopUp")
 
     <div id="size">
-        <img src="@Url.Content("~/images/icons/size.png")" alt="size icon">
+        <img class="menu" src="@Url.Content("~/images/icons/size.png")" alt="size icon">
         <span id="span3"></span>
     </div>
 
     <div id="price">
-        <img src="@Url.Content("~/images/icons/price.png")" alt="price icon">
+        <img class="menu" src="@Url.Content("~/images/icons/price.png")" alt="price icon">
         <span id="span4"></span>
     </div>
 
     <form method="get" action="@Url.Action("Product", "Home")">
-        <input type="number" name="code" autofocus />
+        <input type="number" name="code" autofocus /><br/>
         <input type="submit" value="сканировать" />
     </form>
 </aside>
 <aside id="rightbar">
-    <div id="reboot">
-        <img src="@Url.Content("~/images/icons/reboot.png")" alt="size icon">
-    </div>
-    <div id="reboot">
-        <img src="@Url.Content("~/images/icons/user.png")" alt="size icon">
+    @await Component.InvokeAsync("Reboot")
+
+    <div id="user">
+        <img class="menu" src="@Url.Content("~/images/icons/user.png")" alt="size icon">
     </div>
 </aside>
     <main>

@@ -2,10 +2,12 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div id="cart">
     <a href="@Url.Action("Display", "Cart")">
-        <img src="@Url.Content("~/images/icons/cart1.png")" alt="cart icon">
+        <img class="menu" src="@Url.Content("~/images/icons/cart1.png")" alt="cart icon">
     </a>
     <span id="span1">@Model.TotalItemCount()</span>
     <span id="span2">@Model.ComputeTotalValue()</span>
+</div>
 </body>
 </html>

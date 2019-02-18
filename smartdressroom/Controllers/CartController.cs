@@ -38,5 +38,16 @@ namespace smartdressroom.Controllers
 
             return RedirectToAction("Display", "Cart");
         }
+
+        public IActionResult ClearCart(CartModel cart)
+        {
+            var c = cart;
+            c.Clear();
+
+            string json = c.ToJson();
+            HttpContext.Session.SetString("cart", json);
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

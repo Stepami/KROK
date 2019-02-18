@@ -30,6 +30,12 @@ namespace smartdressroom.Models
             ImgPath = $"~/images/clothes/{brand}/{code}.{imgformat}";
         }
 
+        public ClothesModel(int code, int price)
+        {
+            Size = Brand = string.Empty;
+            ImgPath = "/images/scan_error.png";
+        }
+
         /// <summary>
         /// Уникальный идентификатор записи
         /// </summary>

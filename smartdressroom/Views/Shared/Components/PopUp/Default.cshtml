@@ -1,9 +1,4 @@
-﻿@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html>
 <head>
     <style>
@@ -48,14 +43,14 @@
 <body>
 <div class="b-container">
     <a href="javascript:PopUpShow()">
-        <img src="@Url.Content("~/images/icons/consult.png")" alt="consult icon">
+        <img class="menu" src="@Url.Content("~/images/icons/consult.png")" alt="consult icon">
     </a>
 </div>
 <div class="b-popup" id="popup1">
     <div class="b-popup-content">
-        <img src="@Url.Content("~/images/icons/consultdone.png")" alt="consult icon"><br/>
+        <img src="@Url.Content("~/images/icons/consultdone.png")" alt="consult icon" style="width: 150px;"><br/>
         <a href="javascript:PopUpHide()">
-            <img src="@Url.Content("~/images/icons/ok.png")" alt="consult icon" style="width: 10%; height: 10%"><br/>
+            <img src="@Url.Content("~/images/icons/ok.png")" alt="ok icon" style="width: 5%;"><br/>
         </a>
     </div>
 </div>

@@ -23,7 +23,14 @@ namespace smartdressroom.Controllers
         public IActionResult Product(int code)
         {
             var m = _context.ClothesModels.Where(item => item.Code == code).FirstOrDefault();
-            return m == null ? View(new ClothesModel(0, 0, "", "", ".png")) : View(m);
+            if (m != null)
+            {
+                ViewBag.Other = _context.ClothesModels
+                    .Where(item => item.ID != m.ID && item.CollectionID == m.CollectionID).ToList();
+                return View(m);
+            }
+            else
+                return View(new ClothesModel(0, 0));
         }
     }
 }
