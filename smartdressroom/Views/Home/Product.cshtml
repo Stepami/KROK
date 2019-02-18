@@ -34,7 +34,6 @@
         }
 
         #nav_slider > div {
-            background-color: blue;
             width: 30px;
             height: 50px;
         }
@@ -53,10 +52,6 @@
             overflow: hidden;
             width: 680px;
             margin: 0 auto;
-        }
-
-        #img_11 {
-            background-color: darkgreen;
         }
     </style>
     <meta charset="UTF-8">
@@ -98,8 +93,12 @@
                 </div>
                 <!--        slider_box-->
                 <div id="nav_slider">
-                    <div id="left_nav"></div>
-                    <div id="right_nav"></div>
+                    <div id="left_nav">
+                        <img src="@Url.Content("~/images/icons/left.png")" alt="left icon" style="width: 30px; height: 50px;"/>
+                    </div>
+                    <div id="right_nav">
+                        <img src="@Url.Content("~/images/icons/right.png")" alt="right icon" style="width: 30px; height: 50px;" />
+                    </div>
                 </div>
             </div>
             <!--    slider-->
