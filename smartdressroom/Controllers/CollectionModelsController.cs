@@ -12,12 +12,22 @@ namespace smartdressroom.Controllers
 {
     public class CollectionModelsController : Controller
     {
-        private readonly ApplicationContext _context;
-
-        public CollectionModelsController(ApplicationContext context) => _context = context;
+        public CollectionModelsController() { }
 
         // GET: CollectionModels
-        public async Task<IActionResult> Index() => View(await _context.CollectionModels.ToListAsync());
+        public async Task<IActionResult> Index()
+        {
+            List<CollectionModel> collectionModels = null;
+            using (var context = new ApplicationContext())
+            {
+                collectionModels = await context.CollectionModels.ToListAsync();
+            }
+            if (collectionModels == null)
+            {
+                return NotFound();
+            }
+            return View(collectionModels);
+        }
 
         // GET: CollectionModels/Details/5
         public async Task<IActionResult> Details(Guid? id)
@@ -27,8 +37,12 @@ namespace smartdressroom.Controllers
                 return NotFound();
             }
 
-            var collectionModel = await _context.CollectionModels
-                .FirstOrDefaultAsync(m => m.ID == id);
+            CollectionModel collectionModel = null;
+            using (var context = new ApplicationContext())
+            {
+                collectionModel = await context.CollectionModels
+                    .FirstOrDefaultAsync(m => m.ID == id);
+            }
             if (collectionModel == null)
             {
                 return NotFound();
@@ -47,12 +61,15 @@ namespace smartdressroom.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Name")] CollectionModel collectionModel)
         {
-            if (ModelState.IsValid)
+            using (var context = new ApplicationContext())
             {
-                collectionModel.ID = Guid.NewGuid();
-                _context.Add(collectionModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    collectionModel.ID = Guid.NewGuid();
+                    context.Add(collectionModel);
+                    await context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(collectionModel);
         }
@@ -65,7 +82,11 @@ namespace smartdressroom.Controllers
                 return NotFound();
             }
 
-            var collectionModel = await _context.CollectionModels.FindAsync(id);
+            CollectionModel collectionModel = null;
+            using (var context = new ApplicationContext())
+            {
+                collectionModel = await context.CollectionModels.FindAsync(id);
+            }
             if (collectionModel == null)
             {
                 return NotFound();
@@ -89,8 +110,11 @@ namespace smartdressroom.Controllers
             {
                 try
                 {
-                    _context.Update(collectionModel);
-                    await _context.SaveChangesAsync();
+                    using (var context = new ApplicationContext())
+                    {
+                        context.Update(collectionModel);
+                        await context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,8 +140,12 @@ namespace smartdressroom.Controllers
                 return NotFound();
             }
 
-            var collectionModel = await _context.CollectionModels
-                .FirstOrDefaultAsync(m => m.ID == id);
+            CollectionModel collectionModel = null;
+            using (var context = new ApplicationContext())
+            {
+                collectionModel = await context.CollectionModels
+                    .FirstOrDefaultAsync(m => m.ID == id);
+            }
             if (collectionModel == null)
             {
                 return NotFound();
@@ -131,12 +159,23 @@ namespace smartdressroom.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var collectionModel = await _context.CollectionModels.FindAsync(id);
-            _context.CollectionModels.Remove(collectionModel);
-            await _context.SaveChangesAsync();
+            using (var context = new ApplicationContext())
+            {
+                var collectionModel = await context.CollectionModels.FindAsync(id);
+                context.CollectionModels.Remove(collectionModel);
+                await context.SaveChangesAsync();
+            }
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CollectionModelExists(Guid id) => _context.CollectionModels.Any(e => e.ID == id);
+        private bool CollectionModelExists(Guid id)
+        {
+            bool exists = false;
+            using (var context = new ApplicationContext())
+            {
+                exists = context.CollectionModels.Any(e => e.ID == id);
+            }
+            return exists;
+        }
     }
 }

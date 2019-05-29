@@ -11,9 +11,7 @@ namespace smartdressroom.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly ApplicationContext _context;
-
-        public LoginController(ApplicationContext context) => _context = context;
+        public LoginController() { }
 
         public IActionResult AdminPanel() => View();
 
@@ -22,7 +20,11 @@ namespace smartdressroom.Controllers
         [HttpPost]
         public IActionResult AdminLogin(string login, string password)
         {
-            var admin = _context.Admins.Where(a => a.Login == login && a.Password == password).FirstOrDefault();
+            Models.AdminModel admin = null;
+            using (var context = new ApplicationContext())
+            {
+                admin = context.Admins.Where(a => a.Login == login && a.Password == password).FirstOrDefault();
+            }
             if (admin != null)
             {
                 HttpContext.Session.SetString(nameof(admin), JsonConvert.SerializeObject(admin));

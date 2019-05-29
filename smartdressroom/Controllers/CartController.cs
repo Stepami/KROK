@@ -9,9 +9,7 @@ namespace smartdressroom.Controllers
 {
     public class CartController : Controller
     {
-        private readonly ApplicationContext _context;
-
-        public CartController(ApplicationContext context) => _context = context;
+        public CartController() { }
         
         /// <summary>
         /// Просмотр корзины
@@ -21,7 +19,11 @@ namespace smartdressroom.Controllers
         [HttpPost]
         public IActionResult AddToCart(Guid id, int quantity, CartModel cart)
         {
-            ClothesModel item = _context.ClothesModels.Where(a => a.ID == id).FirstOrDefault();
+            ClothesModel item = null;
+            using (var context = new ApplicationContext())
+            {
+                item = context.ClothesModels.Where(a => a.ID == id).FirstOrDefault();
+            }
             if (item != null)
             {
                 var ce = new CartItemModel(item, quantity);

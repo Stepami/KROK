@@ -8,25 +8,27 @@ namespace smartdressroom.Controllers
     public class HomeController : Controller
     {
         /// <summary>
-        /// База данных
-        /// </summary>
-        private readonly ApplicationContext _context;
-  
-        /// <summary>
         /// Конструктор контроллера
         /// </summary>
-        public HomeController(ApplicationContext context) => _context = context;
+        public HomeController() { }
 
         public IActionResult Index() => View();
 
         [HttpGet]
         public IActionResult Product(int code)
         {
-            var m = _context.ClothesModels.Where(item => item.Code == code).FirstOrDefault();
+            ClothesModel m = null;
+            using (var context = new ApplicationContext())
+            {
+                m = context.ClothesModels.Where(item => item.Code == code).FirstOrDefault();
+            }
             if (m != null)
             {
-                ViewBag.Other = _context.ClothesModels
-                    .Where(item => item.ID != m.ID && item.CollectionID == m.CollectionID).ToList();
+                using (var context = new ApplicationContext())
+                {
+                    ViewBag.Other = context.ClothesModels
+                        .Where(item => item.ID != m.ID && item.CollectionID == m.CollectionID).ToList();
+                }
                 return View(m);
             }
             else

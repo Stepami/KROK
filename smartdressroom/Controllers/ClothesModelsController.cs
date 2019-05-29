@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -11,15 +12,21 @@ namespace smartdressroom.Controllers
 {
     public class ClothesModelsController : Controller
     {
-        private readonly ApplicationContext _context;
-
-        public ClothesModelsController(ApplicationContext context) => _context = context;
+        public ClothesModelsController() { }
 
         // GET: ClothesModels
         public async Task<IActionResult> Index()
         {
-            var applicationContext = _context.ClothesModels.Include(c => c.Collection);
-            return View(await applicationContext.ToListAsync());
+            List<ClothesModel> clothesModels = null;
+            using (var context = new ApplicationContext())
+            {
+                clothesModels = await context.ClothesModels.ToListAsync();
+            }
+            if (clothesModels == null)
+            {
+                return NotFound();
+            }
+            return View(clothesModels);
         }
 
         // GET: ClothesModels/Details/5
@@ -30,9 +37,13 @@ namespace smartdressroom.Controllers
                 return NotFound();
             }
 
-            var clothesModel = await _context.ClothesModels
-                .Include(c => c.Collection)
-                .FirstOrDefaultAsync(m => m.ID == id);
+            ClothesModel clothesModel = null;
+            using (var context = new ApplicationContext())
+            {
+                clothesModel = await context.ClothesModels
+                    .Include(c => c.Collection)
+                    .FirstOrDefaultAsync(m => m.ID == id);
+            }
             if (clothesModel == null)
             {
                 return NotFound();
@@ -44,7 +55,10 @@ namespace smartdressroom.Controllers
         // GET: ClothesModels/Create
         public IActionResult Create()
         {
-            ViewData["CollectionID"] = new SelectList(_context.CollectionModels, "ID", "ID");
+            using (var context = new ApplicationContext())
+            {
+                ViewData["CollectionID"] = new SelectList(context.CollectionModels, "ID", "ID");
+            }
             return View();
         }
 
@@ -55,16 +69,19 @@ namespace smartdressroom.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Code,Price,Size,Brand,ImgFormat,ImgPath,CollectionID")] ClothesModel clothesModel)
         {
-            if (ModelState.IsValid)
+            using (var context = new ApplicationContext())
             {
-                clothesModel.ID = Guid.NewGuid();
-                clothesModel.ImgPath =
-                    $"~/images/clothes/{clothesModel.Brand}/{clothesModel.Code}.{clothesModel.ImgFormat}";
-                _context.Add(clothesModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    clothesModel.ID = Guid.NewGuid();
+                    clothesModel.ImgPath =
+                        $"~/images/clothes/{clothesModel.Brand}/{clothesModel.Code}.{clothesModel.ImgFormat}";
+                    context.Add(clothesModel);
+                    await context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["CollectionID"] = new SelectList(context.CollectionModels, "ID", "ID", clothesModel.CollectionID);
             }
-            ViewData["CollectionID"] = new SelectList(_context.CollectionModels, "ID", "ID", clothesModel.CollectionID);
             return View(clothesModel);
         }
 
@@ -76,12 +93,17 @@ namespace smartdressroom.Controllers
                 return NotFound();
             }
 
-            var clothesModel = await _context.ClothesModels.FindAsync(id);
-            if (clothesModel == null)
+            ClothesModel clothesModel = null;
+            using (var context = new ApplicationContext())
             {
-                return NotFound();
+                clothesModel = await context.ClothesModels.FindAsync(id);
+                if (clothesModel == null)
+                {
+                    return NotFound();
+                }
+
+                ViewData["CollectionID"] = new SelectList(context.CollectionModels, "ID", "ID", clothesModel.CollectionID);
             }
-            ViewData["CollectionID"] = new SelectList(_context.CollectionModels, "ID", "ID", clothesModel.CollectionID);
             return View(clothesModel);
         }
 
@@ -101,8 +123,11 @@ namespace smartdressroom.Controllers
             {
                 try
                 {
-                    _context.Update(clothesModel);
-                    await _context.SaveChangesAsync();
+                    using (var context = new ApplicationContext())
+                    {
+                        context.Update(clothesModel);
+                        await context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -117,7 +142,10 @@ namespace smartdressroom.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CollectionID"] = new SelectList(_context.CollectionModels, "ID", "ID", clothesModel.CollectionID);
+            using (var context = new ApplicationContext())
+            {
+                ViewData["CollectionID"] = new SelectList(context.CollectionModels, "ID", "ID", clothesModel.CollectionID);
+            }
             return View(clothesModel);
         }
 
@@ -129,9 +157,13 @@ namespace smartdressroom.Controllers
                 return NotFound();
             }
 
-            var clothesModel = await _context.ClothesModels
-                .Include(c => c.Collection)
-                .FirstOrDefaultAsync(m => m.ID == id);
+            ClothesModel clothesModel = null;
+            using (var context = new ApplicationContext())
+            {
+                clothesModel = await context.ClothesModels
+                    .Include(c => c.Collection)
+                    .FirstOrDefaultAsync(m => m.ID == id);
+            }
             if (clothesModel == null)
             {
                 return NotFound();
@@ -145,12 +177,23 @@ namespace smartdressroom.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var clothesModel = await _context.ClothesModels.FindAsync(id);
-            _context.ClothesModels.Remove(clothesModel);
-            await _context.SaveChangesAsync();
+            using (var context = new ApplicationContext())
+            {
+                var clothesModel = await context.ClothesModels.FindAsync(id);
+                context.ClothesModels.Remove(clothesModel);
+                await context.SaveChangesAsync();
+            }
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClothesModelExists(Guid id) => _context.ClothesModels.Any(e => e.ID == id);
+        private bool ClothesModelExists(Guid id)
+        {
+            bool exists = false;
+            using (var context = new ApplicationContext())
+            {
+                exists = context.ClothesModels.Any(e => e.ID == id);
+            }
+            return exists;
+        }
     }
 }

@@ -43,8 +43,6 @@ namespace smartdressroom
                 options.Cookie.Name = ".smartdressroom";
             });
 
-            services.AddDbContext<ApplicationContext>();
-
             services.AddMvc(options =>
             {
                 options.ModelBinderProviders.Insert(0, new CartModelBinderProvider());
