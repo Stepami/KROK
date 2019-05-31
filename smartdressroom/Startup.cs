@@ -78,7 +78,7 @@ namespace smartdressroom
             });
             app.UseSignalR(routes =>
             {
-                routes.MapHub<Hubs.ConsoleHub>("/console");
+                routes.MapHub<Hubs.ConsultantHub>("/console");
             });
         }
     }
