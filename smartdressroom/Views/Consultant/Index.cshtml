@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p id="count">0</p>
+    <script src="~/lib/signalr/signalr.js"></script>
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/console").build();
+        connection.start().then(function () {
+            console.log("connected");
+        });
+
+        connection.on("countEvent", function (count) {
+            let p = document.getElementById("count");
+            p.innerHTML = count;
+            console.log("countEvent has been fired!");
+        });
+    </script>
+</body>
+</html>
