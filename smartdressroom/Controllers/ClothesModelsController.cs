@@ -101,8 +101,9 @@ namespace smartdressroom.Controllers
                 {
                     return NotFound();
                 }
+                var collections = context.CollectionModels.ToList();
 
-                ViewData["CollectionID"] = new SelectList(context.CollectionModels, "ID", "ID", clothesModel.CollectionID);
+                ViewData["CollectionID"] = new SelectList(collections, "ID", "ID", clothesModel.CollectionID);
             }
             return View(clothesModel);
         }
