@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using smartdressroom.Binders;
-using smartdressroom.Storage;
+using smartdressroom.Services;
 
 namespace smartdressroom
 {
@@ -35,6 +35,9 @@ namespace smartdressroom
             // Поддержка сессий - до MVC!
             // См. также например
             // https://docs.microsoft.com/ru-ru/aspnet/core/fundamentals/app-state?view=aspnetcore-2.0
+
+            services.AddSingleton<IQueryService, QueryService>();
+
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {

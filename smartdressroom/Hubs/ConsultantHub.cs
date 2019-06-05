@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
+using smartdressroom.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +10,20 @@ namespace smartdressroom.Hubs
 {
     public class ConsultantHub : Hub
     {
-        static List<string> IDs = new List<string>();
+        IQueryService queryService;
+
+        public ConsultantHub(IQueryService qs) => queryService = qs;
+
         public override Task OnConnectedAsync()
         {
-            IDs.Add(Guid.NewGuid().ToString());
-            return Clients.All.SendAsync("countEvent", JsonConvert.SerializeObject(IDs, Formatting.Indented));
+            queryService.Connections++;
+            return Clients.All.SendAsync("countEvent", queryService.Connections);
         }
+
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            IDs.RemoveAt(IDs.Count - 1);
-            return Clients.All.SendAsync("countEvent", JsonConvert.SerializeObject(IDs, Formatting.Indented));
+            queryService.Connections--;
+            return Clients.All.SendAsync("countEvent", queryService.Connections);
         }
     }
 }
