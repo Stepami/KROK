@@ -7,6 +7,18 @@ namespace smartdressroom.Services
 {
     public class QueryService : IQueryService
     {
-        public int Connections { get; set; } = 0;
+        private int count = 0;
+        public int Connections
+        {
+            get => count;
+            set
+            {
+                count = value;
+                EventHandler @event = CountChanged;
+                @event?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler CountChanged;
     }
 }
