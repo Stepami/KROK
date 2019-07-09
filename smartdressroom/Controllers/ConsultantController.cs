@@ -8,9 +8,6 @@ namespace smartdressroom.Controllers
 {
     public class ConsultantController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
     }
 }
