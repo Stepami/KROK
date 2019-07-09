@@ -12,7 +12,7 @@
 </head>
 <body>
     <p id="count">0</p>
-    <script src="~/lib/signalr/signalr.js"></script>
+    <script src="/node_modules/@@aspnet/signalr/dist/browser/signalr.js"></script>
     <script>
         var connection = new signalR.HubConnectionBuilder().withUrl("/console").build();
         connection.start().then(function () {
