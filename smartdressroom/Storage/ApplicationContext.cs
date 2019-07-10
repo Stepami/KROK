@@ -11,17 +11,17 @@ namespace smartdressroom.Storage
         /// <summary>
         /// Каталог одежды
         /// </summary>
-        public DbSet<Models.ClothesModel> ClothesModels { get; set; }
+        public DbSet<ClothesModel> ClothesModels { get; set; }
 
         /// <summary>
         /// Коллекции
         /// </summary>
-        public DbSet<Models.CollectionModel> CollectionModels { get; set; }
+        public DbSet<CollectionModel> CollectionModels { get; set; }
 
         /// <summary>
         /// Админы
         /// </summary>
-        public DbSet<Models.AdminModel> Admins { get; set; }
+        public DbSet<AdminModel> Admins { get; set; }
 
         /// <summary>
         /// Настройка подключения к БД
@@ -31,6 +31,6 @@ namespace smartdressroom.Storage
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.Entity<CollectionModel>()
                 .HasMany(c => c.ClothesModels)
-                .WithOne(cm => cm.Collection);
+                .WithOne(cm => cm.Collection).OnDelete(DeleteBehavior.Cascade);
     }
 }

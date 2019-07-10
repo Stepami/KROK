@@ -13,9 +13,6 @@ namespace smartdressroom
             // Проверка соединения с базой данных
             using (Storage.ApplicationContext db = new Storage.ApplicationContext())
             {
-                // Проверка на существование БД, автоматическое создание при отсутствии
-                // db.ApplicationContext.EnsureCreated();
-
                 // Проверка на существование БД, автоматическое создание при отсутствии, автоматическая миграция
                 db.Database.Migrate();
 
