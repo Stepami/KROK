@@ -1,8 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using smartdressroom.Services
+@inject ICartService cart
+
+<!DOCTYPE html>
 
 <html>
 <head>
-    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>-->
     <style>
         .bg-dark {
             background-color: black !important;
@@ -78,7 +80,13 @@
 </head>
 <body class="bg-dark">
 <aside id="leftbar">
-    @await Component.InvokeAsync("Summary")
+    <div id="cart">
+        <a href="@Url.Action("Display", "Cart")">
+            <img class="menu" src="@Url.Content("~/images/icons/cart1.png")" alt="cart icon">
+        </a>
+        <span id="span1">@cart.GetCart(Context.Session).TotalItemCount()</span>
+        <span id="span2">@cart.GetCart(Context.Session).ComputeTotalValue()</span>
+    </div>
 
     @await Component.InvokeAsync("PopUp")
 
