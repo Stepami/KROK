@@ -1,9 +1,12 @@
-﻿using smartdressroom.Models;
+﻿using Microsoft.AspNetCore.Http;
+using smartdressroom.Models;
 
 namespace smartdressroom.Services
 {
-    interface ICartService
+    public interface ICartService
     {
-        CartModel GetCart();
+        CartModel GetCart(ISession session);
+        void SetCart(string json, ISession session);
+        void ClearCart(ISession session);
     }
 }

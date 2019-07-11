@@ -35,6 +35,7 @@ namespace smartdressroom
             // См. также например
             // https://docs.microsoft.com/ru-ru/aspnet/core/fundamentals/app-state?view=aspnetcore-2.0
 
+            services.AddTransient<ICartService, CartService>();
             services.AddSingleton<IQueryService, QueryService>();
 
             services.AddDistributedMemoryCache();
@@ -49,7 +50,7 @@ namespace smartdressroom
 
             services.AddMvc(options =>
             {
-                options.ModelBinderProviders.Insert(0, new CartModelBinderProvider());
+                //options.ModelBinderProviders.Insert(0, new ClothesModelBinderProvider());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSignalR();
