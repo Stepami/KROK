@@ -48,7 +48,7 @@ namespace smartdressroom.Controllers
         // GET: ClothesModels/Create
         public IActionResult Create()
         {
-            ViewData["CollectionID"] = new SelectList(_context.CollectionModels, "ID", "ID");
+            ViewData["CollectionID"] = new SelectList(_context.CollectionModels, "ID", "Name");
             return View();
         }
 
@@ -61,12 +61,11 @@ namespace smartdressroom.Controllers
         {
             if (ModelState.IsValid)
             {
-                clothesModel.ID = Guid.NewGuid();
                 _context.Add(clothesModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CollectionID"] = new SelectList(_context.CollectionModels, "ID", "ID", clothesModel.CollectionID);
+            ViewData["CollectionID"] = new SelectList(_context.CollectionModels, "ID", "Name", clothesModel.CollectionID);
             return View(clothesModel);
         }
 
@@ -83,7 +82,7 @@ namespace smartdressroom.Controllers
             {
                 return NotFound();
             }
-            ViewData["CollectionID"] = new SelectList(_context.CollectionModels, "ID", "ID", clothesModel.CollectionID);
+            ViewData["CollectionID"] = new SelectList(_context.CollectionModels, "ID", "Name", clothesModel.CollectionID);
             return View(clothesModel);
         }
 
@@ -119,7 +118,7 @@ namespace smartdressroom.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CollectionID"] = new SelectList(_context.CollectionModels, "ID", "ID", clothesModel.CollectionID);
+            ViewData["CollectionID"] = new SelectList(_context.CollectionModels, "ID", "Name", clothesModel.CollectionID);
             return View(clothesModel);
         }
 

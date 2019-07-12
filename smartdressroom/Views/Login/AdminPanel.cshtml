@@ -2,18 +2,13 @@
     Layout = @Url.Content("~/Views/Shared/_LoginLayout.cshtml");
 }
 
-<!DOCTYPE html>
+<title>AdminPanel</title>
+<div>
+    <form class="col m-2" asp-action="Index" asp-controller="ClothesModels">
+        <input type="submit" value="Вещи" class="btn btn-info" />
+    </form>
+    <form class="col m-2" asp-action="Index" asp-controller="CollectionModels">
+        <input type="submit" value="Коллекции" class="btn btn-info" />
+    </form>
+</div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>AdminPanel</title>
-</head>
-<body>
-    <div>
-        <a href="@Url.Action("Index", "ClothesModels")">Вещи</a>
-        <br />
-        <a href="@Url.Action("Index", "CollectionModels")">Коллекции</a>
-    </div>
-</body>
-</html>

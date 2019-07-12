@@ -19,16 +19,16 @@ namespace smartdressroom.Models
         /// <summary>
         /// Конструктор по значениям
         /// </summary>
-        public ClothesModel(int code, int price, string size, string brand, string imgformat, Guid collectionID, CollectionModel collection)
+        public ClothesModel(int code, int price, string size, string brand, string imgformat, Guid collectionID)
         {
             ID = Guid.NewGuid();// Формирование нового уникального идентификатора
             Code = code;
             Price = price;
             Size = size;
             Brand = brand;
+            ImgFormat = imgformat;
             ImgPath = $"~/images/clothes/{brand}/{code}.{imgformat}";
             CollectionID = collectionID;
-            Collection = collection;
         }
 
         public ClothesModel(int code, int price)
@@ -57,14 +57,17 @@ namespace smartdressroom.Models
 
         [JsonProperty("size")]
         [Display(Name = "Размер")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Это поле не может быть пустым.")]
         public string Size { get; set; }
 
         [JsonProperty("brand")]
         [Display(Name = "Бренд")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Это поле не может быть пустым.")]
         public string Brand { get; set; }
 
         [JsonProperty("imgformat")]
         [Display(Name = "Расширение картинки")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Это поле не может быть пустым.")]
         public string ImgFormat { get; set; }
 
         [JsonProperty("img")]

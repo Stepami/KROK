@@ -1,5 +1,4 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@{
+﻿@{
     Layout = null;
 }
 
@@ -7,15 +6,18 @@
 
 <html>
 <head>
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <title>Login</title>
 </head>
-<body>
+<body class="p-2">
     <h1>Login</h1>
     <a href="@Url.Action("Index", "Home")">На главную страницу</a>
     <form asp-action="AdminLogin" method="post">
         <input type="text" id="login" name="login" /><label for="login">Логин</label><br />
         <input type="password" id="password" name="password" /><label for="password">Пароль</label><br />
-        <input type="submit" value="войти" />
+        <input type="submit" value="войти" class="btn btn-info"/>
     </form>
 </body>
 </html>

@@ -36,6 +36,7 @@ namespace smartdressroom.Models
         /// </summary>
         [JsonProperty("name")]
         [Display(Name = "Название коллекции")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Это поле не может быть пустым.")]
         public string Name { get; set; }
 
         [JsonProperty("clothesmodels")]

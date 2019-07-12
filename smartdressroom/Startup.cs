@@ -50,7 +50,7 @@ namespace smartdressroom
 
             services.AddMvc(options =>
             {
-                //options.ModelBinderProviders.Insert(0, new ClothesModelBinderProvider());
+                options.ModelBinderProviders.Insert(0, new ClothesModelBinderProvider());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSignalR();
