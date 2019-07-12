@@ -1,7 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace smartdressroom.Models
 {
@@ -20,7 +19,7 @@ namespace smartdressroom.Models
         /// <summary>
         /// Конструктор по значениям
         /// </summary>
-        public ClothesModel(int code, int price, string size, string brand, string imgformat)
+        public ClothesModel(int code, int price, string size, string brand, string imgformat, Guid collectionID, CollectionModel collection)
         {
             ID = Guid.NewGuid();// Формирование нового уникального идентификатора
             Code = code;
@@ -28,6 +27,8 @@ namespace smartdressroom.Models
             Size = size;
             Brand = brand;
             ImgPath = $"~/images/clothes/{brand}/{code}.{imgformat}";
+            CollectionID = collectionID;
+            Collection = collection;
         }
 
         public ClothesModel(int code, int price)
@@ -71,7 +72,7 @@ namespace smartdressroom.Models
 
         [JsonProperty("collectionid")]
         [Display(Name = "ID коллекции")]
-        public Guid? CollectionID { get; set; }
+        public Guid CollectionID { get; set; }
 
         [JsonProperty("collection")]
         [Display(Name = "Коллекция")]

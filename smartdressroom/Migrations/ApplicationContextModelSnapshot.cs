@@ -2,21 +2,19 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using smartdressroom.Storage;
 
 namespace smartdressroom.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190209181929_OneToMany")]
-    partial class OneToMany
+    partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085");
 
             modelBuilder.Entity("smartdressroom.Models.AdminModel", b =>
                 {
@@ -44,7 +42,10 @@ namespace smartdressroom.Migrations
                     b.Property<int>("Code");
 
                     b.Property<byte[]>("CollectionID")
+                        .IsRequired()
                         .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+
+                    b.Property<string>("ImgFormat");
 
                     b.Property<string>("ImgPath");
 
@@ -76,7 +77,8 @@ namespace smartdressroom.Migrations
                 {
                     b.HasOne("smartdressroom.Models.CollectionModel", "Collection")
                         .WithMany("ClothesModels")
-                        .HasForeignKey("CollectionID");
+                        .HasForeignKey("CollectionID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

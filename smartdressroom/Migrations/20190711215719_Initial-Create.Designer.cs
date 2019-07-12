@@ -9,14 +9,29 @@ using smartdressroom.Storage;
 namespace smartdressroom.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190130175339_01")]
-    partial class _01
+    [Migration("20190711215719_Initial-Create")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085");
+
+            modelBuilder.Entity("smartdressroom.Models.AdminModel", b =>
+                {
+                    b.Property<byte[]>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+
+                    b.Property<string>("Login");
+
+                    b.Property<string>("Password");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Admins");
+                });
 
             modelBuilder.Entity("smartdressroom.Models.ClothesModel", b =>
                 {
@@ -29,7 +44,10 @@ namespace smartdressroom.Migrations
                     b.Property<int>("Code");
 
                     b.Property<byte[]>("CollectionID")
+                        .IsRequired()
                         .HasConversion(new ValueConverter<byte[], byte[]>(v => default(byte[]), v => default(byte[]), new ConverterMappingHints(size: 16)));
+
+                    b.Property<string>("ImgFormat");
 
                     b.Property<string>("ImgPath");
 
@@ -60,8 +78,9 @@ namespace smartdressroom.Migrations
             modelBuilder.Entity("smartdressroom.Models.ClothesModel", b =>
                 {
                     b.HasOne("smartdressroom.Models.CollectionModel", "Collection")
-                        .WithMany()
-                        .HasForeignKey("CollectionID");
+                        .WithMany("ClothesModels")
+                        .HasForeignKey("CollectionID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
