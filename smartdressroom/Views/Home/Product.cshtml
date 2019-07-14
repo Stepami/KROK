@@ -3,14 +3,6 @@
     Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");
 }
 
-<script>
-    $(document).ready(function () {
-
-        $('#consultant').after($('#size'));
-        $('#user').after($('#price'));
-    });
-</script>
-
 @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post, new { id = "sendproduct" }))
 {
 <div class="row justify-content-center p-3">

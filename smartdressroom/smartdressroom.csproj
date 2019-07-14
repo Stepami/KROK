@@ -27,8 +27,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\clothes\KANZLER\" />
-    <Folder Include="wwwroot\js\" />
-    <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
 </Project>

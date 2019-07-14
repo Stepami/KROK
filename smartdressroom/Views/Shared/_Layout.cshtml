@@ -9,6 +9,7 @@
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/modernizr.js"></script>
 </head>
 <body>
     <div class="row mx-0">
@@ -21,9 +22,7 @@
                 <span id="span1">@cart.GetCart(Context.Session).ComputeTotalValue()</span>
             </div>
             <div id="consultant" class="float-left sidebar-item">
-                <a>
-                    <img class="menu" src="@Url.Content("~/images/icons/consult.png")" alt="consult icon">
-                </a>
+                <img class="menu" src="@Url.Content("~/images/icons/consult.png")" alt="consult icon">
             </div>
             <form id="getproduct" method="get" action="@Url.Action("Product", "Home")">
                 <div class="form-group">
@@ -35,6 +34,18 @@
             </form>
         </div>
         <div id="midbar" class="col">
+            <div class="modal fade" id="consultModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <img id="consultcalled" src="~/images/icons/consultdone.png" alt="consultdone" />
+                        </div>
+                        <div id="consultModalfooter" class="modal-footer justify-content-center">
+                            <img id="okimg" src="~/images/icons/ok.png" alt="ok" />
+                        </div>
+                    </div>
+                </div>
+            </div>
             @RenderBody()
         </div>
         <div id="rightbar" class="col-2">
