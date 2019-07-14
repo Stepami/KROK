@@ -2,137 +2,38 @@
 @{
     Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        * {
-            padding: 0;
-            -webkit-transition: all 0.5s ease;
-            -moz-transition: all 0.5s ease;
-            transition: all 0.5s ease;
-        }
 
-        #slider_box > ul > li {
-            float: left;
-            display: block;
-        }
+<script>
+    $(document).ready(function () {
 
-        #slider_box > ul {
-            overflow: hidden;
-            width: 1000%;
-        }
+        $('#consultant').after($('#size'));
+        $('#user').after($('#price'));
+    });
+</script>
 
-        #slider_box {
-            overflow: hidden;
-            position: relative;
-            left: 30px;
-        }
+@using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post, new { id = "sendproduct" }))
+{
+<div class="row justify-content-center p-3">
+    @Html.Hidden("id", @Model.ID)
+    <input class="form-control m-1" type="number"
+           id="quantity" name="quantity"
+           value="1" />
+    <label id="qlbl" class="m-2" for="quantity">кол-во</label>
+    <button type="submit" class="form-control m-1">добавить в корзину</button>
+</div>
+}
 
-        #left_nav {
-            float: left;
-        }
+<div id="product">
+    <p style="font-family: Tahoma, sans-serif; font-weight: normal; color: white">@Model.Brand</p>
+    <img src="@Url.Content(Model.ImgPath)" alt="product img"><br />
+</div>
 
-        #nav_slider > div {
-            width: 30px;
-            height: 50px;
-        }
+<div id="size" class="float-left sidebar-item">
+    <img class="menu" src="@Url.Content("~/images/icons/size.png")" alt="size icon">
+    <div id="sizeval" class="inner-content">@Model.Size</div>
+</div>
 
-        #right_nav {
-            float: right;
-        }
-
-        #nav_slider {
-            overflow: hidden;
-            position: relative;
-            top: -175px;
-        }
-
-        #slider {
-            overflow: hidden;
-            width: 680px;
-            margin: 0 auto;
-        }
-    </style>
-    <meta charset="UTF-8">
-    <script>
-        function fill() {
-            document.getElementById("span3").innerHTML = "@Model.Size";
-            document.getElementById("span4").innerHTML = "@Model.Price";
-        }
-    </script>
-</head>
-<body onload="fill()">
-    @using (Html.BeginForm("AddToCart", "Cart"))
-    {
-        <div>
-            @Html.Hidden("id", @Model.ID)
-            <input type="number" id="quantity" name="quantity" value="1" /><label style="color: white" for="quantity">кол-во</label>
-            <input type="submit" value="добавить в корзину" />
-        </div>
-    }
-    <div>
-        <p style="font-family: Tahoma, sans-serif; font-weight: normal; color: white">@Model.Brand</p>
-        <img src="@Url.Content(Model.ImgPath)" alt="product img"><br />
-        @if (ViewBag.Other != null)
-        {
-            <div id="slider">
-                <div id="slider_box">
-                    <ul>
-                        @foreach (var cm in ViewBag.Other)
-                        {
-                            <li>
-                                <div>
-                                    <a href="~/Home/Product?code=@cm.Code">
-                                        <img src="@Url.Content(@cm.ImgPath)" alt="list"/>
-                                    </a>
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                </div>
-                <!--        slider_box-->
-                <div id="nav_slider">
-                    <div id="left_nav">
-                        <img src="@Url.Content("~/images/icons/left.png")" alt="left icon" style="width: 30px; height: 50px;"/>
-                    </div>
-                    <div id="right_nav">
-                        <img src="@Url.Content("~/images/icons/right.png")" alt="right icon" style="width: 30px; height: 50px;" />
-                    </div>
-                </div>
-            </div>
-            <!--    slider-->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-            <script>
-            function Slider(width_li, margin_right_li, col_view_img) {
-                var step = width_li + margin_right_li,
-                    slider_box_with = col_view_img * step - margin_right_li,
-                    $col_img = $("#slider_box>ul>li").length,
-                    col_main_left = 0,
-                    max_col_main_left = $col_img * step;
-                $("#slider_box").width(slider_box_with);
-                $("#slider_box>ul>li").width(width_li).css("margin-right", margin_right_li);
-                $("#left_nav").click(function () {
-                    if (-col_main_left == max_col_main_left - col_view_img * step) {
-                        col_main_left = 0;
-                    } else {
-                        col_main_left = col_main_left - step;
-                    }
-                    $("#slider_box>ul").css("margin-left", col_main_left + "px");
-                });
-                $("#right_nav").click(function () {
-                    if (col_main_left == 0) {
-                        col_main_left = -max_col_main_left + col_view_img * step;
-                    } else {
-                        col_main_left = col_main_left + step;
-                    }
-                    $("#slider_box>ul").css("margin-left", col_main_left + "px");
-                });
-            }
-            $(Slider(200, @ViewBag.Other.Count , 3));
-            </script>
-        }
-    </div>
-
-</body>
-</html>
+<div id="price" class="float-right sidebar-item">
+    <img class="menu" src="@Url.Content("~/images/icons/price.png")" alt="price icon">
+    <div id="priceval" class="inner-content">@Model.Price</div>
+</div>

@@ -1,0 +1,84 @@
+﻿body {
+    background-color: black !important;
+}
+
+#midbar {
+    text-align: center;
+}
+
+.menu {
+    width: 150px;
+    height: 150px;
+}
+
+#croclogo {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+}
+
+#cart span {
+    display: inline-block;
+    position: absolute;
+}
+
+span, td, #qlbl {
+    color: white;
+    font-family: Tahoma, sans-serif;
+    font-weight: normal;
+}
+
+#span1 {
+    bottom: 0px;
+    left: 40px;
+    transform: translate(-50%, -50%);
+}
+
+.sidebar-item {
+    position: relative;
+    text-align: center;
+}
+
+.inner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: Tahoma, sans-serif;
+    font-weight: normal;
+}
+
+#sizeval {
+    font-size: 60px;
+    transform: translate(-50%, -65%) !important;
+}
+
+#priceval {
+    font-size: 20px;
+    transform: translate(-50%, 100%) !important;
+}
+
+#getproduct {
+    width: 150px;
+}
+
+#getproduct button, #sendproduct button {
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #fff;
+}
+
+#getproduct button:hover, #sendproduct button:hover {
+    color: black;
+    background-color: #fff;
+    border: 1px solid black;
+}
+
+#quantity {
+    width: 75px;
+}
+
+#sendproduct button {
+    width: 200px;
+}

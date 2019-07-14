@@ -5,128 +5,49 @@
 
 <html>
 <head>
-    <style>
-        .bg-dark {
-            background-color: black !important;
-        }
-
-        #leftbar, main {
-            float: left;
-        }
-
-        #rightbar{
-            float: right;
-        }
-
-        #leftbar div {
-            display: block;
-        }
-
-        .menu {
-            width: 150px;
-            height: 150px;
-        }
-
-        .productview {
-            text-align: center;
-        }
-        
-        .productview img{
-            max-width: 100%;
-        }
-
-        #cart {
-            display: inline-block;
-            position: relative;
-        }
-
-        span {
-            color: white;
-            font-family: Tahoma, sans-serif;
-            font-weight: normal;
-        }
-
-        #cart span, #size span, #price span {
-            display: inline-block;
-            position: absolute;
-        }
-
-        #span1 {
-            top: 75px;
-            left: 75px;
-            transform: translate(-50%, -50%);
-        }
-
-        #span2 {
-            bottom: 0px;
-            left: 30px;
-            transform: translate(-15%, -90%);
-        }
-
-        #span3 {
-            font-size: 64px;
-            top: 375px;
-            left: 75px;
-            transform: translate(-25%, -50%);
-        }
-
-        #span4 {
-            font-size: 20px;
-            top: 585px;
-            left: 75px;
-            transform: translate(-25%, -50%);
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
-<body class="bg-dark">
-<aside id="leftbar">
-    <div id="cart">
-        <a href="@Url.Action("Display", "Cart")">
-            <img class="menu" src="@Url.Content("~/images/icons/cart1.png")" alt="cart icon">
-        </a>
-        <span id="span1">@cart.GetCart(Context.Session).TotalItemCount()</span>
-        <span id="span2">@cart.GetCart(Context.Session).ComputeTotalValue()</span>
-    </div>
-
-    <div>
-        <a>
-            <img class="menu" src="@Url.Content("~/images/icons/consult.png")" alt="consult icon">
-        </a>
-    </div>
-
-    <div id="size">
-        <img class="menu" src="@Url.Content("~/images/icons/size.png")" alt="size icon">
-        <span id="span3"></span>
-    </div>
-
-    <div id="price">
-        <img class="menu" src="@Url.Content("~/images/icons/price.png")" alt="price icon">
-        <span id="span4"></span>
-    </div>
-
-    <form method="get" action="@Url.Action("Product", "Home")">
-        <input type="number" name="code" autofocus /><br/>
-        <input type="submit" value="сканировать" />
-    </form>
-</aside>
-<aside id="rightbar">
-    <div id="reboot">
-        <a href="@Url.Action("ClearCart", "Cart")">
-            <img class="menu" src="@Url.Content("~/images/icons/reboot.png")" alt="size icon">
-        </a>
-    </div>
-
-    <div id="user">
-        <img class="menu" src="@Url.Content("~/images/icons/user.png")" alt="size icon">
-    </div>
-</aside>
-    <main>
-        <div class="productview">
+<body>
+    <div class="row mx-0">
+        <div id="leftbar" class="col-2">
+            <div id="cart" class="float-left sidebar-item">
+                <a href="@Url.Action("Display", "Cart")">
+                    <img class="menu" src="@Url.Content("~/images/icons/cart.png")" alt="cart icon">
+                </a>
+                <div class="inner-content">@cart.GetCart(Context.Session).TotalItemCount()</div>
+                <span id="span1">@cart.GetCart(Context.Session).ComputeTotalValue()</span>
+            </div>
+            <div id="consultant" class="float-left sidebar-item">
+                <a>
+                    <img class="menu" src="@Url.Content("~/images/icons/consult.png")" alt="consult icon">
+                </a>
+            </div>
+            <form id="getproduct" method="get" action="@Url.Action("Product", "Home")">
+                <div class="form-group">
+                    <input class="form-control" type="number" 
+                           name="code" placeholder="Артикул"
+                           autofocus />
+                </div>
+                <button type="submit" class="form-control">сканировать</button>
+            </form>
+        </div>
+        <div id="midbar" class="col">
             @RenderBody()
         </div>
-    </main>
-
-    <img src="@Url.Content("~/images/icons/krok.png")" alt="krok logo"
-         style="position: fixed; bottom: 0px; right: 0px;">
+        <div id="rightbar" class="col-2">
+            <div id="reboot" class="float-right sidebar-item" >
+                <a href="@Url.Action("ClearCart", "Cart")">
+                    <img class="menu" src="@Url.Content("~/images/icons/reboot.png")" alt="size icon">
+                </a>
+            </div>
+            <div id="user" class="float-right sidebar-item">
+                <img class="menu" src="@Url.Content("~/images/icons/user.png")" alt="size icon">
+            </div>
+        </div>
+    </div>
+    <img id="croclogo" src="@Url.Content("~/images/icons/krok.png")" alt="krok logo">
 </body>
 </html>

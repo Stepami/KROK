@@ -18,6 +18,7 @@ namespace smartdressroom
                 // Запись изменений в БД
                 db.SaveChanges();
             }
+
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("hosting.json", optional: true)
