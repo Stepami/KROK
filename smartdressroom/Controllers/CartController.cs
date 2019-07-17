@@ -20,6 +20,7 @@ namespace smartdressroom.Controllers
         public IActionResult Display() => View(cartService.GetCart(HttpContext.Session));
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddToCart(Guid id, int quantity)
         {
             ClothesModel item = null;
@@ -42,6 +43,7 @@ namespace smartdressroom.Controllers
             return RedirectToAction("Display", "Cart");
         }
 
+        [HttpGet]
         public IActionResult RemoveFromCart(Guid id)
         {
             var c = cartService.GetCart(HttpContext.Session);

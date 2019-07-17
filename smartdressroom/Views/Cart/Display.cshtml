@@ -14,7 +14,7 @@
             <td>@cm.Item.Price</td>
             <td>@cm.Quantity</td>
             <td>
-                @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                @using (Html.BeginForm("RemoveFromCart", "Cart", FormMethod.Get))
                 {
                     @Html.Hidden("id", cm.Item.ID)
                     <input class="btn btn-sm btn-danger" type="submit" value="Удалить" />
