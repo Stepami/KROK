@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -9,10 +8,8 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
-</head>
-<body>
-    <p id="count">0</p>
-    <script src="/node_modules/@@aspnet/signalr/dist/browser/signalr.js"></script>
+    <script src="/node_modules/@@aspnet/signalr/dist/browser/signalr.min.js"></script>
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script>
         var connection = new signalR.HubConnectionBuilder().withUrl("/console").build();
         connection.start().then(function () {
@@ -24,6 +21,28 @@
             p.innerHTML = count;
             console.log("countEvent has been fired!");
         });
+
+        $(document).ready(function () {
+
+            $('#ajaxbtn').click(function () {
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/Consultant/Test',
+                    success: function (result) {
+                        $('#result').html(result);
+                    },
+                    failure: function () {
+                        console.log('failure');
+                    }
+                });
+            });
+        });
     </script>
+</head>
+<body>
+    <p id="count">0</p>
+    <button id="ajaxbtn">AJAX</button>
+    <div id="result"></div>
 </body>
 </html>

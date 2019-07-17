@@ -9,5 +9,9 @@ namespace smartdressroom.Controllers
     public class ConsultantController : Controller
     {
         public IActionResult Index() => View();
+        public IActionResult Test()
+        {
+            return PartialView(new Random().Next());
+        }
     }
 }

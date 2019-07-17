@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -48,10 +49,18 @@ namespace smartdressroom
 
             services.AddDbContext<Storage.ApplicationContext>();
 
-            services.AddMvc(options =>
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigin", builder => builder.AllowAnyOrigin());
+            });
+
+            services.Configure<MvcOptions>(options =>
             {
                 options.ModelBinderProviders.Insert(0, new ClothesModelBinderProvider());
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAllOrigin"));
+            });
 
             services.AddSignalR();
 
@@ -69,6 +78,7 @@ namespace smartdressroom
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
             app.UseFileServer(new FileServerOptions()
             {
@@ -78,15 +88,18 @@ namespace smartdressroom
                 RequestPath = "/node_modules",
                 EnableDirectoryBrowsing = false
             });
+
             app.UseCookiePolicy();
             // Поддержка сессий - до MVC!
             app.UseSession();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
             app.UseSignalR(routes =>
             {
                 routes.MapHub<Hubs.ConsultantHub>("/console");
