@@ -4,14 +4,14 @@
 }
 
 <form asp-action="AddToCart" asp-controller="Cart" asp-antiforgery="false" id="sendproduct" method="post">
-<div class="row justify-content-center p-3">
-    @Html.Hidden("id", @Model.ID)
-    <input class="form-control m-1" type="number"
-           id="quantity" name="quantity"
-           value="1" />
-    <label id="qlbl" class="m-2" for="quantity">кол-во</label>
-    <button type="submit" class="form-control m-1">добавить в корзину</button>
-</div>
+    <div class="row justify-content-center p-3">
+        @Html.Hidden("id", @Model.ID)
+        <input class="form-control m-1" type="number"
+               id="quantity" name="quantity"
+               value="1" />
+        <label id="qlbl" class="m-2" for="quantity">кол-во</label>
+        <button type="submit" class="form-control m-1">добавить в корзину</button>
+    </div>
 </form>
 
 <div id="product">
