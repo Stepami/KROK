@@ -14,7 +14,7 @@
 <body class="p-2">
     <h1>Login</h1>
     <a href="@Url.Action("Index", "Home")">На главную страницу</a>
-    <form asp-action="AdminLogin" method="post">
+    <form asp-action="AdminLogin" asp-antiforgery="false" method="post">
         <input type="text" id="login" name="login" /><label for="login">Логин</label><br />
         <input type="password" id="password" name="password" /><label for="password">Пароль</label><br />
         <input type="submit" value="войти" class="btn btn-info"/>

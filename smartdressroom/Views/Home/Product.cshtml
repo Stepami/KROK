@@ -3,8 +3,7 @@
     Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");
 }
 
-@using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post, new { id = "sendproduct" }))
-{
+<form asp-action="AddToCart" asp-controller="Cart" asp-antiforgery="false" id="sendproduct" method="post">
 <div class="row justify-content-center p-3">
     @Html.Hidden("id", @Model.ID)
     <input class="form-control m-1" type="number"
@@ -13,7 +12,7 @@
     <label id="qlbl" class="m-2" for="quantity">кол-во</label>
     <button type="submit" class="form-control m-1">добавить в корзину</button>
 </div>
-}
+</form>
 
 <div id="product">
     <p style="font-family: Tahoma, sans-serif; font-weight: normal; color: white">@Model.Brand</p>

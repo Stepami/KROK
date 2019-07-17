@@ -18,7 +18,6 @@ namespace smartdressroom.Controllers
         public IActionResult AdminLogin() => View();
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult AdminLogin(string login, string password)
         {
             Models.AdminModel admin = null;
