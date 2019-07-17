@@ -9,10 +9,10 @@
 
             if (!Boolean(@Convert.ToInt32(Context.Session.Keys.Contains("admin")))) {
 
-                //var form = $('<form action="@Url.Action("AdminLogin", "Login")"></form>');
+                var form = $('<form action="@Url.Action("AdminLogin", "Login")"></form>');
 
-                //$(document.body).append(form);
-                //form.submit();
+                $(document.body).append(form);
+                form.submit();
             }
         });
     </script>

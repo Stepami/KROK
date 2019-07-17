@@ -3,7 +3,7 @@
     Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");
 }
 
-<form asp-action="AddToCart" asp-controller="Cart" asp-antiforgery="false" id="sendproduct" method="post">
+<form asp-action="AddToCart" asp-controller="Cart" id="sendproduct" method="post">
     <div class="row justify-content-center p-3">
         @Html.Hidden("id", @Model.ID)
         <input class="form-control m-1" type="number"
