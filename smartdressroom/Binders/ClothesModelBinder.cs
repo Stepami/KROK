@@ -12,26 +12,31 @@ namespace smartdressroom.Binders
                 throw new ArgumentNullException(nameof(bindingContext));
 
             var idValue = bindingContext.ValueProvider.GetValue("ID");
-            var codeValue = bindingContext.ValueProvider.GetValue("Code");
+            var vcodeValue = bindingContext.ValueProvider.GetValue("VendorCode");
             var priceValue = bindingContext.ValueProvider.GetValue("Price");
-            var sizeValue = bindingContext.ValueProvider.GetValue("Size");
+            var sizesstrValue = bindingContext.ValueProvider.GetValue("SizesString");
             var brandValue = bindingContext.ValueProvider.GetValue("Brand");
             var formatValue = bindingContext.ValueProvider.GetValue("ImgFormat");
+            var countValue = bindingContext.ValueProvider.GetValue("ImagesCount");
             var cIDValue = bindingContext.ValueProvider.GetValue("CollectionID");
 
-            Guid id = Guid.Parse(idValue.FirstValue);
-            int code = int.Parse(codeValue.FirstValue);
+            Guid id = Guid.Empty;
+            if (idValue.FirstValue != null)
+                id = Guid.Parse(idValue.FirstValue);
+            string vcode = vcodeValue.FirstValue;
             int price = int.Parse(priceValue.FirstValue);
-            string size = sizeValue.FirstValue;
+            string sizesstr = sizesstrValue.FirstValue;
             string brand = brandValue.FirstValue;
             string format = formatValue.FirstValue;
+            int count = int.Parse(countValue.FirstValue);
             Guid collectionID = Guid.Parse(cIDValue.FirstValue);
 
-            Models.ClothesModel model = new Models.ClothesModel(code, price, size, brand, format, collectionID);
+            Models.ClothesModel model = new Models.ClothesModel(vcode, price, sizesstr, brand, format, count, collectionID);
             using (var context = new Storage.ApplicationContext())
             {
-                if (context.ClothesModels.Find(id) != null)
-                    model.ID = id;
+                if (id != Guid.Empty)
+                    if (context.ClothesModels.Find(id) != null)
+                        model.ID = id;
             }
 
             bindingContext.Result = ModelBindingResult.Success(model);

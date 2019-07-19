@@ -14,9 +14,6 @@ namespace smartdressroom.Controllers
 
         public CartController(ICartService cartService) => this.cartService = cartService;
         
-        /// <summary>
-        /// Просмотр корзины
-        /// </summary>
         public IActionResult Display() => View(cartService.GetCart(HttpContext.Session));
 
         [HttpPost]
@@ -37,7 +34,7 @@ namespace smartdressroom.Controllers
                     c.LineList[c.LineList.FindIndex(x => x.Item.ID == ce.Item.ID)].Quantity += quantity;
                 else c.LineList.Add(ce);
 
-                cartService.SetCart(c.ToJson(), HttpContext.Session);
+                cartService.SetCart(c, HttpContext.Session);
             }
 
             return RedirectToAction("Display", "Cart");
@@ -52,7 +49,7 @@ namespace smartdressroom.Controllers
             if (item != null)
                 c.RemoveLine(item);
 
-            cartService.SetCart(c.ToJson(), HttpContext.Session);
+            cartService.SetCart(c, HttpContext.Session);
 
             return RedirectToAction("Display");
         }

@@ -2,22 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using smartdressroom.Storage;
 
 namespace smartdressroom.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20190718000117_01")]
+    partial class _01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085");
 
             modelBuilder.Entity("smartdressroom.Models.AdminModel", b =>
                 {
@@ -56,11 +55,9 @@ namespace smartdressroom.Migrations
 
                     b.Property<int>("Price");
 
-                    b.Property<string>("Sizes")
-                        .IsRequired();
+                    b.Property<string>("Sizes");
 
-                    b.Property<string>("VendorCode")
-                        .IsRequired();
+                    b.Property<string>("VendorCode");
 
                     b.HasKey("ID");
 

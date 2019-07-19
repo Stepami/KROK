@@ -31,13 +31,13 @@ namespace smartdressroom.Services
             return cart;
         }
 
-        public void SetCart(string json, ISession session) => session.SetString(key, json);
+        public void SetCart(CartModel cart, ISession session) => session.SetString(key, cart.ToJson());
 
         public void ClearCart(ISession session)
         {
             var cart = GetCart(session);
             cart.Clear();
-            SetCart(cart.ToJson(), session);
+            SetCart(cart, session);
         }
     }
 }

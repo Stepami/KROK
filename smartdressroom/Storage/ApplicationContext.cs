@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using smartdressroom.Models;
+using System;
 
 namespace smartdressroom.Storage
 {
@@ -27,10 +29,31 @@ namespace smartdressroom.Storage
         /// Настройка подключения к БД
         /// </summary>
         /// <param name="optionsBuilder"></param>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseMySQL("server=localhost;UserId=stepan;Password=leftkrok;database=db;");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=db;Trusted_Connection=True;");
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.Entity<CollectionModel>()
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var converter = new GuidToBytesConverter();
+
+            modelBuilder.Entity<AdminModel>()
+                .Property(am => am.ID)
+                .HasConversion(converter);
+            modelBuilder.Entity<ClothesModel>()
+                .Property(am => am.ID)
+                .HasConversion(converter);
+            modelBuilder.Entity<CollectionModel>()
+                .Property(am => am.ID)
+                .HasConversion(converter);
+
+            modelBuilder.Entity<ClothesModel>()
+                .Property(cm => cm.Sizes)
+                .HasConversion(
+                    s => string.Join(',', s),
+                    s => s.Split(',', StringSplitOptions.RemoveEmptyEntries));
+
+            modelBuilder.Entity<CollectionModel>()
                 .HasMany(c => c.ClothesModels)
                 .WithOne(cm => cm.Collection).OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

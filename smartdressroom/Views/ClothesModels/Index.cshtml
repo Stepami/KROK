@@ -1,12 +1,17 @@
 ﻿@model IEnumerable<smartdressroom.Models.ClothesModel>
 
 @{
-    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
-<h2>Index</h2>
+<!DOCTYPE html>
 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -14,19 +19,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Code)
+                @Html.DisplayNameFor(model => model.VendorCode)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Size)
+                @Html.DisplayNameFor(model => model.Sizes)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Brand)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ImgFormat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagesCount)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ImgPath)
@@ -41,19 +49,22 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Code)
+                @Html.DisplayFor(modelItem => item.VendorCode)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Size)
+                @Html.DisplayFor(modelItem => item.Sizes)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Brand)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ImgFormat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImagesCount)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ImgPath)
@@ -70,3 +81,5 @@
 }
     </tbody>
 </table>
+</body>
+</html>

@@ -57,7 +57,7 @@ namespace smartdressroom.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Code,Price,Size,Brand,ImgFormat,ImgPath,CollectionID")] ClothesModel clothesModel)
+        public async Task<IActionResult> Create([Bind("ID,VendorCode,Price,SizesString,Brand,ImgFormat,ImagesCount,ImgPath,CollectionID")] ClothesModel clothesModel)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace smartdressroom.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ID,Code,Price,Size,Brand,ImgFormat,ImgPath,CollectionID")] ClothesModel clothesModel)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ID,VendorCode,Price,SizesString,Brand,ImgFormat,ImagesCount,ImgPath,CollectionID")] ClothesModel clothesModel)
         {
             if (id != clothesModel.ID)
             {

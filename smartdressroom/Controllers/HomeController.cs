@@ -15,12 +15,12 @@ namespace smartdressroom.Controllers
         public IActionResult Index() => View();
 
         [HttpGet]
-        public IActionResult Product(int code)
+        public IActionResult Product(string vcode)
         {
             ClothesModel m = null;
             using (var context = new ApplicationContext())
             {
-                m = context.ClothesModels.Where(item => item.Code == code).FirstOrDefault();
+                m = context.ClothesModels.Where(item => item.VendorCode == vcode).FirstOrDefault();
             }
             if (m != null)
             {
@@ -32,7 +32,7 @@ namespace smartdressroom.Controllers
                 return View(m);
             }
             else
-                return View(new ClothesModel(0, 0));
+                return View(new ClothesModel("0", 0));
         }
     }
 }
