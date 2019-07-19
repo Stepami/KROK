@@ -6,6 +6,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <title>Умное Зеркало</title>
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
@@ -39,10 +40,10 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <img id="consultcalled" src="~/images/icons/consultdone.png" alt="consultdone" />
+                            <img id="consultcalled" src="~/images/icons/consultcalled.png" alt="consultcalled img" />
                         </div>
                         <div id="consultModalfooter" class="modal-footer justify-content-center">
-                            <img id="okimg" src="~/images/icons/ok.png" alt="ok" />
+                            <img id="okimg" src="~/images/icons/ok.png" alt="ok img" />
                         </div>
                     </div>
                 </div>
@@ -52,11 +53,11 @@
         <div id="rightbar" class="col-2">
             <div id="reboot" class="float-right sidebar-item" >
                 <a href="@Url.Action("ClearCart", "Cart")">
-                    <img class="menu" src="@Url.Content("~/images/icons/reboot.png")" alt="size icon">
+                    <img class="menu" src="@Url.Content("~/images/icons/reboot.png")" alt="reboot icon">
                 </a>
             </div>
             <div id="user" class="float-right sidebar-item">
-                <img class="menu" src="@Url.Content("~/images/icons/user.png")" alt="size icon">
+                <img class="menu" src="@Url.Content("~/images/icons/user.png")" alt="user icon">
             </div>
         </div>
     </div>

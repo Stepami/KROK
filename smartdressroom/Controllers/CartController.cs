@@ -27,6 +27,8 @@ namespace smartdressroom.Controllers
             }
             if (item != null)
             {
+                if (quantity < 1)
+                    return RedirectToAction("Product", "Home", new { vcode = item.VendorCode });
                 var ce = new CartItemModel(item, quantity);
                 var c = cartService.GetCart(HttpContext.Session);
 

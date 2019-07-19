@@ -24,11 +24,7 @@ namespace smartdressroom.Controllers
             }
             if (m != null)
             {
-                using (var context = new ApplicationContext())
-                {
-                    ViewBag.Other = context.ClothesModels
-                        .Where(item => item.ID != m.ID && item.CollectionID == m.CollectionID).ToList();
-                }
+                m.SelectedSize = m.Sizes[0];
                 return View(m);
             }
             else

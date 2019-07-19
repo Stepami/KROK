@@ -22,7 +22,7 @@
     position: absolute;
 }
 
-span, td, #qlbl, .inner-content {
+span, td, #qlbl, .inner-content, #product > p {
     color: white;
     font-family: Tahoma, sans-serif;
     font-weight: normal;
@@ -83,6 +83,7 @@ span, td, #qlbl, .inner-content {
 
 .modal-content {
     background-color: transparent !important;
+    border: 0px solid transparent !important;
 }
 
 .modal-footer {
@@ -100,4 +101,9 @@ span, td, #qlbl, .inner-content {
 
 #consultModalfooter {
     cursor: pointer;
+}
+
+#productCarousel {
+    margin: 0 auto !important;
+    width: 400px !important;
 }

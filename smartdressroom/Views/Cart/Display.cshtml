@@ -4,13 +4,13 @@
     Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");
 }
 
-<table class="table" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%)">
+<table class="table inner-content">
     <tr><td>Бренд</td><td>Размер</td><td>Цена</td><td>Количество</td></tr>
     @foreach (CartItemModel cm in Model.LineList)
     {
         <tr>
             <td>@cm.Item.Brand</td>
-            <td>@cm.Item?.SelectedSize</td>
+            <td>@cm.Item.SelectedSize</td>
             <td>@cm.Item.Price</td>
             <td>@cm.Quantity</td>
             <td>
