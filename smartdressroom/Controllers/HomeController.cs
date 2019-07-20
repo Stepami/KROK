@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using smartdressroom.Models;
 using smartdressroom.Storage;
 
@@ -20,7 +21,8 @@ namespace smartdressroom.Controllers
             ClothesModel m = null;
             using (var context = new ApplicationContext())
             {
-                m = context.ClothesModels.Where(item => item.VendorCode == vcode).FirstOrDefault();
+                m = context.ClothesModels.Include(cm => cm.Collection.ClothesModels)
+                    .Where(item => item.VendorCode == vcode).FirstOrDefault();
             }
             if (m != null)
             {

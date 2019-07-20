@@ -16,7 +16,9 @@
 
 <div id="product">
     <p>@Model.Brand</p>
-    <div id="productCarousel" class="carousel slide" data-ride="carousel">
+    <div id="productCarousel" class="carousel slide" 
+         data-ride="carousel" data-interval="2500"
+         data-size="@Model.SelectedSize" data-price="@Model.Price">
         <ol class="carousel-indicators">
             <li data-target="#productCarousel" data-slide-to="0" class="active"></li>
             @for (int i = 1; i < Model.ImagesCount; i++)
@@ -48,14 +50,5 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-</div>
 
-<div id="size" class="float-left sidebar-item">
-    <img class="menu" src="@Url.Content("~/images/icons/size.png")" alt="size icon">
-    <div id="sizeval" class="inner-content">@Model.SelectedSize</div>
-</div>
-
-<div id="price" class="float-right sidebar-item">
-    <img class="menu" src="@Url.Content("~/images/icons/price.png")" alt="price icon">
-    <div id="priceval" class="inner-content">@Model.Price</div>
 </div>
