@@ -22,7 +22,7 @@
     position: absolute;
 }
 
-span, td, #qlbl, .inner-content, #product > p,h4 {
+span, td, #qlbl, .inner-content, #product > p {
     color: white !important;
     font-family: Tahoma, sans-serif;
     font-weight: normal;
@@ -99,8 +99,8 @@ span, td, #qlbl, .inner-content, #product > p,h4 {
     width: 75px;
 }
 
-#consultModalfooter {
-    cursor: pointer;
+#consultModalfooter, .links {
+    cursor: pointer !important;
 }
 
 #productCarousel {
@@ -113,7 +113,7 @@ header > nav > span {
     font-size: 64px;
 }
 
-#puk {
+#collectionCarousel {
     max-width: 560px !important;
     margin: 0 auto !important;
 }

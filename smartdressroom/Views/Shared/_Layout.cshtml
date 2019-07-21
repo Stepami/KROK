@@ -24,10 +24,10 @@
     <div class="row mx-0">
         <div id="leftbar" class="col-2">
             <div id="cart" class="float-left sidebar-item">
-                <a href="@Url.Action("Display", "Cart")">
+                <a data-url="@Url.Action("Display", "Cart")">
                     <img class="menu" src="@Url.Content("~/images/icons/cart.png")" alt="cart icon">
                 </a>
-                <div class="inner-content">@cart.GetCart(Context.Session).TotalItemCount()</div>
+                <div id="countDiv" class="inner-content">@cart.GetCart(Context.Session).TotalItemCount()</div>
                 <span id="span1">@cart.GetCart(Context.Session).ComputeTotalValue()</span>
             </div>
             <div id="consultant" class="float-left sidebar-item">
@@ -43,7 +43,7 @@
                            name="vcode" placeholder="Артикул"
                            autofocus />
                 </div>
-                <button type="submit" class="form-control">сканировать</button>
+                <button type="button" class="form-control">сканировать</button>
             </form>
         </div>
         <div id="midbar" class="col">
@@ -59,7 +59,7 @@
                     </div>
                 </div>
             </div>
-            <div id="productView">
+            <div id="mainView">
                 @RenderBody()
             </div>
         </div>

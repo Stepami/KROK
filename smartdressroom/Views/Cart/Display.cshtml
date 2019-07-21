@@ -1,7 +1,7 @@
 ﻿@using smartdressroom.Models
 @model CartModel
 @{
-    Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");
+    Layout = null;
 }
 
 <table class="table inner-content">
@@ -14,13 +14,13 @@
             <td>@cm.Item.Price</td>
             <td>@cm.Quantity</td>
             <td>
-                @using (Html.BeginForm("RemoveFromCart", "Cart", FormMethod.Get))
+                @using (Html.BeginForm("RemoveFromCart", "Cart", FormMethod.Post, new { @class = "removeProduct" }))
                 {
                     @Html.Hidden("id", cm.Item.ID)
-                    <input class="btn btn-sm btn-danger" type="submit" value="Удалить" />
+                    <input class="btn btn-sm btn-outline-danger" type="submit" value="Удалить" data-url="@Url.Action("RemoveFromCart", "Cart")" />
                 }
             </td>
         </tr>
     }
-    <tr><td>Итого</td><td></td><td>@Model.ComputeTotalValue()</td><td>@Model.TotalItemCount()</td></tr>
+    <tr><td>Итого</td><td></td><td id="totalValue">@Model.ComputeTotalValue()</td><td id="totalCount">@Model.TotalItemCount()</td></tr>
 </table>

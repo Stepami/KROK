@@ -27,10 +27,10 @@ namespace smartdressroom.Controllers
             if (m != null)
             {
                 m.SelectedSize = m.Sizes[0];
-                return View(m);
+                return PartialView(m);
             }
             else
-                return View(new ClothesModel("0", 0));
+                return PartialView(new ClothesModel("0", 0));
         }
     }
 }

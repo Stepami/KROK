@@ -14,11 +14,11 @@ namespace smartdressroom.Controllers
 
         public CartController(ICartService cartService) => this.cartService = cartService;
         
-        public IActionResult Display() => View(cartService.GetCart(HttpContext.Session));
+        public IActionResult Display() => PartialView(cartService.GetCart(HttpContext.Session));
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddToCart(Guid id, int quantity)
+        public JsonResult AddToCart(Guid id, int quantity)
         {
             ClothesModel item = null;
             using (var context = new ApplicationContext())
@@ -27,8 +27,6 @@ namespace smartdressroom.Controllers
             }
             if (item != null)
             {
-                if (quantity < 1)
-                    return RedirectToAction("Product", "Home", new { vcode = item.VendorCode });
                 var ce = new CartItemModel(item, quantity);
                 var c = cartService.GetCart(HttpContext.Session);
 
@@ -39,11 +37,12 @@ namespace smartdressroom.Controllers
                 cartService.SetCart(c, HttpContext.Session);
             }
 
-            return RedirectToAction("Display", "Cart");
+            return Json(Url.Action("Display", "Cart"));
         }
 
-        [HttpGet]
-        public IActionResult RemoveFromCart(Guid id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult RemoveFromCart(Guid id)
         {
             var c = cartService.GetCart(HttpContext.Session);
             CartItemModel item = c.LineList.FirstOrDefault(x => x.Item.ID == id);
@@ -53,7 +52,7 @@ namespace smartdressroom.Controllers
 
             cartService.SetCart(c, HttpContext.Session);
 
-            return RedirectToAction("Display");
+            return Json(Url.Action("Display", "Cart"));
         }
 
         public IActionResult ClearCart()
