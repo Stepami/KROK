@@ -22,8 +22,8 @@
     position: absolute;
 }
 
-span, td, #qlbl, .inner-content, #product > p {
-    color: white;
+span, td, #qlbl, .inner-content, #product > p,h4 {
+    color: white !important;
     font-family: Tahoma, sans-serif;
     font-weight: normal;
 }
@@ -106,4 +106,14 @@ span, td, #qlbl, .inner-content, #product > p {
 #productCarousel {
     margin: 0 auto !important;
     width: 400px !important;
+}
+
+header > nav > span {
+    margin: 0 auto;
+    font-size: 64px;
+}
+
+#puk {
+    max-width: 560px !important;
+    margin: 0 auto !important;
 }

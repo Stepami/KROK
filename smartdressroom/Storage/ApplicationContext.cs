@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using smartdressroom.Models;
 using System;
+using System.Runtime.InteropServices;
 
 namespace smartdressroom.Storage
 {
@@ -29,7 +30,13 @@ namespace smartdressroom.Storage
         /// Настройка подключения к БД
         /// </summary>
         /// <param name="optionsBuilder"></param>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=db;Trusted_Connection=True;");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            string connectionStr = "Server=localhost;Database=db;Trusted_Connection=False;MultipleActiveResultSets=true;User Id=SA;Password=YAkrutoy!Ushn1k;";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                connectionStr = "Server=localhost\\SQLEXPRESS;Database=db;Trusted_Connection=True;";
+            optionsBuilder.UseSqlServer(connectionStr);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

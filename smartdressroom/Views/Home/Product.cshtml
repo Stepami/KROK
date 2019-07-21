@@ -1,6 +1,7 @@
 ﻿@model smartdressroom.Models.ClothesModel
 @{
     Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");
+    var models = Model.Collection.ClothesModels.Where(m => m.ID != Model.ID).ToArray();
 }
 
 <form asp-action="AddToCart" asp-controller="Cart" id="sendproduct" method="post">
@@ -16,8 +17,8 @@
 
 <div id="product">
     <p>@Model.Brand</p>
-    <div id="productCarousel" class="carousel slide" 
-         data-ride="carousel" data-interval="2500"
+    <div id="productCarousel" class="carousel slide"
+         data-ride="carousel" data-interval="2000"
          data-size="@Model.SelectedSize" data-price="@Model.Price">
         <ol class="carousel-indicators">
             <li data-target="#productCarousel" data-slide-to="0" class="active"></li>
@@ -29,14 +30,14 @@
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <div class="container">
-                    <img class="d-block w-100" src="@Url.Content(string.Format(Model.ImgPath, 0))" alt="slide 0">
+                    <img class="d-block w-100" src="@Url.Content(string.Format(Model.ImgPath, 0))" alt="slide 0 0">
                 </div>
             </div>
             @for (int i = 1; i < Model.ImagesCount; i++)
             {
                 <div class="carousel-item">
                     <div class="container">
-                        <img class="d-block w-100" src="@Url.Content(string.Format(Model.ImgPath, i))" alt="slide @i">
+                        <img class="d-block w-100" src="@Url.Content(string.Format(Model.ImgPath, i))" alt="slide 0 @i">
                     </div>
                 </div>
             }
@@ -50,5 +51,16 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-
+    <div id="puk" class="owl-carousel py-3">
+        @for (int i = 0; i < models.Length; i++)
+        {
+            <div class="item">
+                <div class="container">
+                    <a href="@Url.Action("Product", "Home", new { vcode = models[i].VendorCode })">
+                        <img class="d-block w-100" src="@Url.Content(string.Format(models[i].ImgPath, 0))" alt="slide 1 @i">
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
 </div>
