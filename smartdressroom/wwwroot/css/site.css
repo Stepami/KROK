@@ -117,3 +117,18 @@ header > nav > span {
     max-width: 560px !important;
     margin: 0 auto !important;
 }
+
+.owl-nav > button > img{
+    height: 50px;
+    position: absolute;
+}
+
+#leftArrow{
+    left: 0;
+    transform: translate(-110%, -310%);
+}
+
+#rightArrow {
+    right: 0;
+    transform: translate(110%, -310%);
+}

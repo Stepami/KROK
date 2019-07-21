@@ -20,6 +20,28 @@
         });
     });
 
+    $('#getproduct').on('keyup keypress', function (e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            $.ajax({
+                type: 'GET',
+                url: $('#getproduct').attr('action'),
+                data: {
+                    "vcode": $("input[name='vcode']").val()
+                },
+                success: function (result) {
+                    $('#mainView').html(result);
+                    initProductView();
+                },
+                failure: function () {
+                    console.log('failure');
+                }
+            });
+            e.preventDefault();
+            return false;
+        }
+    });
+
     $('#getproduct button').click(function () {
         $.ajax({
             type: 'GET',
@@ -56,8 +78,8 @@ function initProductView() {
         margin: 5,
         nav: true,
         navText: [
-            "<img src='/images/icons/left.png' alt='left nav' style='height: 50px'>",
-            "<img src='/images/icons/right.png' alt='right nav' style='height: 50px'>"
+            "<img src='/images/icons/left.png' alt='left nav' id='leftArrow'>",
+            "<img src='/images/icons/right.png' alt='right nav' id='rightArrow'>"
         ],
         responsive: {
             600: {
@@ -82,7 +104,7 @@ function initProductView() {
         });
     });
 
-    $('#sendproduct').submit(function () {
+    $('#sendproduct').submit(function (event) {
         var form = $(this);
         var urlTo = '';
         if (parseInt($("input[name='quantity']").val()) > 0) {
@@ -114,7 +136,7 @@ function initProductView() {
                 }
             });
         }
-        return false;
+        event.preventDefault();
     });
 }
 
@@ -125,7 +147,7 @@ function initCartView() {
     $('#countDiv').html($('#totalCount').html());
     $('#span1').html($('#totalValue').html());
 
-    $('.removeProduct').submit(function () {
+    $('.removeProduct').submit(function (event) {
         var form = $(this);
         var url = form.find("input[type='submit']").data('url');
         var id = form.find("input[name='id']").val();
@@ -138,9 +160,6 @@ function initCartView() {
             },
             success: function (result) {
                 urlTo = result;
-            },
-            error: function () {
-                console.log('err');
             },
             complete: function () {
                 $.ajax({
@@ -159,6 +178,6 @@ function initCartView() {
                 console.log('failure');
             }
         });
-        return false;
+        event.preventDefault();
     });
 }
