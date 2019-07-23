@@ -45,7 +45,7 @@ namespace smartdressroom.Models
             LineList = new List<CartItemModel>();
         }
 
-        public void RemoveLine(CartItemModel ce) => LineList.RemoveAll(l => l.Item.ID == ce.Item.ID);
+        public void RemoveLine(CartItemModel ce) => LineList.RemoveAll(l => l.Item.ID == ce.Item.ID && l.Item.SelectedSize == ce.Item.SelectedSize);
 
         public decimal ComputeTotalValue() => LineList.Sum(e => e.Item.Price * e.Quantity);
 

@@ -11,6 +11,7 @@
 <form asp-action="AddToCart" asp-controller="Cart" id="sendproduct" method="post">
     <div class="row justify-content-center p-3">
         @Html.Hidden("id", @Model.ID)
+        @Html.Hidden("selectedSize", @Model.SelectedSize)
         <input class="form-control m-1" type="number"
                id="quantity" name="quantity"
                value="1" />
@@ -23,7 +24,7 @@
     <p>@Model.Brand</p>
     <div id="productCarousel" class="carousel slide"
          data-ride="carousel" data-interval="2500"
-         data-size="@Model.SelectedSize" data-price="@Model.Price">
+         data-size="@Model.SelectedSize" data-price="@Model.Price" data-vcode="@Model.VendorCode">
         <ol class="carousel-indicators">
             <li data-target="#productCarousel" data-slide-to="0" class="active"></li>
             @for (int i = 1; i < Model.ImagesCount; i++)

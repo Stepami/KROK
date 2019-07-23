@@ -132,3 +132,15 @@ header > nav > span {
     right: 0;
     transform: translate(110%, -310%);
 }
+
+.btn-dark {
+    color: white !important;
+    background-color: black !important;
+    border-color: white !important;
+}
+
+.btn-dark:hover {
+    color: black !important;
+    background-color: white !important;
+    border-color: black !important;
+}

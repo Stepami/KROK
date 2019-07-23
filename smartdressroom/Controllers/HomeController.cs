@@ -32,5 +32,20 @@ namespace smartdressroom.Controllers
             else
                 return PartialView(new ClothesModel("0", 0));
         }
+
+        [HttpGet]
+        public IActionResult ProductSizes(string vcode)
+        {
+            string[] s = null;
+            using (var context = new ApplicationContext())
+            {
+                s = context.ClothesModels.Include(cm => cm.Collection.ClothesModels)
+                    .Where(item => item.VendorCode == vcode).FirstOrDefault().Sizes;
+            }
+            if (s != null)
+                return PartialView(s);
+            else
+                return PartialView(new string[0]);
+        }
     }
 }

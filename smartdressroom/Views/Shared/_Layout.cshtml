@@ -13,7 +13,7 @@
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/node_modules/owl.carousel/dist/owl.carousel.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/js/modernizr.js"></script>
+    <script src="~/js/AJAXnav.js"></script>
 </head>
 <body>
     <header>
@@ -36,6 +36,7 @@
             <div id="size" class="float-left sidebar-item">
                 <img class="menu" src="@Url.Content("~/images/icons/size.png")" alt="size icon">
                 <div id="sizeval" class="inner-content"></div>
+                <div id="sizes" class="btn-group btn-group-toggle btn-group-vertical" data-toggle="buttons" data-url="@Url.Action("ProductSizes", "Home")"></div>
             </div>
             <form id="getproduct" method="get" action="@Url.Action("Product", "Home")">
                 <div class="form-group">
@@ -69,8 +70,8 @@
                     <img class="menu" src="@Url.Content("~/images/icons/reboot.png")" alt="reboot icon">
                 </a>
             </div>
-            <div id="user" class="float-right sidebar-item">
-                <img class="menu" src="@Url.Content("~/images/icons/user.png")" alt="user icon">
+            <div id="bring" class="float-right sidebar-item">
+                <img class="menu" src="@Url.Content("~/images/icons/bring.png")" alt="bring icon">
             </div>
             <div id="price" class="float-right sidebar-item">
                 <img class="menu" src="@Url.Content("~/images/icons/price.png")" alt="price icon">

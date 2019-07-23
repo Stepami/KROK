@@ -18,7 +18,7 @@ namespace smartdressroom.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult AddToCart(Guid id, int quantity)
+        public JsonResult AddToCart(Guid id, int quantity, string selectedSize)
         {
             ClothesModel item = null;
             using (var context = new ApplicationContext())
@@ -27,10 +27,11 @@ namespace smartdressroom.Controllers
             }
             if (item != null)
             {
+                item.SelectedSize = selectedSize;
                 var ce = new CartItemModel(item, quantity);
                 var c = cartService.GetCart(HttpContext.Session);
 
-                if (c.LineList.Exists(x => x.Item.ID == ce.Item.ID))
+                if (c.LineList.Exists(x => x.Item.ID == ce.Item.ID && x.Item.SelectedSize == ce.Item.SelectedSize))
                     c.LineList[c.LineList.FindIndex(x => x.Item.ID == ce.Item.ID)].Quantity += quantity;
                 else c.LineList.Add(ce);
 

@@ -7,7 +7,18 @@
         $('#consultModal').modal('hide');
     });
 
+    $('#size').click(function () {
+        
+        if ($('#sizes').is(":hidden")) {
+            $('#sizes').show();
+        } else {
+            $('#sizes').hide();
+        }
+    });
+    $('#sizes').hide();
+
     $('#cart a').click(function () {
+
         $.ajax({
             type: 'GET',
             url: $(this).data('url'),
@@ -21,8 +32,11 @@
     });
 
     $('#getproduct').on('keyup keypress', function (e) {
+
         var keyCode = e.keyCode || e.which;
+
         if (keyCode === 13) {
+
             $.ajax({
                 type: 'GET',
                 url: $('#getproduct').attr('action'),
@@ -43,6 +57,7 @@
     });
 
     $('#getproduct button').click(function () {
+
         $.ajax({
             type: 'GET',
             url: $('#getproduct').attr('action'),
@@ -61,6 +76,7 @@
 });
 
 $(document).ajaxSend(function (e, xhr, options) {
+
     if (options.type.toUpperCase() == "POST") {
         var token = $('form').find("input[name='__RequestVerificationToken']").val();
         xhr.setRequestHeader("RequestVerificationToken", token);
@@ -70,6 +86,26 @@ $(document).ajaxSend(function (e, xhr, options) {
 function initProductView() {
     $('#sizeval').html($('#productCarousel').data('size'));
     $('#priceval').html($('#productCarousel').data('price'));
+
+    $.ajax({
+        type: 'GET',
+        url: $('#sizes').data('url'),
+        data: {
+            "vcode": $('#productCarousel').data('vcode')
+        },
+        success: function (result) {
+            $('#sizes').html(result);
+            $("#sizes label").click(function () {
+
+                var size = $(this).find("input[name='sizes']").val();
+                $('#sizeval').html(size);
+                $("input[name='selectedSize']").val(size);
+            });
+        },
+        failure: function () {
+            console.log('failure');
+        }
+    });
 
     $('#collectionCarousel').owlCarousel({
         center: true,
@@ -89,7 +125,9 @@ function initProductView() {
     });
 
     $('.links').click(function () {
+
         var vcode = $(this).data('vcode');
+
         $.ajax({
             type: 'GET',
             url: $(this).data('url'),
@@ -105,20 +143,25 @@ function initProductView() {
     });
 
     $('#sendproduct').submit(function (event) {
+
         var form = $(this);
         var urlTo = '';
+
         if (parseInt($("input[name='quantity']").val()) > 0) {
+
             $.ajax({
                 type: 'POST',
                 url: form.attr('action'),
                 data: {
                     "id": $("input[name='id']").val(),
                     "quantity": $("input[name='quantity']").val(),
+                    "selectedSize": $("input[name='selectedSize']").val()
                 },
                 success: function (result) {
                     urlTo = result;
                 },
                 complete: function () {
+
                     $.ajax({
                         type: 'GET',
                         url: urlTo,
@@ -148,10 +191,12 @@ function initCartView() {
     $('#span1').html($('#totalValue').html());
 
     $('.removeProduct').submit(function (event) {
+
         var form = $(this);
         var url = form.find("input[type='submit']").data('url');
         var id = form.find("input[name='id']").val();
         var urlTo = '';
+
         $.ajax({
             type: 'POST',
             url: url,
@@ -162,6 +207,7 @@ function initCartView() {
                 urlTo = result;
             },
             complete: function () {
+
                 $.ajax({
                     type: 'GET',
                     url: urlTo,
