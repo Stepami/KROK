@@ -37,7 +37,7 @@ namespace smartdressroom
             // https://docs.microsoft.com/ru-ru/aspnet/core/fundamentals/app-state?view=aspnetcore-2.0
 
             services.AddTransient<ICartService, CartService>();
-            services.AddSingleton<IQueryService, QueryService>();
+            services.AddSingleton<IConsultantService, ConsultantService>();
 
             services.AddDistributedMemoryCache();
             services.AddSession(options =>

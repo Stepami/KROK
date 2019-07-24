@@ -10,32 +10,24 @@ namespace smartdressroom.Hubs
 {
     public class ConsultantHub : Hub
     {
-        IQueryService queryService;
-        EventHandler handler;
+        IConsultantService consultantService;
 
-        public ConsultantHub(IQueryService qs)
+        public ConsultantHub(IConsultantService cs)
         {
-            handler = new EventHandler(async (sender, e) => await OnCountChanged());
-            queryService = qs;
-            queryService.CountChanged += handler;
+            consultantService = cs;
         }
 
         public override Task OnConnectedAsync()
         {
-            queryService.Connections++;
+            int roomNumber = consultantService.AddRoom(Context.ConnectionId);
+            Clients.Caller.SendAsync("roomAdded", roomNumber);
             return base.OnConnectedAsync();
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            queryService.Connections--;
+            consultantService.RemoveRoom(Context.ConnectionId);
             return base.OnDisconnectedAsync(exception);
-        }
-
-        public Task OnCountChanged()
-        {
-            queryService.CountChanged -= handler;
-            return Clients.All.SendAsync("countEvent", queryService.Connections);
         }
     }
 }
