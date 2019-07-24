@@ -29,8 +29,32 @@ namespace smartdressroom.Services
         public int AddRoom(string hub)
         {
             int i;
+            if (Rooms.Count == 1)
+            {
+                if (Rooms[0].Number != 1)
+                {
+                    Rooms.Insert(0, new Room
+                    {
+                        HubID = hub,
+                        Number = 1
+                    });
+                    return 1;
+                }
+            }
             for (i = 0; i < Rooms.Count - 1; i++)
             {
+                if (i == 0)
+                {
+                    if (Rooms[i].Number != 1)
+                    {
+                        Rooms.Insert(i, new Room
+                        {
+                            HubID = hub,
+                            Number = i + 1
+                        });
+                        return i + 1;
+                    }
+                }
                 if (Rooms[i + 1].Number - Rooms[i].Number != 1)
                 {
                     Rooms.Insert(i + 1, new Room
