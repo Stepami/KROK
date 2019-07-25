@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    $('#consultant, #bring').click(function () {
+    $('#consultant').click(function () {
         $('#consultModal').modal('show');
     });
     $('#consultModalfooter').click(function () {
@@ -85,6 +85,10 @@ $(document).ajaxSend(function (e, xhr, options) {
 
 function initProductView() {
     $('#productCarousel').carousel();
+
+    $('#bring').click(function () {
+        $('#consultModal').modal('show');
+    });
 
     $('#sizeval').html($('#productCarousel').data('size'));
     $('#priceval').html($('#productCarousel').data('price'));

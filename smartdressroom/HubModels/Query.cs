@@ -7,7 +7,7 @@ namespace smartdressroom.HubModels
 {
     public class Query
     {
-        public Guid ID { get; set; }
+        public string ID { get; set; }
         public DateTime CreatedAt { get; set; }
         public QueryStatus Status { get; set; }
         public string ServedBy { get; set; } = null;
