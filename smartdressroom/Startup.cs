@@ -2,7 +2,6 @@
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
@@ -37,11 +36,6 @@ namespace smartdressroom
             // См. также например
             // https://docs.microsoft.com/ru-ru/aspnet/core/fundamentals/app-state?view=aspnetcore-2.0
 
-            services.AddHttpsRedirection(options =>
-            {
-                options.HttpsPort = 5124;
-            });
-
             services.AddTransient<ICartService, CartService>();
             services.AddSingleton<IConsultantService, ConsultantService>();
 
@@ -56,12 +50,6 @@ namespace smartdressroom
             services.AddDbContext<Storage.ApplicationContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.Configure<ForwardedHeadersOptions>(options =>
-            {
-                options.ForwardedHeaders =
-                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-            });
 
             services.AddCors(options =>
             {
