@@ -8,7 +8,7 @@ namespace smartdressroom.Services
     {
         List<Query> Queries { get; set; }
         List<Room> Rooms { get; set; }
-        void MakeQuery();
+        string MakeQuery(bool needsConsultant, string hub, Product product);
         void ChangeQueryStatus();
         void CloseQuery();
         int AddRoom(string hub);

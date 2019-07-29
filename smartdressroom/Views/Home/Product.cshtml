@@ -24,7 +24,8 @@
     <p>@Model.Brand</p>
     <div id="productCarousel" class="carousel slide"
          data-ride="carousel" data-interval="2500"
-         data-size="@Model.SelectedSize" data-price="@Model.Price" data-vcode="@Model.VendorCode">
+         data-size="@Model.SelectedSize" data-price="@Model.Price" data-vcode="@Model.VendorCode"
+         data-imgurl="@Model.ImgPath" data-imgcount="@Model.ImagesCount">
         <ol class="carousel-indicators">
             <li data-target="#productCarousel" data-slide-to="0" class="active"></li>
             @for (int i = 1; i < Model.ImagesCount; i++)

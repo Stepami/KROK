@@ -9,7 +9,7 @@ namespace smartdressroom.HubModels
     {
         public int Number { get; set; }
         public string Responsible { get; set; } = null;
-        public bool NeedsConsultant { get; set; } = true;
+        public bool NeedsConsultant { get; set; }
         public string HubID { get; set; }
     }
 }

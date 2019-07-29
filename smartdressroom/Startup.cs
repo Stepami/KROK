@@ -36,6 +36,11 @@ namespace smartdressroom
             // См. также например
             // https://docs.microsoft.com/ru-ru/aspnet/core/fundamentals/app-state?view=aspnetcore-2.0
 
+            services.AddHttpsRedirection(options =>
+            {
+                options.HttpsPort = 5124;
+            });
+
             services.AddTransient<ICartService, CartService>();
             services.AddSingleton<IConsultantService, ConsultantService>();
 
@@ -49,7 +54,7 @@ namespace smartdressroom
 
             services.AddDbContext<Storage.ApplicationContext>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddCors(options =>
             {

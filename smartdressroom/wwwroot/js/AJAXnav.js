@@ -2,6 +2,7 @@
 
     $('#consultant').click(function () {
         $('#consultModal').modal('show');
+        connection.send('OnQueryMade', true, null);
     });
     $('#consultModalfooter').click(function () {
         $('#consultModal').modal('hide');
@@ -85,10 +86,6 @@ $(document).ajaxSend(function (e, xhr, options) {
 
 function initProductView() {
     $('#productCarousel').carousel();
-
-    $('#bring').click(function () {
-        $('#consultModal').modal('show');
-    });
 
     $('#sizeval').html($('#productCarousel').data('size'));
     $('#priceval').html($('#productCarousel').data('price'));
@@ -186,6 +183,17 @@ function initProductView() {
             });
         }
         event.preventDefault();
+    });
+
+    $('#bring').click(function () {
+        $('#consultModal').modal('show');
+        var product = {
+            "VendorCode": $('#productCarousel').data('vcode'),
+            "SelectedSize": $('#productCarousel').data('size'),
+            "ImgUrl": $('#productCarousel').data('imgurl'),
+            "ImgCount": $('#productCarousel').data('imgcount'),
+        }
+        connection.send('OnQueryMade', false, product);
     });
 }
 

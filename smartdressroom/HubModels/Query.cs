@@ -12,6 +12,6 @@ namespace smartdressroom.HubModels
         public QueryStatus Status { get; set; }
         public string ServedBy { get; set; } = null;
         public Room Room { get; set; }
-        public Product Product { get; set; } = null;
+        public Product Product { get; set; }
     }
 }

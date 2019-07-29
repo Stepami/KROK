@@ -11,9 +11,20 @@ namespace smartdressroom.Services
         public List<Query> Queries { get; set; } = new List<Query>();
         public List<Room> Rooms { get; set; } = new List<Room>();
         
-        public void MakeQuery()
+        public string MakeQuery(bool needsConsultant, string hub, Product product)
         {
-            throw new NotImplementedException();
+            Room room = Rooms.Find(r => r.HubID == hub);
+            room.NeedsConsultant = needsConsultant;
+            Queries.Add(new Query
+            {
+                ID = Guid.NewGuid().ToString(),
+                CreatedAt = DateTime.Now,
+                Status = room.Responsible == null ? QueryStatus.FREE : QueryStatus.FREE_BUSY,
+                Room = room,
+                Product = product
+            });
+            Rooms[room.Number - 1] = room;
+            return Queries.Last().ID;
         }
 
         public void ChangeQueryStatus()
