@@ -1,5 +1,5 @@
 ﻿const connection = new signalR.HubConnectionBuilder()
-    .withUrl("/console")
+    .withUrl("/mirrorhub")
     .configureLogging(signalR.LogLevel.Trace)
     .build();
 

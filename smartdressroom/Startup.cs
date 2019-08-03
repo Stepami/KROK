@@ -102,7 +102,7 @@ namespace smartdressroom
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<Hubs.ConsultantHub>("/console");
+                routes.MapHub<Hubs.ConsultantHub>("/mirrorhub");
             });
         }
     }
