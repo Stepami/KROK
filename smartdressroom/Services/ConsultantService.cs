@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 using smartdressroom.HubModels;
 
 namespace smartdressroom.Services
 {
     public class ConsultantService : IConsultantService
     {
+        private readonly IHubContext<Hubs.ConsultantHub> hubContext;
+
+        public ConsultantService(IHubContext<Hubs.ConsultantHub> context) => hubContext = context;
+
         public List<Query> Queries { get; set; } = new List<Query>();
         public List<Room> Rooms { get; set; } = new List<Room>();
         
@@ -19,7 +23,7 @@ namespace smartdressroom.Services
             {
                 ID = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.Now,
-                Status = room.Responsible == null ? QueryStatus.FREE : QueryStatus.FREE_BUSY,
+                Status = QueryStatus.FREE_BUSY,//room.Responsible == null ? QueryStatus.FREE : QueryStatus.FREE_BUSY,
                 Room = room,
                 Product = product
             });
@@ -27,9 +31,12 @@ namespace smartdressroom.Services
             return Queries.Last().ID;
         }
 
-        public void ChangeQueryStatus()
+        public async void ChangeQueryStatusAsync(string id)
         {
-            throw new NotImplementedException();
+            int i = Queries.IndexOf(Queries.Find(q => q.ID == id));
+            if (Queries[i].Status == QueryStatus.FREE_BUSY && Queries[i].ServedBy == null)
+                Queries[i].Status = QueryStatus.FREE;
+            await hubContext.Clients.All.SendAsync("queryAdded", Queries[i]);
         }
 
         public void CloseQuery()

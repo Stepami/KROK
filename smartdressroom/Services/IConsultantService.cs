@@ -1,6 +1,7 @@
 ﻿using smartdressroom.HubModels;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace smartdressroom.Services
 {
@@ -9,7 +10,7 @@ namespace smartdressroom.Services
         List<Query> Queries { get; set; }
         List<Room> Rooms { get; set; }
         string MakeQuery(bool needsConsultant, string hub, Product product);
-        void ChangeQueryStatus();
+        void ChangeQueryStatusAsync(string id);
         void CloseQuery();
         int AddRoom(string hub);
         void RemoveRoom(string hub);
