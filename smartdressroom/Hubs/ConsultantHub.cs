@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using Newtonsoft.Json;
 using smartdressroom.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using smartdressroom.HubModels;
-using System.Threading;
 
 namespace smartdressroom.Hubs
 {
@@ -21,22 +17,37 @@ namespace smartdressroom.Hubs
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            if (consultantService.Rooms.Find(r => r.HubID == Context.ConnectionId) != null)
+            if (consultantService.Rooms.Exists(r => r.HubID == Context.ConnectionId))
                 consultantService.RemoveRoom(Context.ConnectionId);
             return base.OnDisconnectedAsync(exception);
         }
 
-        public async Task OnRoomInitialized() => await Clients.Caller.SendAsync("roomAdded", consultantService.AddRoom(Context.ConnectionId));
+        [HubMethodName("onRoomInitialized")]
+        public async Task OnRoomInitialized() => await Clients.Caller.SendAsync("onRoomAdded", consultantService.AddRoom(Context.ConnectionId));
 
+        [HubMethodName("onConsultantLoggedIn")]
+        public async Task OnConsultantLoggedIn()
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, "consultants");
+            await Clients.Caller.SendAsync("onQueriesReceived", consultantService.Queries);
+        }
+
+        [HubMethodName("onQueryMade")]
         public Task OnQueryMade(bool needsConsultant, Product product)
         {
             string id = consultantService.MakeQuery(needsConsultant, Context.ConnectionId, product);
-            return Clients.All.SendAsync("queryAdded", consultantService.Queries.Find(q => q.ID == id))
+            return Clients.Group("consultants").SendAsync("onQueriesReceived", consultantService.Queries)
                 .ContinueWith(t => Task.Run(async () =>
                 {
                     await Task.Delay(changingStatusTimeout * 1000);
                     consultantService.ChangeQueryStatusAsync(id);
                 }));
         }
+
+        [HubMethodName("onQuerySent")]
+        public async Task OnQuerySent(string id, string servedBy) => await Clients.Caller.SendAsync("onQueryConfirmed", id, await consultantService.ConfirmQueryAsync(id, servedBy));
+
+        [HubMethodName("onQueryClosed")]
+        public void OnQueryClosed(string id, string servedBy) => consultantService.CloseQueryAsync(id, servedBy);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using smartdressroom.HubModels;
 
@@ -23,7 +24,7 @@ namespace smartdressroom.Services
             {
                 ID = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.Now,
-                Status = QueryStatus.FREE_BUSY,//room.Responsible == null ? QueryStatus.FREE : QueryStatus.FREE_BUSY,
+                Status = room.Responsible == null ? QueryStatus.FREE : QueryStatus.FREE_BUSY,
                 Room = room,
                 Product = product
             });
@@ -36,12 +37,63 @@ namespace smartdressroom.Services
             int i = Queries.IndexOf(Queries.Find(q => q.ID == id));
             if (Queries[i].Status == QueryStatus.FREE_BUSY && Queries[i].ServedBy == null)
                 Queries[i].Status = QueryStatus.FREE;
-            await hubContext.Clients.All.SendAsync("queryAdded", Queries[i]);
+            await hubContext.Clients.Group("consultants").SendAsync("onQueriesReceived", Queries);
         }
 
-        public void CloseQuery()
+        public async void CloseQueryAsync(string id, string servedBy)
         {
-            throw new NotImplementedException();
+            int i = Queries.IndexOf(Queries.Find(q => q.ID == id));
+            if (Queries[i].ServedBy == servedBy)
+                Queries[i].Status = QueryStatus.CLOSED;
+            await hubContext.Clients.Group("consultants").SendAsync("onQueriesReceived", Queries);
+        }
+
+        public async Task<bool> ConfirmQueryAsync(string id, string servedBy)
+        {
+            bool confirmation = false;
+            int i = Queries.IndexOf(Queries.Find(q => q.ID == id));
+            Room room = Queries[i].Room;
+
+            if (Queries[i].Status != QueryStatus.CLOSED &&
+                Queries[i].Status != QueryStatus.BUSY &&
+                Queries[i].ServedBy == null)
+            {
+                if (room.Responsible == null)
+                {
+                    room.Responsible = servedBy;
+                    Rooms[room.Number - 1] = room;
+
+                    Queries[i].ServedBy = servedBy;
+                    Queries[i].Status = QueryStatus.BUSY;
+                    Queries[i].Room = room;
+
+                    Queries.ForEach(q =>
+                    {
+                        if (q.Status != QueryStatus.CLOSED &&
+                        q.Room.Responsible == null &&
+                        q.Room.HubID == room.HubID)
+                        {
+                            if (q.ID != Queries[i].ID)
+                            {
+                                q.Room = room;
+                                q.Status = QueryStatus.FREE_BUSY;
+                            }
+                        }
+                    });
+
+                    confirmation = true;
+                }
+                else if (Queries[i].ServedBy == null)
+                {
+                    Queries[i].ServedBy = servedBy;
+                    Queries[i].Status = QueryStatus.BUSY;
+                    confirmation = true;
+                }
+            }
+
+            await hubContext.Clients.Group("consultants").SendAsync("onQueriesReceived", Queries);
+
+            return confirmation;
         }
 
         public int AddRoom(string hub)

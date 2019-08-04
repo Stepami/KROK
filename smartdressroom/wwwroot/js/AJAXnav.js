@@ -2,7 +2,7 @@
 
     $('#consultant').click(function () {
         $('#consultModal').modal('show');
-        connection.send('OnQueryMade', true, null);
+        hub.send('onQueryMade', true, null);
     });
     $('#consultModalfooter').click(function () {
         $('#consultModal').modal('hide');
@@ -193,7 +193,7 @@ function initProductView() {
             "ImgUrl": $('#productCarousel').data('imgurl'),
             "ImgCount": $('#productCarousel').data('imgcount'),
         }
-        connection.send('OnQueryMade', false, product);
+        hub.send('onQueryMade', false, product);
     });
 }
 

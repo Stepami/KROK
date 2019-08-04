@@ -1,12 +1,21 @@
-﻿const connection = new signalR.HubConnectionBuilder()
+﻿const hub = new signalR.HubConnectionBuilder()
     .withUrl("/mirrorhub")
     .configureLogging(signalR.LogLevel.Trace)
     .build();
 
-connection.on("roomAdded", (roomNumber) => $('#room').html("Комната " + roomNumber));
-connection.on("queryAdded", (query) => console.log(query));
+hub.on("onRoomAdded", (roomNumber) => $('#room').html("Комната " + roomNumber));
 
-connection.start().then(function () {
+hub.onclose((error) => {
+    console.log(error);
+    setTimeout(() => {
+        hub.start().then(() => {
+            console.log("connected");
+            hub.invoke('onRoomInitialized');
+        });
+    }, 5000); // Restart connection after 5 seconds.
+});
+
+hub.start().then(() => {
     console.log("connected");
-    connection.invoke('OnRoomInitialized');
+    hub.invoke('onRoomInitialized');
 });

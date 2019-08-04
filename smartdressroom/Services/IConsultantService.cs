@@ -11,7 +11,8 @@ namespace smartdressroom.Services
         List<Room> Rooms { get; set; }
         string MakeQuery(bool needsConsultant, string hub, Product product);
         void ChangeQueryStatusAsync(string id);
-        void CloseQuery();
+        Task<bool> ConfirmQueryAsync(string id, string servedBy);
+        void CloseQueryAsync(string id, string servedBy);
         int AddRoom(string hub);
         void RemoveRoom(string hub);
     }
