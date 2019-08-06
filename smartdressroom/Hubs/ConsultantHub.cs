@@ -28,8 +28,8 @@ namespace smartdressroom.Hubs
         [HubMethodName("onConsultantLoggedIn")]
         public async Task OnConsultantLoggedIn()
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, "consultants");
-            await Clients.Caller.SendAsync("onQueriesReceived", consultantService.Queries);
+            await Groups.AddToGroupAsync(Context.ConnectionId, "consultants")
+                .ContinueWith(t => Clients.Caller.SendAsync("onQueriesReceived", consultantService.Queries));
         }
 
         [HubMethodName("onQueryMade")]
