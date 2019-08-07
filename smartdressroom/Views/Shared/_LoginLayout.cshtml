@@ -1,9 +1,20 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="row p-4 bg-dark">
+        <form class="mr-2" asp-action="AdminPanel" asp-controller="Login">
+            <input type="submit" value="Панель" class="btn btn-info" />
+        </form>
+        <form class="ml-2" asp-action="AdminLogout" asp-controller="Login">
+            <input type="submit" value="Выйти" class="btn btn-info" />
+        </form>
+    </div>
+    @RenderBody()
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js" async></script>
     <script>
         $(document).ready(function () {
 
@@ -16,16 +27,5 @@
             }
         });
     </script>
-</head>
-<body>
-    <div class="row p-4 bg-dark">
-        <form class="mr-2" asp-action="AdminPanel" asp-controller="Login">
-            <input type="submit" value="Панель" class="btn btn-info" />
-        </form>
-        <form class="ml-2" asp-action="AdminLogout" asp-controller="Login">
-            <input type="submit" value="Выйти" class="btn btn-info" />
-        </form>
-    </div>
-    @RenderBody()
 </body>
 </html>
