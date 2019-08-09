@@ -50,5 +50,8 @@ namespace smartdressroom.Hubs
 
         [HubMethodName("onQueryClosed")]
         public void OnQueryClosed(string id, string servedBy) => consultantService.CloseQueryAsync(id, servedBy);
+
+        [HubMethodName("onUpdateRequested")]
+        public async Task OnUpdateRequested() => await Clients.Caller.SendAsync("onQueriesReceived", JsonConvert.SerializeObject(consultantService.Queries));
     }
 }
