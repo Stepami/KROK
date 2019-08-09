@@ -9,17 +9,17 @@ http://46.101.81.176/ - HTTP/1.1
 
 # WebSocket API(для мобильного приложения):
 
--Строка подключения: http://46.101.81.176:80/mirrorhub
+- Строка подключения: http://46.101.81.176:80/mirrorhub
 
--[Документация к SignalR Core](https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction?view=aspnetcore-2.2)
+- [Документация к SignalR Core](https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction?view=aspnetcore-2.2)
 
 # Методы
 
--onConsultantLoggedIn(void) : void (send)
+- onConsultantLoggedIn(void) : void (send)
 
 Добавляет консультанта в группу хаба для получения списка запросов. Далее вызывает onQueriesReceived.
 
--onQueriesReceived(void) : string (receive)
+- onQueriesReceived(void) : string (receive)
 
 Возвращает JSON-строку со списком запросов на метод.
 
@@ -62,14 +62,14 @@ http://46.101.81.176/ - HTTP/1.1
   }
 ]
 ```
--onQuerySent(string queryID, string servedBy) : void (send)
+- onQuerySent(string queryID, string servedBy) : void (send)
 
 Функция принятия запроса консультантом. Принимает на вход ID принимаемого запроса и имя консультанта, который захотел принять этот запрос. Вызывает onQueryConfirmed.
 
--onQueryConfirmed(void) : string, bool (receive)
+- onQueryConfirmed(void) : string, bool (receive)
 
 Функция которая принимает решение о том, может ли консультант принять запрос. Отправляет консультанту ID запроса и булевский флаг отражающий решение системы. Далее вызывает onQueriesReceived.
 
--onQueryClose(string queryID, string servedBy) : void (send)
+- onQueryClose(string queryID, string servedBy) : void (send)
 
 Функция для уведомления системы о том, что консультант завершил обслуживание данного запроса. ринимает на вход ID принимаемого запроса и имя консультанта, который захотел закрыть этот запрос. Далее вызывает onQueriesReceived.
