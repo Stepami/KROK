@@ -185,6 +185,8 @@ function initProductView() {
         event.preventDefault();
     });
 
+    $('#bring').off('click');
+
     $('#bring').click(function () {
         $('#consultModal').modal('show');
         var product = {
