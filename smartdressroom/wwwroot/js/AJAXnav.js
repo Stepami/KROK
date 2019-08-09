@@ -191,7 +191,7 @@ function initProductView() {
         $('#consultModal').modal('show');
         var product = {
             "VendorCode": $('#productCarousel').data('vcode'),
-            "SelectedSize": $('#productCarousel').data('size'),
+            "SelectedSize": $('#sizeval').html(),
             "ImgUrl": $('#productCarousel').data('imgurl'),
             "ImgCount": $('#productCarousel').data('imgcount'),
         }
