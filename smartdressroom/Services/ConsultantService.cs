@@ -21,29 +21,36 @@ namespace smartdressroom.Services
         {
             Room room = Rooms.Find(r => r.HubID == hub);
             room.NeedsConsultant = needsConsultant;
-            Queries.Add(new Query
+            Query q = new Query
             {
                 Status = room.Responsible == null ? QueryStatus.FREE : QueryStatus.FREE_BUSY,
                 Room = room,
                 Product = product
-            });
+            };
+            Queries.Add(q);
             Rooms[room.Number - 1] = room;
-            return Queries.Last().ID;
+            return q.ID;
         }
 
         public async void ChangeQueryStatusAsync(string id)
         {
             int i = Queries.IndexOf(Queries.Find(q => q.ID == id));
-            if (Queries[i].Status == QueryStatus.FREE_BUSY && Queries[i].ServedBy == null)
-                Queries[i].Status = QueryStatus.FREE;
+            if (i > -1)
+            {
+                if (Queries[i].Status == QueryStatus.FREE_BUSY && Queries[i].ServedBy == null)
+                    Queries[i].Status = QueryStatus.FREE;
+            }
             await hubContext.Clients.Group("consultants").SendAsync("onQueriesReceived", JsonConvert.SerializeObject(Queries));
         }
 
         public async void CloseQueryAsync(string id, string servedBy)
         {
             int i = Queries.IndexOf(Queries.Find(q => q.ID == id));
-            if (Queries[i].ServedBy == servedBy)
-                Queries[i].Status = QueryStatus.CLOSED;
+            if (i > -1)
+            {
+                if (Queries[i].ServedBy == servedBy)
+                    Queries[i].Status = QueryStatus.CLOSED;
+            }
             await hubContext.Clients.Group("consultants").SendAsync("onQueriesReceived", JsonConvert.SerializeObject(Queries));
         }
 
@@ -51,42 +58,43 @@ namespace smartdressroom.Services
         {
             bool confirmation = false;
             int i = Queries.IndexOf(Queries.Find(q => q.ID == id));
-            Room room = Queries[i].Room;
-
-            if (Queries[i].Status != QueryStatus.CLOSED &&
-                Queries[i].Status != QueryStatus.BUSY &&
-                Queries[i].ServedBy == null)
+            if (i > -1)
             {
-                if (room.Responsible == null)
+                Room room = Queries[i].Room;
+
+                if (Queries[i].Status != QueryStatus.CLOSED &&
+                    Queries[i].Status != QueryStatus.BUSY &&
+                    Queries[i].ServedBy == null)
                 {
-                    room.Responsible = servedBy;
-                    Rooms[room.Number - 1] = room;
-
-                    Queries[i].ServedBy = servedBy;
-                    Queries[i].Status = QueryStatus.BUSY;
-                    Queries[i].Room = room;
-
-                    Queries.ForEach(q =>
+                    if (room.Responsible == null)
                     {
-                        if (q.Status != QueryStatus.CLOSED &&
-                        q.Room.Responsible == null &&
-                        q.Room.HubID == room.HubID)
+                        room.Responsible = servedBy;
+                        Rooms[room.Number - 1] = room;
+
+                        Queries[i].ServedBy = servedBy;
+                        Queries[i].Status = QueryStatus.BUSY;
+
+                        for (int j = 0; j < Queries.Count; j++)
                         {
-                            if (q.ID != Queries[i].ID)
+                            if (Queries[j].Status == QueryStatus.FREE &&
+                            Queries[j].Room.Responsible == room.Responsible &&
+                            Queries[j].Room.HubID == room.HubID)
                             {
-                                q.Room = room;
-                                q.Status = QueryStatus.FREE_BUSY;
+                                if (Queries[j].ID != Queries[i].ID)
+                                {
+                                    Queries[j].Status = QueryStatus.FREE_BUSY;
+                                }
                             }
                         }
-                    });
 
-                    confirmation = true;
-                }
-                else if (Queries[i].ServedBy == null)
-                {
-                    Queries[i].ServedBy = servedBy;
-                    Queries[i].Status = QueryStatus.BUSY;
-                    confirmation = true;
+                        confirmation = true;
+                    }
+                    else if (Queries[i].ServedBy == null)
+                    {
+                        Queries[i].ServedBy = servedBy;
+                        Queries[i].Status = QueryStatus.BUSY;
+                        confirmation = true;
+                    }
                 }
             }
 
