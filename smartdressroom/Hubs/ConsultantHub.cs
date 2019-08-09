@@ -3,6 +3,7 @@ using smartdressroom.Services;
 using System;
 using System.Threading.Tasks;
 using smartdressroom.HubModels;
+using Newtonsoft.Json;
 
 namespace smartdressroom.Hubs
 {
@@ -29,14 +30,14 @@ namespace smartdressroom.Hubs
         public async Task OnConsultantLoggedIn()
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, "consultants")
-                .ContinueWith(t => Clients.Caller.SendAsync("onQueriesReceived", consultantService.Queries));
+                .ContinueWith(t => Clients.Caller.SendAsync("onQueriesReceived", JsonConvert.SerializeObject(consultantService.Queries)));
         }
 
         [HubMethodName("onQueryMade")]
         public Task OnQueryMade(bool needsConsultant, Product product)
         {
             string id = consultantService.MakeQuery(needsConsultant, Context.ConnectionId, product);
-            return Clients.Group("consultants").SendAsync("onQueriesReceived", consultantService.Queries)
+            return Clients.Group("consultants").SendAsync("onQueriesReceived", JsonConvert.SerializeObject(consultantService.Queries))
                 .ContinueWith(t => Task.Run(async () =>
                 {
                     await Task.Delay(changingStatusTimeout * 1000);

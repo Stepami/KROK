@@ -1,15 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace smartdressroom.HubModels
 {
     public class Room
     {
+        [JsonProperty("number")]
         public int Number { get; set; }
+
+        [JsonProperty("responsible")]
         public string Responsible { get; set; } = null;
+
+        [JsonProperty("needsConsultant")]
         public bool NeedsConsultant { get; set; }
+
+        [JsonProperty("hubID")]
         public string HubID { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 using smartdressroom.HubModels;
 
 namespace smartdressroom.Services
@@ -22,8 +23,6 @@ namespace smartdressroom.Services
             room.NeedsConsultant = needsConsultant;
             Queries.Add(new Query
             {
-                ID = Guid.NewGuid().ToString(),
-                CreatedAt = DateTime.Now,
                 Status = room.Responsible == null ? QueryStatus.FREE : QueryStatus.FREE_BUSY,
                 Room = room,
                 Product = product
@@ -37,7 +36,7 @@ namespace smartdressroom.Services
             int i = Queries.IndexOf(Queries.Find(q => q.ID == id));
             if (Queries[i].Status == QueryStatus.FREE_BUSY && Queries[i].ServedBy == null)
                 Queries[i].Status = QueryStatus.FREE;
-            await hubContext.Clients.Group("consultants").SendAsync("onQueriesReceived", Queries);
+            await hubContext.Clients.Group("consultants").SendAsync("onQueriesReceived", JsonConvert.SerializeObject(Queries));
         }
 
         public async void CloseQueryAsync(string id, string servedBy)
@@ -45,7 +44,7 @@ namespace smartdressroom.Services
             int i = Queries.IndexOf(Queries.Find(q => q.ID == id));
             if (Queries[i].ServedBy == servedBy)
                 Queries[i].Status = QueryStatus.CLOSED;
-            await hubContext.Clients.Group("consultants").SendAsync("onQueriesReceived", Queries);
+            await hubContext.Clients.Group("consultants").SendAsync("onQueriesReceived", JsonConvert.SerializeObject(Queries));
         }
 
         public async Task<bool> ConfirmQueryAsync(string id, string servedBy)
@@ -91,7 +90,7 @@ namespace smartdressroom.Services
                 }
             }
 
-            await hubContext.Clients.Group("consultants").SendAsync("onQueriesReceived", Queries);
+            await hubContext.Clients.Group("consultants").SendAsync("onQueriesReceived", JsonConvert.SerializeObject(Queries));
 
             return confirmation;
         }
