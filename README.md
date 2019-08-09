@@ -35,10 +35,10 @@ http://46.101.81.176/ - HTTP/1.1
     {
       "number" : 1,
       "responsible" : null,
-      "needsConsultant" : false,
       "hubID" : "azIO6oem9xa26iT_n3bFfA"
     },
-    "product" : null
+    "product" : null,
+    "needsConsultant" : false
   },
   {
     "id" : "48427a30-ed8a-486f-b523-7bb261d25b73",
@@ -49,7 +49,6 @@ http://46.101.81.176/ - HTTP/1.1
     {
       "number" : 1,
       "responsible" : null,
-      "needsConsultant" : false,
       "hubID" : "azIO6oem9xa26iT_n3bFfA"
     },
     "product" :
@@ -58,7 +57,8 @@ http://46.101.81.176/ - HTTP/1.1
       "selectedSize" : "S",
       "imgUrl" : "~/images/clothes/KANZLER/R240580/{0}.jpg",
       "imgCount" : 5
-    }
+    },
+    "needsConsultant" : true
   }
 ]
 ```
