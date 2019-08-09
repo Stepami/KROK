@@ -19,7 +19,7 @@ namespace smartdressroom.Hubs
         public override Task OnDisconnectedAsync(Exception exception)
         {
             if (consultantService.Rooms.Exists(r => r.HubID == Context.ConnectionId))
-                consultantService.RemoveRoom(Context.ConnectionId);
+                consultantService.RemoveRoomAsync(Context.ConnectionId);
             return base.OnDisconnectedAsync(exception);
         }
 

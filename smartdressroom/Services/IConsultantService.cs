@@ -14,6 +14,6 @@ namespace smartdressroom.Services
         Task<bool> ConfirmQueryAsync(string id, string servedBy);
         void CloseQueryAsync(string id, string servedBy);
         int AddRoom(string hub);
-        void RemoveRoom(string hub);
+        void RemoveRoomAsync(string hub);
     }
 }

@@ -142,10 +142,11 @@ namespace smartdressroom.Services
             return Rooms.Count;
         }
 
-        public void RemoveRoom(string hub)
+        public async void RemoveRoomAsync(string hub)
         {
             Rooms.Remove(Rooms.Find(r => r.HubID == hub));
             Queries.RemoveAll(q => q.Room.HubID == hub);
+            await hubContext.Clients.Group("consultants").SendAsync("onQueriesReceived", JsonConvert.SerializeObject(Queries));
         }
     }
 }
