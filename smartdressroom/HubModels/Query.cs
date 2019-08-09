@@ -22,5 +22,8 @@ namespace smartdressroom.HubModels
 
         [JsonProperty("product")]
         public Product Product { get; set; }
+
+        [JsonProperty("needsConsultant")]
+        public bool NeedsConsultant { get; set; }
     }
 }

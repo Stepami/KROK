@@ -10,9 +10,6 @@ namespace smartdressroom.HubModels
         [JsonProperty("responsible")]
         public string Responsible { get; set; } = null;
 
-        [JsonProperty("needsConsultant")]
-        public bool NeedsConsultant { get; set; }
-
         [JsonProperty("hubID")]
         public string HubID { get; set; }
     }

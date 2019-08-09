@@ -20,15 +20,14 @@ namespace smartdressroom.Services
         public string MakeQuery(bool needsConsultant, string hub, Product product)
         {
             Room room = Rooms.Find(r => r.HubID == hub);
-            room.NeedsConsultant = needsConsultant;
             Query q = new Query
             {
                 Status = room.Responsible == null ? QueryStatus.FREE : QueryStatus.FREE_BUSY,
                 Room = room,
-                Product = product
+                Product = product,
+                NeedsConsultant = needsConsultant
             };
             Queries.Add(q);
-            Rooms[room.Number - 1] = room;
             return q.ID;
         }
 
