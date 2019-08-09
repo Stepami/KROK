@@ -38,7 +38,7 @@ http://46.101.81.176/ - HTTP/1.1
       "hubID" : "azIO6oem9xa26iT_n3bFfA"
     },
     "product" : null,
-    "needsConsultant" : false
+    "needsConsultant" : true
   },
   {
     "id" : "48427a30-ed8a-486f-b523-7bb261d25b73",
@@ -58,7 +58,7 @@ http://46.101.81.176/ - HTTP/1.1
       "imgUrl" : "~/images/clothes/KANZLER/R240580/{0}.jpg",
       "imgCount" : 5
     },
-    "needsConsultant" : true
+    "needsConsultant" : false
   }
 ]
 ```
