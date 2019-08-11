@@ -7,13 +7,41 @@ https://46.101.81.176/ - HTTP/2
 
 http://46.101.81.176/ - HTTP/1.1
 
-# WebSocket API(для мобильного приложения):
+# WebSocket API:
 
 - Строка подключения: http://46.101.81.176:80/mirrorhub
 
 - [Документация к SignalR Core](https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction?view=aspnetcore-2.2)
+# Методы(для веб-интерфейса)
 
-# Методы
+- onRoomInitialized(void) : void (send)
+
+Запускает процесс инициализации комнаты на сервере. По окончании вызывает onRoomAdded.
+
+- onRoomAdded(void) : int (receive)
+
+Возвращает целочисленный номер комнаты от 1 до int.MaxValue, добавленной на сервер после вызова onRoomInitialized.
+
+- onQueryMade(bool needsConsultant, object product) : void (send)
+
+Запускает процесс создания запроса на сервере. На вход принимает булевый флаг, показывающий нужен ли консультант, и объект вещи.
+
+Пример создания объекта вещи:
+```javascript
+var product = {
+            "VendorCode": 'R241160',
+            "SelectedSize": 'L,
+            "ImgUrl": '~/images/clothes/KANZLER/R241160/{0}.jpg',
+            "ImgCount": 5
+        }
+```
+Вызов метода осуществляется либо для вызова консультанта, либо для запроса вещи, соответственно, возможны только два варианта комбинации аргументов:
+```javascript
+hub.send('onQueryMade', true, null); // вызов консультанта
+hub.send('onQueryMade', false, product); // запрос вещи
+```
+По окончании выполнения вызывает onQueriesReceived.
+# Методы(для мобильного приложения)
 
 - onConsultantLoggedIn(void) : void (send)
 
