@@ -11,7 +11,7 @@ http://46.101.81.176/ - HTTP/1.1
 
 Получение информации о вещи по артикулу. В ответе приходит JSON с основной информацией и массивом смежных вещей из этой же коллекции. Параметр **vcode** : *string* - артикул вещи.
 
-Пример ответа на запрос **https://46.101.81.176/api/products/VC1245**:
+Пример ответа на запрос **http://46.101.81.176/api/products/VC1245**:
 ```javascript
 {
     "vendorCode": "VC1245",
@@ -153,3 +153,14 @@ hub.send('onQueryMade', false, product); // запрос вещи
 - onQueryClose(string queryID, string servedBy) : void (send)
 
 Функция для уведомления системы о том, что консультант завершил обслуживание данного запроса. ринимает на вход ID принимаемого запроса и имя консультанта, который захотел закрыть этот запрос. Далее вызывает onQueriesReceived.
+# Requirements
+- OS: Win10(x64), Ubuntu 16.04/18.04
+- .NET Core SDK 2.2
+- СУБД MS SQL Server 2017 Express
+- npm 6.x.x
+# Установка
+1. git clone https://github.com/Stepami/KROK
+2. dotnet publish -o outdir (outdir - папка со скомпилированным проектом)
+3. npm install (внутри outdir)
+# Запуск
+1. dotnet outdir/smartdressroom.dll (outdir - папка со скомпилированным проектом)
