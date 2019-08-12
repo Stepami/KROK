@@ -3,9 +3,60 @@ SmartDressroom project on clever mirror gazelle.
 
 Use VPN if can't connect
 
-https://46.101.81.176/ - HTTP/2
+https://46.101.81.176/ - HTTP/2 (может писать о небезопасности, так как SSL сертификат самоподписанный)
 
 http://46.101.81.176/ - HTTP/1.1
+# REST API:
+- /api/products/{vcode}
+
+Получение информации о вещи по артикулу. В ответе приходит JSON с основной информацией и массивом смежных вещей из этой же коллекции. Параметр **vcode** : *string* - артикул вещи.
+Пример ответа на запрос /api/products/VC1245:
+```javascript
+{
+    "vendorCode": "VC1245",
+    "price": 1000,
+    "sizes":
+    [
+        "S",
+        "M",
+        "L",
+        "XL"
+    ],
+    "brand": "brand1",
+    "collectionName": "Test Collection",
+    "imagesCount": 2,
+    "imgPath": "~/images/clothes/brand1/VC1245/{0}.jpg",
+    "collection":
+    [
+        {
+            "vendorCode": "VC1244",
+            "price": 600,
+            "sizes":
+            [
+                "XS",
+                "S",
+                "M"
+            ],
+            "brand": "brand2",
+            "imagesCount": 3,
+            "imgPath": "~/images/clothes/brand2/VC1244/{0}.jpg"
+        },
+        {
+            "vendorCode": "VC1246",
+            "price": 700,
+            "sizes":
+            [
+                "L",
+                "XL",
+                "XXL"
+            ],
+            "brand": "brand3",
+            "imagesCount": 5,
+            "imgPath": "~/images/clothes/brand3/VC1246/{0}.jpg"
+        }
+    ]
+}
+```
 
 # WebSocket API:
 
