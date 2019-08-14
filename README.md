@@ -59,7 +59,7 @@ http://46.101.81.176/ - HTTP/1.1
 }
 ```
 
-# WebSocket API:
+# Hub API:
 
 - Строка подключения: http://46.101.81.176:80/mirrorhub
 
