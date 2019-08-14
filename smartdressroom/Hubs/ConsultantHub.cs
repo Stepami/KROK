@@ -18,19 +18,32 @@ namespace smartdressroom.Hubs
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            if (consultantService.Rooms.Exists(r => r.HubID == Context.ConnectionId))
+            if (consultantService.Consultants.Exists(c => c == Context.ConnectionId))
+                consultantService.Consultants.Remove(Context.ConnectionId);
+            else if (consultantService.Rooms.Exists(r => r.HubID == Context.ConnectionId))
                 consultantService.RemoveRoomAsync(Context.ConnectionId);
             return base.OnDisconnectedAsync(exception);
         }
 
         [HubMethodName("onRoomInitialized")]
-        public async Task OnRoomInitialized() => await Clients.Caller.SendAsync("onRoomAdded", consultantService.AddRoom(Context.ConnectionId));
+        public async Task OnRoomInitialized()
+        {
+            if (consultantService.Consultants.Exists(c => c == Context.ConnectionId))
+                await Task.Delay(0);
+            else await Clients.Caller.SendAsync("onRoomAdded", consultantService.AddRoom(Context.ConnectionId));
+        }
 
         [HubMethodName("onConsultantLoggedIn")]
         public async Task OnConsultantLoggedIn()
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, "consultants")
-                .ContinueWith(t => Clients.Caller.SendAsync("onQueriesReceived", JsonConvert.SerializeObject(consultantService.Queries)));
+            if (consultantService.Rooms.Exists(r => r.HubID == Context.ConnectionId))
+                await Task.Delay(0);
+            else
+            {
+                consultantService.Consultants.Add(Context.ConnectionId);
+                await Groups.AddToGroupAsync(Context.ConnectionId, "consultants")
+                    .ContinueWith(t => Clients.Caller.SendAsync("onQueriesReceived", JsonConvert.SerializeObject(consultantService.Queries)));
+            }
         }
 
         [HubMethodName("onQueryMade")]

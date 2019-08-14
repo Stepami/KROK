@@ -7,6 +7,7 @@ namespace smartdressroom.Services
 {
     public interface IConsultantService
     {
+        List<string> Consultants { get; set; }
         List<Query> Queries { get; set; }
         List<Room> Rooms { get; set; }
         string MakeQuery(bool needsConsultant, string hub, Product product);

@@ -14,6 +14,7 @@ namespace smartdressroom.Services
 
         public ConsultantService(IHubContext<Hubs.ConsultantHub> context) => hubContext = context;
 
+        public List<string> Consultants { get; set; } = new List<string>();
         public List<Query> Queries { get; set; } = new List<Query>();
         public List<Room> Rooms { get; set; } = new List<Room>();
         
