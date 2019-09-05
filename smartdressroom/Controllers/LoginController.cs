@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -11,7 +8,9 @@ namespace smartdressroom.Controllers
 {
     public class LoginController : Controller
     {
-        public LoginController() { }
+        private readonly ApplicationContext _context;
+
+        public LoginController(ApplicationContext _context) => this._context = _context;
 
         public IActionResult AdminPanel() => View();
 
@@ -21,11 +20,9 @@ namespace smartdressroom.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AdminLogin(string login, string password)
         {
-            Models.AdminModel admin = null;
-            using (var context = new ApplicationContext())
-            {
-                admin = context.Admins.Where(a => a.Login == login && a.Password == password).FirstOrDefault();
-            }
+            var admin = _context.Admins
+                .Where(a => a.Login == login && a.Password == password)
+                .FirstOrDefault();
             if (admin != null)
             {
                 HttpContext.Session.SetString(nameof(admin), JsonConvert.SerializeObject(admin));

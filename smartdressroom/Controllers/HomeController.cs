@@ -8,22 +8,18 @@ namespace smartdressroom.Controllers
 {
     public class HomeController : Controller
     {
-        /// <summary>
-        /// Конструктор контроллера
-        /// </summary>
-        public HomeController() { }
+        private readonly ApplicationContext _context;
+        public HomeController(ApplicationContext _context) => this._context = _context;
 
         public IActionResult Index() => View();
 
         [HttpGet]
         public IActionResult Product(string vcode)
         {
-            ClothesModel m = null;
-            using (var context = new ApplicationContext())
-            {
-                m = context.ClothesModels.Include(cm => cm.Collection.ClothesModels)
-                    .Where(item => item.VendorCode == vcode).FirstOrDefault();
-            }
+            var m = _context.ClothesModels
+                .Include(cm => cm.Collection.ClothesModels)
+                .Where(item => item.VendorCode == vcode)
+                .FirstOrDefault();
             if (m != null)
             {
                 m.SelectedSize = m.Sizes[0];
@@ -36,12 +32,11 @@ namespace smartdressroom.Controllers
         [HttpGet]
         public IActionResult ProductSizes(string vcode)
         {
-            string[] s = null;
-            using (var context = new ApplicationContext())
-            {
-                s = context.ClothesModels.Include(cm => cm.Collection.ClothesModels)
-                    .Where(item => item.VendorCode == vcode).FirstOrDefault().Sizes;
-            }
+            var s = _context.ClothesModels
+                .Include(cm => cm.Collection.ClothesModels)
+                .Where(item => item.VendorCode == vcode)
+                .FirstOrDefault()
+                .Sizes;
             if (s != null)
                 return PartialView(s);
             else

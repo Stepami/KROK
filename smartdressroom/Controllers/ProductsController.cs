@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,15 +8,15 @@ namespace smartdressroom.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly Storage.ApplicationContext context;
+        private readonly Storage.ApplicationContext _context;
 
-        public ProductsController(Storage.ApplicationContext context) => this.context = context;
+        public ProductsController(Storage.ApplicationContext _context) => this._context = _context;
 
         // GET api/products/R240580
         [HttpGet("api/[controller]/{vcode}")]
         public async Task<object> Get(string vcode)
         {
-            var result = await context.ClothesModels
+            var result = await _context.ClothesModels
                 .Include(cm => cm.Collection.ClothesModels)
                 .FirstOrDefaultAsync(cm => cm.VendorCode == vcode);
 

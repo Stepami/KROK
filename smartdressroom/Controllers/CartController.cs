@@ -11,20 +11,21 @@ namespace smartdressroom.Controllers
     public class CartController : Controller
     {
         private readonly ICartService cartService;
+        private readonly ApplicationContext _context;
 
-        public CartController(ICartService cartService) => this.cartService = cartService;
-        
+        public CartController(ICartService cartService, ApplicationContext _context)
+        {
+            this.cartService = cartService;
+            this._context = _context;
+        }
+
         public IActionResult Display() => PartialView(cartService.GetCart(HttpContext.Session));
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public JsonResult AddToCart(Guid id, int quantity, string selectedSize)
         {
-            ClothesModel item = null;
-            using (var context = new ApplicationContext())
-            {
-                item = context.ClothesModels.Where(a => a.ID == id).FirstOrDefault();
-            }
+            var item = _context.ClothesModels.Where(a => a.ID == id).FirstOrDefault();
             if (item != null)
             {
                 item.SelectedSize = selectedSize;
