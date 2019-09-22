@@ -6,7 +6,7 @@ SmartDressroom project on clever mirror gazelle.
 
 Получение информации о вещи по артикулу. В ответе приходит JSON с основной информацией и массивом смежных вещей из этой же коллекции. Параметр **vcode** : *string* - артикул вещи.
 
-Пример ответа на запрос **http://46.101.81.176/api/products/VC1245**:
+Пример ответа на запрос **/api/products/VC1245**:
 ```javascript
 {
     "vendorCode": "VC1245",
@@ -56,7 +56,7 @@ SmartDressroom project on clever mirror gazelle.
 
 # Hub API:
 
-- Строка подключения: http://46.101.81.176:80/mirrorhub
+- Строка подключения: http://ip-address:port/mirrorhub
 
 - [Документация к SignalR Core](https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction?view=aspnetcore-2.2)
 # Методы(для веб-интерфейса)
