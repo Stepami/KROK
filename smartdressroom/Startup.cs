@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
 using smartdressroom.Binders;
 using smartdressroom.Services;
 
@@ -21,20 +23,9 @@ namespace smartdressroom
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            /*
-             * Если это включено, сессия не работает
-             * 
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.;
-            });
-            */
-
             // Поддержка сессий - до MVC!
             // См. также например
-            // https://docs.microsoft.com/ru-ru/aspnet/core/fundamentals/app-state?view=aspnetcore-2.0
+            // https://docs.microsoft.com/ru-ru/aspnet/core/fundamentals/app-state?view=aspnetcore-2.2
 
             services.AddTransient<ICartService, CartService>();
             services.AddSingleton<IConsultantService, ConsultantService>();
@@ -51,6 +42,22 @@ namespace smartdressroom
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidIssuer = AuthOptions.ISSUER,
+                            ValidateAudience = true,
+                            ValidAudience = AuthOptions.AUDIENCE,
+                            ValidateLifetime = true,
+                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                            ValidateIssuerSigningKey = true,
+                        };
+                    });
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllOrigin", builder => builder.AllowAnyOrigin());
@@ -63,7 +70,6 @@ namespace smartdressroom
             });
 
             services.AddSignalR();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,8 +96,9 @@ namespace smartdressroom
             });
 
             app.UseCookiePolicy();
-            // Поддержка сессий - до MVC!
             app.UseSession();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

@@ -53,7 +53,7 @@ namespace smartdressroom.Hubs
             return Clients.Group("consultants").SendAsync("onQueriesReceived", JsonConvert.SerializeObject(consultantService.Queries))
                 .ContinueWith(t => Task.Run(async () =>
                 {
-                    await Task.Delay(changingStatusTimeout * 1000);
+                    await Task.Delay(TimeSpan.FromSeconds(changingStatusTimeout));
                     consultantService.ChangeQueryStatusAsync(id);
                 }));
         }

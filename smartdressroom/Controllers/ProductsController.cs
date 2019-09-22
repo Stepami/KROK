@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,7 @@ namespace smartdressroom.Controllers
         public ProductsController(Storage.ApplicationContext _context) => this._context = _context;
 
         // GET api/products/R240580
+        [Authorize]
         [HttpGet("api/[controller]/{vcode}")]
         public async Task<object> Get(string vcode)
         {
