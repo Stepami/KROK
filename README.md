@@ -1,11 +1,6 @@
 # KROK
 SmartDressroom project on clever mirror gazelle.
 
-Use VPN if can't connect
-
-https://46.101.81.176/ - HTTP/2 (может писать о небезопасности, так как SSL сертификат самоподписанный)
-
-http://46.101.81.176/ - HTTP/1.1
 # REST API:
 - /api/products/{vcode}
 
