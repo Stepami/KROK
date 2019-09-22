@@ -2,6 +2,44 @@
 SmartDressroom project on clever mirror gazelle.
 
 # REST API:
+- JWT аутентификация
+Для доступа к REST API необходимо аутенцифицироваться через POST запрос и получить токен доступа.
+Пример:
+```javascript
+var tokenKey = "accessToken";
+// получение токена доступа
+$.ajax({
+    type: 'POST',
+    url: '/token',
+    success: function (data) {
+        // сохраняем в хранилище sessionStorage токен доступа
+        sessionStorage.setItem("accessToken", data.access_token);
+        console.log(data);
+    }
+});
+// использование токена доступа
+$.ajax({
+    type: 'GET',
+    url: '/api/products/132',
+    beforeSend: function (xhr) {
+        var token = sessionStorage.getItem(tokenKey);
+        xhr.setRequestHeader("Authorization", "Bearer " + token);
+    },
+    success: function (data) {
+        console.log(data);
+    }
+});
+```
+
+Объект, приходящий от сервера и содержащий токен:
+```javascript
+{
+    "access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibG9naW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJ1c2VyIiwibmJmIjoxNTY5MTU3NTAyLCJleHAiOjE1NjkxNTc4MDIsImlzcyI6IkNST0NNaXJyb3IiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUxMjMvIn0.1N0SqPTBY_hl7B45vmRkau68ztFbelJ75gMAoTvmc54",
+    "timestamp":"2019-09-22T13:05:02.791Z",
+    "expiresIn":"00:05:00"
+}
+```
+
 - /api/products/{vcode}
 
 Получение информации о вещи по артикулу. В ответе приходит JSON с основной информацией и массивом смежных вещей из этой же коллекции. Параметр **vcode** : *string* - артикул вещи.
