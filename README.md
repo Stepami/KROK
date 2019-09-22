@@ -3,6 +3,7 @@ SmartDressroom project on clever mirror gazelle.
 
 # REST API:
 - JWT аутентификация
+
 Для доступа к REST API необходимо аутенцифицироваться через POST запрос и получить токен доступа.
 Пример:
 ```javascript
