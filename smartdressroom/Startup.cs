@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
 using smartdressroom.Binders;
 using smartdressroom.Services;
 
@@ -40,7 +41,14 @@ namespace smartdressroom
 
             services.AddDbContext<Storage.ApplicationContext>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddCors();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(opt =>
+            {
+                opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                opt.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -57,11 +65,6 @@ namespace smartdressroom
                             ValidateIssuerSigningKey = true,
                         };
                     });
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAllOrigin", builder => builder.AllowAnyOrigin());
-            });
 
             services.Configure<MvcOptions>(options =>
             {
@@ -97,6 +100,12 @@ namespace smartdressroom
 
             app.UseCookiePolicy();
             app.UseSession();
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseAuthentication();
 
